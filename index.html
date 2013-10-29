@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="fr" ng-app="JocondeLab">
+<head>
+	<meta charset="UTF-8">
+	<title>JocondeLab</title>
+
+	<script src="scripts/angular.min.js"></script>
+	<script src="scripts/angular-resource.js"></script>
+	<script src="scripts/controllers.js"></script>
+</head>
+<body>
+	<div ng-controller="NoticeCtrl">
+		<li ng-repeat="notice in notices">
+			{{ notice.loca }}
+		</li>
+	</div>
+	<form action="">
+		<input type="text" placeholder="Recherche" />
+		<input type="submit" />
+	</form>
+</body>
+</html>
