@@ -1,7 +1,23 @@
-var JocondeLab = angular.module('JocondeLab', ['ngResource']);
+var app = angular.module('JocondeLab', []);
 
-JocondeLab.controller('NoticeCtrl', function NoticeCtrl($scope, $resource, $http) {
-	$http({method: 'GET', url: 'http://localhost/JocondeLab/api/web/index.php/notices'}).success(function(data) {
+app.controller('NoticeCtrl', function NoticeCtrl($scope, $http) {
+	
+	$http.get('http://localhost/JocondeLab/api/web/index.php/notices').success(function(data) {
 		$scope.notices = data;
 	});
+
+});
+
+app.controller('SearchCtrl', function SearchCtrl($scope, $http) {
+
+	$scope.search = function() {
+		$http.post('../api/web/index.php/search', {"data" : $scope.keywords})
+		.success(function(data, status) {
+
+		})
+		.error(function(data,status) {
+
+		});
+	}
+
 });

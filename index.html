@@ -8,15 +8,15 @@
 	<script src="scripts/angular-resource.js"></script>
 	<script src="scripts/controllers.js"></script>
 </head>
-<body>
+<body ng-app="JocondeLab">
 	<div ng-controller="NoticeCtrl">
 		<li ng-repeat="notice in notices">
 			{{ notice.loca }}
 		</li>
 	</div>
-	<form action="">
-		<input type="text" placeholder="Recherche" />
-		<input type="submit" />
+	<form action="" ng-controller="SearchCtrl">
+		<input type="text" placeholder="Recherche" ng-model="keywords" />
+		<input type="submit" ng-click="search()" />
 	</form>
 </body>
 </html>
