@@ -31,17 +31,12 @@ $app->get('/museums', function() use($app) {
 
     return new JsonResponse($result);
 });
+
 $app->get('/images', function() use($app) {
     $sql = 'SELECT noticeimage.relative_url as url
-    FROM core_term as term
-    INNER JOIN core_noticeterm as noticeterm
-    ON term.id = noticeterm.term_id
-    INNER JOIN core_notice as notice
-    ON noticeterm.notice_id = notice.id
-    INNER JOIN core_noticeimage as noticeimage
-    ON notice.id = noticeimage.notice_id
-    GROUP BY notice.id
-    ORDER BY RANDOM
+    FROM core_noticeimage as noticeimage
+    WHERE noticeimage.relative_url LIKE "%_p.jpg%"
+    ORDER BY rand()
     LIMIT 0, 7';
     $result = $app['db']->fetchAll($sql);
 

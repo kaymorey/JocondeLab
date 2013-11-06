@@ -1,0 +1,10 @@
+ul.accordion {
+	width: 100%;
+	height: 50%;
+}
+ul.accordion li {
+	display: inline-block;
+	float: left;
+	overflow: hidden;
+	height: 100%;
+}

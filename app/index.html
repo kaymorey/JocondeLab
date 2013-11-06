@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr" ng-app="JocondeLab">
+<head>
+	<meta charset="UTF-8">
+	<title>JocondeLab</title>
+
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+	<!-- ANGULAR -->
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-route.min.js"></script>
+	
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+
+	<!-- JQUERY -->
+	<script src="js/jquery.min.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	
+	<script src="js/accordion.js"></script>
+</head>
+<body>
+	<section ng-view>
+		
+	</section>
+	<script>
+	$(document).ready(function() {
+		$('ul.accordion').accordion();
+	});
+	</script>
+</body>
+</html>

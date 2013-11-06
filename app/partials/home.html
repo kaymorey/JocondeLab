@@ -1,0 +1,17 @@
+<!-- <div ng-controller="MuseumCtrl">
+	<li ng-repeat="museum in museums">
+		{{ museum }}
+	</li>
+</div> -->
+<div>
+	<form action="">
+		<input type="text" placeholder="Recherche" ng-model="keywords" />
+		<input type="submit" ng-click="search()" />
+	</form>
+	<div>
+		<li ng-repeat="result in results">
+			<h1>{{ result.titre }}</h1>
+			<img ng-src="http://www.culture.gouv.fr/Wave/image/joconde/{{ result.url }}" alt="" />
+		</li>
+	</div>
+</div>
