@@ -22,11 +22,25 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 	)
 ));
 
-$app->get('/museums', function() use($app) {
+$app->post('/museums', function(Request $request) use($app) {
+    $city = $request->getContent();
+
     $sql = 'SELECT notice.loca, notice.id 
     FROM core_notice as notice 
-    WHERE notice.loca is not null and notice.loca != ""
-    GROUP BY notice.loca';
+    WHERE notice.loca LIKE "%'.$city.' ; %"
+    GROUP BY notice.loca
+    LIMIT 0, 8';
+    $result = $app['db']->fetchAll($sql);
+
+    return new JsonResponse($result);
+});
+
+$app->get('/cities', function() use($app) {
+    $sql = 'SELECT RTRIM(SUBSTRING_INDEX(notice.loca, ";", 1)) as city
+    FROM core_notice as notice
+    WHERE SUBSTRING_INDEX(notice.loca2, ";", 1) LIKE "%France%"
+    AND notice.loca IS NOT NULL
+    GROUP BY city';
     $result = $app['db']->fetchAll($sql);
 
     return new JsonResponse($result);
@@ -39,6 +53,18 @@ $app->get('/images', function() use($app) {
     ORDER BY rand()
     LIMIT 0, 7';
     $result = $app['db']->fetchAll($sql);
+
+    return new JsonResponse($result);
+});
+
+$app->post('/geoloc-museums', function(Request $request) use($app) {
+    $index = $request->getContent();
+
+    $sql = 'SELECT notice.loca, notice.id
+    FROM core_notice as notice
+    LIMIT ?, 5';
+
+    $result = $app['db']->fetchAll($sql, array((int) $index));
 
     return new JsonResponse($result);
 });

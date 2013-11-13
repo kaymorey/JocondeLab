@@ -1,7 +1,0 @@
-database:
-    driver: pdo_mysql
-    host: localhost
-    dbname: JocondeLab
-    user: root
-    password: zHuy3uoz
-    charset: utf8

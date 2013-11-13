@@ -7,6 +7,12 @@
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 
+	<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<section ng-view>
+		
+	</section>
 	<!-- ANGULAR -->
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-route.min.js"></script>
@@ -16,18 +22,8 @@
 
 	<!-- JQUERY -->
 	<script src="js/jquery.min.js"></script>
-	<script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true&key=AIzaSyDRBUszBrrCUfEmBE2BbQjq5H-RuDQKz4s"></script>
 	
 	<script src="js/accordion.js"></script>
-</head>
-<body>
-	<section ng-view>
-		
-	</section>
-	<script>
-	$(document).ready(function() {
-		$('ul.accordion').accordion();
-	});
-	</script>
 </body>
 </html>

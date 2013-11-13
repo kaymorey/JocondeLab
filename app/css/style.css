@@ -1,10 +1,59 @@
-ul.accordion {
+/*************************
+*         GENERAL        *
+**************************/
+
+body {
+	font-family: 'Roboto', Arial, sans-serif;
+}
+
+
+/*************************
+*          HOME          *
+**************************/
+
+section.destination-choice {
 	width: 100%;
+	background-color: #EEE;
+	text-align: center;
+	cursor: pointer;
+}
+section.destination-choice:hover {
+	background-color: #FFF;
+}
+section.where {
+	height: 48%;
+	position: absolute;
+	top: 0;
+	border-bottom: solid #FFF 2%;
+	z-index: 100;
+}
+section.going-there {
 	height: 50%;
+	position: absolute;
+	top: 50%;
+}
+section.destination-choice h2 {
+	position: relative;
+	top: 50%;
+}
+section.destination-choice h2 a {
+	color: #000;
+	font-size: 1.5em;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+/*************************
+*        ACCORDION       *
+**************************/
+
+ul.accordion {
+	background-color: #000;
 }
 ul.accordion li {
 	display: inline-block;
 	float: left;
 	overflow: hidden;
 	height: 100%;
+	position: absolute;
 }
