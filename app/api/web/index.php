@@ -69,6 +69,21 @@ $app->post('/geoloc-museums', function(Request $request) use($app) {
     return new JsonResponse($result);
 });
 
+$app->post('/insert-geoloc', function(Request $request) use($app) {
+    $data = $request->getContent();
+
+    $museumCode = $data['museumCode'];
+    $cityCode = $data['cityCode'];
+    $id = $data['id'];
+
+    $sql = 'INSERT INTO geoloc(id, notice_id, museum, city)
+    values("", ?, ?, ?)';
+
+    $result = $app['db']->executeUpdate($sql, array((int) $id, $museumCode, $cityCode));
+
+    return $result;
+});
+
 $app->post('/search', function(Request $request) use($app) {
 	$keywords = $request->getContent();
     $sql = 'SELECT notice.titr as titre, noticeimage.relative_url as url

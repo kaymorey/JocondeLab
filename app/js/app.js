@@ -27,8 +27,8 @@ app.config(['$routeProvider',
 			templateUrl: 'partials/accordion.html',
 			controller: 'AccordionCtrl'
 		})
-		.when('geoloc-query', {
-			templateUrl: 'partials/qeoloc-query.html',
+		.when('/geoloc-query', {
+			templateUrl: 'partials/geoloc-query.html',
 			controller: 'GeolocqueryCtrl'
 		})
 		.otherwise({
