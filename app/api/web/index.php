@@ -35,6 +35,16 @@ $app->post('/museums', function(Request $request) use($app) {
     return new JsonResponse($result);
 });
 
+$app->get('/get-museums', function() use $app) {
+    $sql = 'SELECT notice.loca, notice.id
+    FROM core_notice as notice
+    WHERE notice.loca IS NOT NULL
+    GROUP BY notice.loca';
+    $result = $app['db']->fetchAll($sql);
+
+    return new JsonResponse($result);
+}
+
 $app->get('/cities', function() use($app) {
     $sql = 'SELECT RTRIM(SUBSTRING_INDEX(notice.loca, ";", 1)) as city
     FROM core_notice as notice
@@ -59,29 +69,49 @@ $app->get('/images', function() use($app) {
 
 $app->post('/geoloc-museums', function(Request $request) use($app) {
     $index = $request->getContent();
+    $index = intval($index);
 
     $sql = 'SELECT notice.loca, notice.id
     FROM core_notice as notice
-    LIMIT ?, 5';
+    ORDER BY notice.id
+    LIMIT '.$index.', 5';
 
-    $result = $app['db']->fetchAll($sql, array((int) $index));
+    $result = $app['db']->fetchAll($sql);
 
     return new JsonResponse($result);
 });
 
 $app->post('/insert-geoloc', function(Request $request) use($app) {
     $data = $request->getContent();
+    $data = json_decode($data);
 
-    $museumCode = $data['museumCode'];
-    $cityCode = $data['cityCode'];
-    $id = $data['id'];
+    $museumCode = array(
+        'lat' => $data->museumCode->lat,
+        'lng' => $data->museumCode->lng
+    );
+    $museumCode = json_encode($museumCode);
+    $cityCode = array(
+        'lat' => $data->cityCode->lat,
+        'lng' => $data->cityCode->lng
+    );
+    $cityCode = json_encode($cityCode);
 
-    $sql = 'INSERT INTO geoloc(id, notice_id, museum, city)
-    values("", ?, ?, ?)';
+    $loca = $data->loca;
 
-    $result = $app['db']->executeUpdate($sql, array((int) $id, $museumCode, $cityCode));
+    $sql = 'SELECT notice.id
+    FROM core_notice as notice
+    WHERE notice.loca = '.$loca;
 
-    return $result;
+    $notices = $app['db']->fetchAll($sql);
+
+    foreach($notices as $notice) {
+        $sql = 'INSERT INTO geoloc(id, notice_id, museum, city)
+        values("", ?, ?, ?)';
+
+        $result = $app['db']->executeUpdate($sql, array((int) $notice['id'], $museumCode, $cityCode));
+    }
+
+    return "Lignes insérées pour le musée ".$loca;
 });
 
 $app->post('/search', function(Request $request) use($app) {
