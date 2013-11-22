@@ -46,7 +46,7 @@ JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scop
 JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scope, $location) {
 	$scope.submit = function(city) {
 		$scope.city = angular.copy(city);
-		$location.path('/partir/:city');
+		$location.path('/partir/'+city);
 	}
 });
 
