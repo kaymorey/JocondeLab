@@ -35,22 +35,29 @@ $app->post('/museums', function(Request $request) use($app) {
     return new JsonResponse($result);
 });
 
-$app->get('/get-museums', function() use $app) {
+$app->get('/get-museums', function() use ($app) {
     $sql = 'SELECT notice.loca, notice.id
     FROM core_notice as notice
     WHERE notice.loca IS NOT NULL
+    AND notice.loca != ""
+    AND notice.loca LIKE "%;%"
+    AND notice.loca NOT LIKE "%oeuvre disparue%"
+    AND notice.loca NOT LIKE "%oeuvre détruite%"
+    AND notice.loca NOT LIKE "%oeuvre volée%"
+    AND SUBSTRING_INDEX(notice.loca2, ";", 1) LIKE "%France%"
     GROUP BY notice.loca';
     $result = $app['db']->fetchAll($sql);
 
     return new JsonResponse($result);
-}
+});
 
 $app->get('/cities', function() use($app) {
-    $sql = 'SELECT RTRIM(SUBSTRING_INDEX(notice.loca, ";", 1)) as city
+    $sql = 'SELECT RTRIM(SUBSTRING_INDEX(notice.loca, ";", 1)) as city, COUNT(DISTINCT SUBSTRING_INDEX(notice.loca, ";", 2)) as nbMuseums
     FROM core_notice as notice
     WHERE SUBSTRING_INDEX(notice.loca2, ";", 1) LIKE "%France%"
     AND notice.loca IS NOT NULL
-    GROUP BY city';
+    GROUP BY city
+    ORDER BY nbMuseums DESC';
     $result = $app['db']->fetchAll($sql);
 
     return new JsonResponse($result);
@@ -96,11 +103,11 @@ $app->post('/insert-geoloc', function(Request $request) use($app) {
     );
     $cityCode = json_encode($cityCode);
 
-    $loca = $data->loca;
+    $loca = $data->notice->loca;
 
     $sql = 'SELECT notice.id
     FROM core_notice as notice
-    WHERE notice.loca = '.$loca;
+    WHERE notice.loca = "'.$loca.'"';
 
     $notices = $app['db']->fetchAll($sql);
 

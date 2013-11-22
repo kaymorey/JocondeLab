@@ -1,104 +1,46 @@
 var JocondeLabControllers = angular.module('JocondeLabControllers', []);
 
-JocondeLabControllers.controller('GeolocqueryCtrl', function GeolocqueryCtrl($scope, $timeout, $http, Geocoder) {
-	var insertGeoloc = function(museums) {
-		$scope.interval = 0;
-		geoloc = $timeout(function geolocFunction() {
-			$http({
-				method: 'POST',
-				url: 'api/web/index.php/geoloc-museums',
-				data: $scope.interval
-			})
-			.success(function(data) {
-				for(i = $scope.interval; i < $scope.interval + 5; i++) {
-					loca = data[i].loca.split(";");
-					var city = loca[0];
-					city = city.trim();
-					var museum = loca[1];
-					var museum = museum.trim();
+JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scope, $http) {
+	$scope.slideLeft = false;
+	$scope.slideRight = false;
 
-					var loca = data[i];
+	$scope.showLeft = false;
+	$scope.showRight = false;
 
-					var museumCode = Geocoder.getGeocode(museum+' '+city+' France');
-					museumCode.then(function(code) {
-						var museum = {
-							'lat': code['lat'],
-							'lng': code['lng']
-						}
+	$scope.showLeftTitle = true;
+	$scope.showRightTitle = true;
 
-						var cityCode = Geocoder.getGeocode(city+' France');
-						cityCode.then(function(code) {
-							var city = {
-								'lat': code['lat'],
-								'lng': code['lng']
-							}
+	$scope.cities = [];
 
-							var result = {
-								'museumCode': museum,
-								'cityCode': city,
-								'loca': loca
-							}
+	$scope.chooseHomeLeft = function(item) {
+		if($scope.showLeft == false) {
+			$scope.slideLeft = true;
 
-							$http({
-								method: 'POST',
-								url: 'api/web/index.php/insert-geoloc',
-								data: result
-							})
-							.success(function(data) {
-								$scope.result = data;
-							});
-				}
-				angular.forEach(data, function(value, key) {
-					loca = value.loca.split(";");
-					var city = loca[0];
-					city = city.trim();
-					var museum = loca[1];
-					var museum = museum.trim();
+			$scope.showRight = false;
 
-					var result = [];
-					var museumCode = Geocoder.getGeocode(museum+' '+city+' France');
-					museumCode.then(function(code) {
-						var museum = {
-							'lat': code['lat'],
-							'lng': code['lng']
-						}
-
-						var cityCode = Geocoder.getGeocode(city+' France');
-						cityCode.then(function(code) {
-							var city = {
-								'lat': code['lat'],
-								'lng': code['lng']
-							}
-							
-							result = {
-								'museumCode': museum,
-								'cityCode': city,
-								'id': value.id
-							}
-							$http({
-								method: 'POST',
-								url: 'api/web/index.php/insert-geoloc',
-								data: result
-							})
-							.success(function(data) {
-								$scope.result = data;
-							});
-						});
-					})
-				});
-			});
-			$scope.interval += 5;
-			geoloc = $timeout(geolocFunction, 10000);
-		}, 10000);
-	}
+			$scope.showRightTitle = false;
+		}
+   	};
 
 	$http({
 		method: 'GET',
-		url: 'api/web/index.php/get-museums'
+		url: 'api/web/index.php/cities'
 	})
 	.success(function(data) {
-		insertGeoloc(data);
+		angular.forEach(data, function(value, key) {
+			$scope.cities.push(value.city);
+		});
 	});
+
+   $scope.chooseHomeRight = function(item) {
+		if($scope.showRight == false) {
+			$scope.slideRight = true;
+
+			$scope.showLeft = false;
+
+			$scope.showLeftTitle = false;
+		}
+   };
 });
 
 JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $http, Geocoder) {
@@ -125,7 +67,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 				geocode.then(function(data) {
 					$scope.geocodes.push(data);
 				}, function(error) {
-					alert(error)
+					alert(error);
 				});
 			});
 		}, function(error) {
@@ -179,4 +121,80 @@ JocondeLabControllers.controller('SearchCtrl', function SearchCtrl($scope, $http
 		});
 	}
 
+});
+
+/* ---- GET GEOLOC MUSEUMS QUERY  ---- */
+
+JocondeLabControllers.controller('GeolocqueryCtrl', function GeolocqueryCtrl($scope, $timeout, $http, Geocoder, $q) {
+	var insertGeoloc = function(museums) {
+		$scope.interval = 683;
+		$scope.lastMuseum = '';
+		geoloc = $timeout(function geolocFunction() {
+			angular.forEach(museums, function(value, index) {
+				if(index >= $scope.interval && index < $scope.interval + 5) {
+					loca = museums[index].loca.split(";");
+					var city = loca[0];
+					city = city.trim();
+					var museum = loca[1];
+					var museum = museum.trim();
+
+					var loca = museums[index];
+
+					var museumCode = Geocoder.getGeocode(museum+' '+city+' France');
+					museumCode.then(function(code) {
+						console.log(loca);
+						var museum = {
+							'lat': code['lat'],
+							'lng': code['lng']
+						}
+
+						var cityCode = Geocoder.getGeocode(city+' France');
+						cityCode.then(function(code) {
+							var city = {
+								'lat': code['lat'],
+								'lng': code['lng']
+							}
+
+							var result = {
+								'museumCode': museum,
+								'cityCode': city,
+								'notice': loca
+							}
+
+							$http({
+								method: 'POST',
+								url: 'api/web/index.php/insert-geoloc',
+								data: result
+							})
+							.success(function(data) {
+								$scope.result = data;
+							});
+						}, function(error) {
+							if(error == "OVER_QUERY_LIMIT") {
+								alert(error);
+								$scope.lastMuseum = museums[index]+ ' '+index;
+								$timeout.cancel(stop);
+							}
+						});
+					}, function(error) {
+						if(error == "OVER_QUERY_LIMIT") {
+							alert(error);
+							$scope.lastMuseum = museums[index]+ ' '+index;
+							$timeout.cancel(stop);
+						}
+					});
+				}
+			});
+			$scope.interval += 5;
+			geoloc = $timeout(geolocFunction, 25000);
+		}, 25000);
+	}
+
+	$http({
+		method: 'GET',
+		url: 'api/web/index.php/get-museums'
+	})
+	.success(function(data) {
+		insertGeoloc(data);
+	});
 });

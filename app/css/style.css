@@ -1,9 +1,30 @@
 /*************************
+*          FONTS         *
+**************************/
+@font-face {
+    font-family: 'Gtwalsheim';
+    src: url('../fonts/Gt-Walsheim-Web/gt-walsheim-web.eot');
+    src: url('../fonts/Gt-Walsheim-Web/gt-walsheim-web.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Gt-Walsheim-Web/gt-walsheim-web.woff') format('woff'),
+         url('../fonts/Gt-Walsheim-Web/gt-walsheim-web.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GtwalsheimMed';
+    src: url('../fonts/Gt-Walsheim-Web/gt-walsheim-medium-web.eot');
+    src: url('../fonts/Gt-Walsheim-Web/gt-walsheim-medium-web.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Gt-Walsheim-Web/gt-walsheim-medium-web.woff') format('woff'),
+         url('../fonts/Gt-Walsheim-Web/gt-walsheim-medium-web.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/*************************
 *         GENERAL        *
 **************************/
 
 body {
-	font-family: 'Roboto', Arial, sans-serif;
+	font-family: 'Gtwalsheim', Arial, sans-serif;
 }
 
 
@@ -11,36 +32,113 @@ body {
 *          HOME          *
 **************************/
 
-section.destination-choice {
-	width: 100%;
-	background-color: #EEE;
+section.home {
+	width: 50%;
+	height: 100%;
 	text-align: center;
 	cursor: pointer;
 }
-section.destination-choice:hover {
-	background-color: #FFF;
-}
-section.where {
-	height: 48%;
-	position: absolute;
-	top: 0;
-	border-bottom: solid #FFF 2%;
-	z-index: 100;
-}
-section.going-there {
-	height: 50%;
-	position: absolute;
-	top: 50%;
-}
-section.destination-choice h2 {
-	position: relative;
-	top: 50%;
-}
-section.destination-choice h2 a {
-	color: #000;
+section.home h2 {
+	color: #FFF;
 	font-size: 1.5em;
 	text-decoration: none;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 1.2em;
+}
+section.home img.arrow {
+	position: absolute;
+	top: 50%;
+	margin-top: -23px;
+}
+section.home div.content {
+	height: 200px;
+	line-height: 200px;
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	margin-top: -100px;
+}
+
+section.left {
+	position: absolute;
+	top: 0;
+	z-index: 100;
+	background: url(../images/home-top.jpg) no-repeat center center; 
+}
+
+section.right {
+	position: absolute;
+	left: 50%;
+	background: url(../images/home-bottom.jpg) no-repeat center center; 
+}
+section.right h2 {
+	margin-bottom: 10px;
+}
+section.right form {
+	position: absolute;
+	left: 50%;
+	width: 264px;
+	margin-left: -132px;
+	line-height: 1.2em;
+}
+section.right form input {
+	border: solid #FFF 2px;
+	background-color: transparent;
+	font-size: 1.3em;
+	color: #FFF;
+	font-family: 'Gtwalsheim', Arial, sans-serif;
+}
+section.right form input[type="text"] {
+	width: 250px;
+	padding: 5px;
+	position: relative;
+	z-index: 100;
+}
+section.right form input[type="submit"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 4px;
+}
+section.right div.suggest div {
+	text-align: left;
+	left: 3px !important;
+}
+section.right.selected div.content {
+	line-height: 1em;
+}
+section.right.selected h2 {
+	position: relative;
+	top: 60px;
+}
+section.right.selected form {
+	bottom: 41px;
+}
+
+/*************************
+*         FOOTER         *
+**************************/
+footer {
+	background-color: #000;
+	color: #FFF;
+	height: 60px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	border-top: solid #262626 1px;
+	z-index:100;
+}
+footer h1 {
+	color: #666666;
 	text-transform: uppercase;
+	font-size: 27px;
+	line-height: 60px;
+	padding-left: 18px;
+}
+footer h1 strong {
+	color: #FFF;
+	font-family: 'GtwalsheimMed', Arial, sans-serif;
 }
 
 /*************************

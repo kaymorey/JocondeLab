@@ -9,7 +9,7 @@ app.config(['$routeProvider',
 		$routeProvider
 		.when('/', {
 			templateUrl: 'partials/home.html',
-			controller: 'SearchCtrl'
+			controller: 'HomeChoiceCtrl'
 		})
 		.when('/destination', {
 			templateUrl: 'partials/destination.html',
@@ -64,7 +64,7 @@ app.factory('Geocoder', function ($q) {
 					deferred.resolve(result);
 				}
 				else {
-					deferred.reject('Geocode was not successful for the following reason: ' + status);
+					deferred.reject(status);
 				}
 
 			});
@@ -87,4 +87,71 @@ accordion.directive('accordionInit', function() {
 			});
 		}
 	};
+});
+
+app.directive('showSlide', function() {
+   return {
+	 restrict: 'A',
+
+	 //set up the directive.
+	 link: function(scope, element, attrs) {
+		var watchField = attrs.showSlide;
+
+		scope.$watch(attrs.showSlide, function(show) {
+			if(scope.slideLeft) {
+				$('.home.right').animate({
+					left: '90%',
+					width: '10%',
+				}, {duration: 500, queue: false });
+				$('.home.left').animate({
+					width: '90%'
+				}, 
+				{
+					duration: 500, 
+					queue: false, 
+					complete: function() {
+						scope.$apply(function() {
+							scope.showLeft = true;
+							scope.showLeftTitle = true;
+						});
+					} 
+				});
+				scope.slideLeft = false;
+			}
+			else if(scope.slideRight) {
+				$('.home.left').animate({
+					width: '10%',
+				}, {duration: 500, queue: false });
+				$('.home.right').animate({
+					left: '10%',
+					width: '90%',
+				}, 
+				{
+					duration: 500, 
+					queue: false, 
+					complete: function() {
+						scope.$apply(function() {
+							scope.showRight = true;
+							scope.showRightTitle = true;
+						});
+					} 
+				});
+			   scope.slideRight = false;
+			}
+		});
+	 }
+   }
+});
+
+app.directive('autoSuggest', function() {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			scope.$watch('cities', function(update) {
+				if(update) {
+					$(element).suggest(scope.cities);
+				}
+			});
+		}
+	}
 });

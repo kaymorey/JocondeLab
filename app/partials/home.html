@@ -1,10 +1,21 @@
-<section class="where destination-choice">
-	<h2>
-		<a href="#">Où aller ?</a>
-	</h2>
+<section class="left home" ng-class="{selected: showLeft}" ng-click="chooseHomeLeft()" show-slide="slideLeft">
+	<div class="content">
+		<h2 ng-show="showLeftTitle">
+			Trouvez la meilleure destination en France en fonction de vos préférences artistiques.
+		</h2>
+	</div>
+	<img src="images/arrow-left.png" ng-show="showRight" alt="" class="arrow" />
 </section>
-<section class="going-there destination-choice">
-	<h2>
-		<a href="#/museums">Je vais là !</a>
-	</h2>
+
+<section class="right home" ng-class="{selected: showRight}" ng-click="chooseHomeRight()" show-slide="slideRight">
+	<div class="content">
+		<h2 ng-show="showRightTitle">
+		Vous connaissez déjà votre destination ?
+		</h2>
+		<img src="images/arrow-right.png" ng-show="showLeft" alt="" class="arrow" />
+		<form action="" ng-show="showRight">
+			<input type="text" placeholder="Ville" required auto-suggest  />
+			<input type="submit" value="go" />
+		</form>
+	</div>
 </section>
