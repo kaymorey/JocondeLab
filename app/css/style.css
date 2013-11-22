@@ -59,6 +59,9 @@ section.home div.content {
 	top: 50%;
 	margin-top: -100px;
 }
+section.selected {
+	cursor: default;
+}
 
 section.left {
 	position: absolute;
@@ -100,6 +103,9 @@ section.right form input[type="submit"] {
 	top: 0;
 	right: 0;
 	padding: 4px;
+}
+section.right span.suggest-more {
+	display: none !important;
 }
 section.right div.suggest div {
 	text-align: left;

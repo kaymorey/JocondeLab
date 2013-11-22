@@ -13,8 +13,8 @@
 		Vous connaissez déjà votre destination ?
 		</h2>
 		<img src="images/arrow-right.png" ng-show="showLeft" alt="" class="arrow" />
-		<form action="" ng-show="showRight">
-			<input type="text" placeholder="Ville" required auto-suggest  />
+		<form action="" ng-show="showRight" ng-controller="ChooseCityCtrl" ng-submit="submit(city)">
+			<input type="text" placeholder="Ville" auto-suggest ng-model="city"  />
 			<input type="submit" value="go" />
 		</form>
 	</div>

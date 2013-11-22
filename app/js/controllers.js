@@ -43,6 +43,14 @@ JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scop
    };
 });
 
+JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scope, $location) {
+	$scope.submit = function(city) {
+		$scope.city = angular.copy(city);
+		$location.path('/partir/:city');
+	}
+});
+
+
 JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $http, Geocoder) {
 	$scope.city = 'Paris';
 	$scope.geocodes = [];

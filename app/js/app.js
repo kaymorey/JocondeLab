@@ -11,13 +11,13 @@ app.config(['$routeProvider',
 			templateUrl: 'partials/home.html',
 			controller: 'HomeChoiceCtrl'
 		})
+		.when('/partir/:city', {
+			templateUrl: 'partials/museums.html',
+			controller: 'MuseumsCtrl'
+		})
 		.when('/destination', {
 			templateUrl: 'partials/destination.html',
 			controller: 'DestCtrl'
-		})
-		.when('/museums', {
-			templateUrl: 'partials/museums.html',
-			controller: 'MuseumsCtrl'
 		})
 		.when('/cities', {
 			templateUrl: 'partials/cities.html',
