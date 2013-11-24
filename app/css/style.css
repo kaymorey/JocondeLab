@@ -123,6 +123,24 @@ section.right.selected form {
 }
 
 /*************************
+*           MAP          *
+**************************/
+section.map {
+	background-color: #000;
+	width: 30%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+}
+section.artwork {
+	background-color: red;
+	width: 70%;
+	height: 100%;
+	position: absolute;
+	left: 30%;
+}
+
+/*************************
 *         FOOTER         *
 **************************/
 footer {

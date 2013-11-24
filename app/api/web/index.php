@@ -25,11 +25,13 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app->post('/museums', function(Request $request) use($app) {
     $city = $request->getContent();
 
-    $sql = 'SELECT notice.loca, notice.id 
-    FROM core_notice as notice 
+    $sql = 'SELECT notice.loca, notice.id, geoloc.museum 
+    FROM core_notice as notice
+    INNER JOIN geoloc
+    ON notice.id = geoloc.notice_id
     WHERE notice.loca LIKE "%'.$city.' ; %"
     GROUP BY notice.loca
-    LIMIT 0, 8';
+    LIMIT 0, 5';
     $result = $app['db']->fetchAll($sql);
 
     return new JsonResponse($result);
