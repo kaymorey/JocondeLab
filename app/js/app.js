@@ -47,8 +47,6 @@ app.factory('Geocoder', function ($q) {
 				if (status === google.maps.GeocoderStatus.OK) {
 					var point = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
 					if(reference != null) {
-						console.log(reference);
-						console.log(point);
 						var distance = google.maps.geometry.spherical.computeDistanceBetween(reference, point);
 					}
 					else {
@@ -158,15 +156,19 @@ app.directive('autoSuggest', function() {
 
 app.directive('googleMap', function() {
 	return {
-		restric: 'A',
+		restrict: 'A',
 		link: function(scope, element, attrs) {
-			var mapOptions = {
-				zoom: 8,
-				center: new google.maps.LatLng(-34.397, 150.644)
-			  };
+			scope.$watch('museums', function(update) {
+				var mapOptions = {
+					zoom: 8,
+					// Centrer sur la ville
+					center: new google.maps.LatLng(-34.397, 150.644)
+			  	};
 
-			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+				// Créer des marqueurs pour les différents musées
+			});
 		}
 	}
 });

@@ -52,7 +52,6 @@ JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scop
 
 
 JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $http, Geocoder) {
-	$scope.city = 'Paris';
 	$scope.geocodes = [];
 
 	$http({
@@ -62,25 +61,6 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 	})
 	.success(function(data) {
 		$scope.museums = data;
-
-		var reference = Geocoder.getGeocode($scope.city+' France');
-		reference.then(function(data) {
-			var refLatLng = data;
-			reference = new google.maps.LatLng(refLatLng.lat, refLatLng.lng);
-
-			angular.forEach($scope.museums, function(value, key) {
-				var splitted = value.loca.split(' ; ');
-				var museum = splitted[1];
-				var geocode = Geocoder.getGeocode(museum+' '+$scope.city+' France', reference);
-				geocode.then(function(data) {
-					$scope.geocodes.push(data);
-				}, function(error) {
-					alert(error);
-				});
-			});
-		}, function(error) {
-			alert(error);
-		});
 	});
 	/*
 	var geocode = Geocoder.getGeocode('Musée du Louvre Paris France');
