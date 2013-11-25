@@ -158,11 +158,11 @@ app.directive('googleMap', function() {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
-			scope.$watch('museums', function(update) {
+			scope.$watch('cityCode', function(update) {
 				var mapOptions = {
 					zoom: 8,
 					// Centrer sur la ville
-					center: new google.maps.LatLng(-34.397, 150.644)
+					center: new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng'])
 			  	};
 
 				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
