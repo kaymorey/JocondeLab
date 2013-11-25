@@ -25,7 +25,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app->post('/museums', function(Request $request) use($app) {
     $city = $request->getContent();
 
-    $sql = 'SELECT notice.loca, notice.id, geoloc.museum 
+    $sql = 'SELECT notice.loca, notice.id, geoloc.museum as geoloc 
     FROM core_notice as notice
     INNER JOIN geoloc
     ON notice.id = geoloc.notice_id

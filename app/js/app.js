@@ -163,11 +163,20 @@ app.directive('googleMap', function() {
 					zoom: 8,
 					// Centrer sur la ville
 					center: new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng'])
-			  	};
+				};
 
 				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 				// Créer des marqueurs pour les différents musées
+				angular.forEach(scope.museums, function(museum, index) {
+					var geoloc = JSON.parse(museum.geoloc);
+					var markerLatlng = new google.maps.LatLng(geoloc.lat, geoloc.lng);
+					var marker = new google.maps.Marker({
+						position: markerLatlng,
+						map: map,
+						title:"Hello World!"
+					});
+				});
 			});
 		}
 	}

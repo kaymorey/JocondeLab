@@ -58,7 +58,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 	$http({
 		method: 'POST',
 		url: 'api/web/index.php/museums',
-		data: $scope.city
+		data: $routeParams.city
 	})
 	.success(function(data) {
 		$scope.museums = data;
