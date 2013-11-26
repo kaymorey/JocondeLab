@@ -31,6 +31,7 @@ $app->post('/museums', function(Request $request) use($app) {
     ON notice.id = geoloc.notice_id
     WHERE notice.loca LIKE "%'.$city.' ; %"
     GROUP BY notice.loca
+    ORDER BY rand()
     LIMIT 0, 5';
     $result = $app['db']->fetchAll($sql);
 
