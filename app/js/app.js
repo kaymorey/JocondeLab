@@ -176,6 +176,15 @@ app.directive('googleMap', function() {
 						map: map,
 						title:"Hello World!"
 					});
+
+					var mapStyles = [{
+					    featureType: "all",
+					    stylers: [{ 
+					    	visibility: "off" 
+					    }]
+				    }];
+
+					map.setOptions({styles: mapStyles});
 				});
 			});
 		}
