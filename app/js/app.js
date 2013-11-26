@@ -159,38 +159,51 @@ app.directive('googleMap', function() {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
 			scope.$watch('cityCode', function(update) {
+				var center = new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng']);
+
 				var mapOptions = {
-					zoom: 15,
+					zoom: 8,
 					// Centrer sur la ville
-					center: new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng']),
+					center: center,
 					backgroundColor: "rgb(0, 0, 0)",
 					disableDefaultUI: true
 				};
 
 				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+				var mapStyles = [{
+				    featureType: "all",
+				    stylers: [{ 
+				    	visibility: "off" 
+				    }]
+			    }];
+
+			    var markerCenter = new google.maps.Marker({
+						position: center,
+						map: map,
+						title:"Hello World!",
+						icon: 'images/markerCenter.png'
+					});
+
+			    var latlngbounds = new google.maps.LatLngBounds();
+
 				// Créer des marqueurs pour les différents musées
 				angular.forEach(scope.museums, function(museum, index) {
 					var geoloc = JSON.parse(museum.geoloc);
 					var markerLatlng = new google.maps.LatLng(geoloc.lat, geoloc.lng);
-					var markerImage = 'images/marker.png';
 
 					var marker = new google.maps.Marker({
 						position: markerLatlng,
 						map: map,
 						title:"Hello World!",
-						icon: markerImage
+						icon: 'images/marker.png'
 					});
 
-					var mapStyles = [{
-					    featureType: "all",
-					    stylers: [{ 
-					    	visibility: "off" 
-					    }]
-				    }];
-
-					map.setOptions({styles: mapStyles});
+					latlngbounds.extend(markerLatlng);
 				});
+
+				map.setOptions({styles: mapStyles});
+				map.fitBounds(latlngbounds);
 			});
 		}
 	}
