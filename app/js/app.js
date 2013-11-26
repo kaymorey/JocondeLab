@@ -160,9 +160,11 @@ app.directive('googleMap', function() {
 		link: function(scope, element, attrs) {
 			scope.$watch('cityCode', function(update) {
 				var mapOptions = {
-					zoom: 8,
+					zoom: 15,
 					// Centrer sur la ville
-					center: new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng'])
+					center: new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng']),
+					backgroundColor: "rgb(0, 0, 0)",
+					disableDefaultUI: true
 				};
 
 				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -171,10 +173,13 @@ app.directive('googleMap', function() {
 				angular.forEach(scope.museums, function(museum, index) {
 					var geoloc = JSON.parse(museum.geoloc);
 					var markerLatlng = new google.maps.LatLng(geoloc.lat, geoloc.lng);
+					var markerImage = 'images/marker.png';
+
 					var marker = new google.maps.Marker({
 						position: markerLatlng,
 						map: map,
-						title:"Hello World!"
+						title:"Hello World!",
+						icon: markerImage
 					});
 
 					var mapStyles = [{
