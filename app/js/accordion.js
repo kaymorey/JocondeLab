@@ -2,26 +2,27 @@
 {
     $.fn.accordion = function()
     {
-        var SCREEN_WIDTH  = $(window).width(),
-        SCREEN_HEIGHT = $(window).height();
+        var width  = this.width(),
+        height = this.height();
 
         var nbImages = this.find('li').find('img').length;
         var items = this.find('li');
 
         var minWidth = 30;
-        var maxWidth = SCREEN_WIDTH - nbImages / SCREEN_WIDTH;
+        var maxWidth = width - (nbImages - 1) * minWidth;
 
         openIndex = -1;
 
-        this.height(SCREEN_HEIGHT/1.5);
-        items.height(SCREEN_HEIGHT/1.5);
+        items.height(height);
+        items.find('img').height(height);
+
         items.css('opacity', '0.5');
 
-        return this.find('li').each(function(index) {
-            var realWidth = SCREEN_WIDTH/nbImages;
-            closeWidth = Math.floor(SCREEN_WIDTH/nbImages);
+        return items.each(function(index) {
+            var realWidth = width/nbImages;
+            closeWidth = Math.floor(width/nbImages);
             if(index == nbImages - 1) {
-                $(this).width(SCREEN_WIDTH - (index * closeWidth));
+                $(this).width(width - (index * closeWidth));
             }
             else {
                 $(this).width(closeWidth);
@@ -58,7 +59,7 @@
                     openWidth = imageWidth;
                 }
 
-                closeWidth = (SCREEN_WIDTH - openWidth) / (nbImages - 1);
+                closeWidth = (width - openWidth) / (nbImages - 1);
 
                 items.each(function(index) {
                     if(index == 0) {

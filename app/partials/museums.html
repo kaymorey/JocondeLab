@@ -1,6 +1,10 @@
 <section class="map" id="map-canvas" google-map>
 	
 </section>
-<section class="artwork">
-	
+<section class="artwork" accordion-init>
+	<ul class="accordion">
+		<li ng-repeat="artwork in artworks">
+			<img ng-src="http://www.culture.gouv.fr/Wave/image/joconde/{{ artwork.image }}" alt="" />
+		</li>
+	</ul>
 </section>

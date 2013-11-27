@@ -55,20 +55,22 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 	$scope.geocodes = [];
 	$scope.cityCode = [];
 
-	$http({
-		method: 'POST',
-		url: 'api/web/index.php/museums',
-		data: $routeParams.city
-	})
-	.success(function(data) {
-		$scope.museums = data;
-		var geocode = Geocoder.getGeocode($routeParams.city+' France');
-		geocode.then(function(data) {
-			$scope.cityCode = data;
-		}, function(error) {
-			alert(error);
+	$scope.getData = function() {
+		$http({
+			method: 'POST',
+			url: 'api/web/index.php/museums',
+			data: $routeParams.city
+		})
+		.success(function(data) {
+			$scope.artworks = data;
+			var geocode = Geocoder.getGeocode($routeParams.city+' France');
+			geocode.then(function(data) {
+				$scope.cityCode = data;
+			}, function(error) {
+				alert(error);
+			});
 		});
-	});
+	}
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {

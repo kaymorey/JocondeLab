@@ -77,8 +77,8 @@ accordion.directive('accordionInit', function() {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
-			scope.getImages();
-			scope.$watch('images', function(update) {
+			scope.getData();
+			scope.$watch('artworks', function(update) {
 				if(update) {
 					$(element).accordion();
 				}
@@ -188,7 +188,7 @@ app.directive('googleMap', function() {
 			    var latlngbounds = new google.maps.LatLngBounds();
 
 				// Créer des marqueurs pour les différents musées
-				angular.forEach(scope.museums, function(museum, index) {
+				angular.forEach(scope.artworks, function(museum, index) {
 					var geoloc = JSON.parse(museum.geoloc);
 					var markerLatlng = new google.maps.LatLng(geoloc.lat, geoloc.lng);
 
