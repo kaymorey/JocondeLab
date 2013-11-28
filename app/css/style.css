@@ -144,6 +144,15 @@ section.artwork {
 	position: absolute;
 	left: 30%;
 }
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
+#map-canvas div div a div img{
+    display:none;
+}
 
 /*************************
 *         FOOTER         *
