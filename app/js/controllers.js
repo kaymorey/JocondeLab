@@ -1,6 +1,9 @@
 var JocondeLabControllers = angular.module('JocondeLabControllers', []);
 
 JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scope, $http) {
+	// Affichage full page
+	$scope.full = true;
+
 	$scope.slideLeft = false;
 	$scope.slideRight = false;
 
@@ -52,6 +55,9 @@ JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scop
 
 
 JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $http, Geocoder, $routeParams) {
+	// Affichage full page
+	$scope.full = true;
+	
 	$scope.geocodes = [];
 	$scope.cityCode = [];
 

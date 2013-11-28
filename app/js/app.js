@@ -154,6 +154,23 @@ app.directive('autoSuggest', function() {
 	}
 });
 
+app.directive('full', function() {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			if(scope.full) {
+				var sectionHeight = $(window).height() - $('footer').height();
+				element.height(sectionHeight);
+				 angular.element($(window)).bind('resize',function() {
+				 	console.log('pop');
+					var sectionHeight = $(window).height() - $('footer').height();
+					element.height(sectionHeight);
+				});
+			}
+		}
+	}
+});
+
 app.directive('googleMap', function() {
 	return {
 		restrict: 'A',
