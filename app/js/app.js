@@ -204,6 +204,11 @@ app.directive('googleMap', function() {
 
 			    var latlngbounds = new google.maps.LatLngBounds();
 
+			    var markersTab = [];
+
+			    var defaultIcon = 'images/marker.png';
+			    var activeIcon = 'images/markerActive.png';
+
 				// Créer des marqueurs pour les différents musées
 				angular.forEach(scope.artworks, function(museum, index) {
 					var geoloc = JSON.parse(museum.geoloc);
@@ -215,12 +220,23 @@ app.directive('googleMap', function() {
 						title:"Hello World!",
 						icon: 'images/marker.png'
 					});
-
+					markersTab.push(marker);
 					latlngbounds.extend(markerLatlng);
 				});
 
 				map.setOptions({styles: mapStyles});
 				map.fitBounds(latlngbounds);
+
+				var prevActive = -1;
+
+				$('.accordion li').click(function() {
+					if(prevActive != -1) {
+						markersTab[prevActive].setIcon(defaultIcon);
+					}
+					var index = $(this).index();
+					markersTab[index].setIcon(activeIcon);
+					prevActive = index;
+				})
 			});
 		}
 	}
