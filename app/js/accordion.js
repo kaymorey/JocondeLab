@@ -1,28 +1,58 @@
 (function($)
 {
-    $.fn.accordion = function()
+    function resizeAccordion(content, items, settings, parameters) {
+        var width  = content.width(),
+        height = content.height();
+
+        var maxWidth = width - (settings.nbImages - 1) * parameters.minWidth;
+
+        settings.contentWidth = width;
+        settings.contentHeight = height;
+        settings.maxWidth = maxWidth;
+
+        items.height(settings.contentHeight);
+        items.find('img').height(settings.contentHeight);
+
+        if(settings.openIndex == -1) {
+            items.width(Math.floor(settings.contentWidth / settings.nbImages));
+        }        
+    }
+    $.fn.accordion = function(options)
     {
+        var defauts = {
+            "minWidth": 30
+        };  
+           
+        parameters = $.extend(defauts, options);
+
         var width  = this.width(),
         height = this.height();
 
         var nbImages = this.find('li').find('img').length;
-        var items = this.find('li');
+        items = this.find('li');
+        content = this;
 
-        var minWidth = 30;
-        var maxWidth = width - (nbImages - 1) * minWidth;
+        var maxWidth = width - (nbImages - 1) * parameters.minWidth;
 
-        openIndex = -1;
+        var settings = {
+            'content': this,
+            'contentWidth': width,
+            'contentHeight': height,
+            'maxWidth': maxWidth,
+            'nbImages': nbImages,
+            'openIndex': -1
+        };
 
-        items.height(height);
-        items.find('img').height(height);
+        items.height(settings.contentHeight);
+        items.find('img').height(settings.contentHeight);
 
         items.css('opacity', '0.5');
 
         return items.each(function(index) {
-            var realWidth = width/nbImages;
-            closeWidth = Math.floor(width/nbImages);
-            if(index == nbImages - 1) {
-                $(this).width(width - (index * closeWidth));
+            var closeWidth = Math.floor(settings.contentWidth / settings.nbImages);
+            // Last image
+            if(index == settings.nbImages - 1) {
+                $(this).width(settings.contentWidth - (index * closeWidth));
             }
             else {
                 $(this).width(closeWidth);
@@ -36,36 +66,36 @@
             });
 
             $(this).on("mouseover", function() {
-                if(openIndex != index) {
+                if(settings.openIndex != index) {
                     $(this).css('opacity', '1');
                 }
             });
             $(this).on("mouseout", function() {
-                if(openIndex != index) {
+                if(settings.openIndex != index) {
                     $(this).css('opacity', '0.5');
                 }
             });
 
             $(this).on("click", function() {
                 var imageWidth = $(this).find('img').width();
-                openIndex = index;
+                settings.openIndex = index;
                 var openWidth;
                 var leftPos = 0;
 
-                if(imageWidth > maxWidth) {
-                    openWidth = maxWidth;
+                if(imageWidth > settings.maxWidth) {
+                    openWidth = settings.maxWidth;
                 }
                 else {
                     openWidth = imageWidth;
                 }
 
-                closeWidth = (width - openWidth) / (nbImages - 1);
+                closeWidth = (settings.contentWidth - openWidth) / (settings.nbImages - 1);
 
                 items.each(function(index) {
                     if(index == 0) {
                         leftPos = 0;
                     }
-                    else if(index == openIndex + 1) {
+                    else if(index == settings.openIndex + 1) {
                         leftPos += openWidth;
                     }
                     else {
@@ -83,7 +113,12 @@
                     width: openWidth
                 }, {duration: 500, queue: false });
                 $(this).css('opacity', '1');
-            })
+
+            });
+
+            $(window).bind("resize", function () {
+                resizeAccordion(content, items, settings, parameters);
+            });
             
         });
     };

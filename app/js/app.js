@@ -162,7 +162,6 @@ app.directive('full', function() {
 				var sectionHeight = $(window).height() - $('footer').height();
 				element.height(sectionHeight);
 				 angular.element($(window)).bind('resize',function() {
-				 	console.log('pop');
 					var sectionHeight = $(window).height() - $('footer').height();
 					element.height(sectionHeight);
 				});
