@@ -5,6 +5,7 @@
         height = content.height();
 
         var maxWidth = width - (settings.nbImages - 1) * parameters.minWidth;
+        var closeWidth = Math.floor(settings.contentWidth / settings.nbImages);
 
         settings.contentWidth = width;
         settings.contentHeight = height;
@@ -15,7 +16,15 @@
 
         if(settings.openIndex == -1) {
             items.width(Math.floor(settings.contentWidth / settings.nbImages));
-        }        
+            items.each(function(index) {
+                $(this).css({
+                    'left': closeWidth * index +'px'
+                });
+            });
+        }
+        else {
+
+        }    
     }
     $.fn.accordion = function(options)
     {
