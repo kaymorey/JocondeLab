@@ -23,7 +23,40 @@
             });
         }
         else {
+            var imageWidth = items.eq(settings.openIndex).find('img').width();
+            var openWidth;
+            var leftPos = 0;
 
+            if(imageWidth > settings.maxWidth) {
+                openWidth = settings.maxWidth;
+            }
+            else {
+                openWidth = imageWidth;
+            }
+
+            closeWidth = (settings.contentWidth - openWidth) / (settings.nbImages - 1);
+
+            items.each(function(index) {
+                if(index == 0) {
+                    leftPos = 0;
+                }
+                else if(index == settings.openIndex + 1) {
+                    leftPos += openWidth;
+                }
+                else {
+                    leftPos += closeWidth;
+                }
+
+                itemWidth = closeWidth;
+                if(index == settings.openIndex) {
+                    itemWidth = openWidth
+                }
+
+                $(this).css({
+                    'width': itemWidth,
+                    'left': leftPos
+                })
+            });
         }    
     }
     $.fn.accordion = function(options)
