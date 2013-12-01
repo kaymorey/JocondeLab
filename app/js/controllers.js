@@ -72,6 +72,13 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 			var geocode = Geocoder.getGeocode($routeParams.city+' France');
 			geocode.then(function(data) {
 				$scope.cityCode = data;
+				$http({
+					method: 'GET',
+					url: 'http://api.geonames.org/findNearbyPlaceNameJSON?lat='+$scope.cityCode['lat']+'&lng='+$scope.cityCode['lng']+'&featureCode=PPL&radius=10&maxRows=50&username=kaymorey'
+				})
+				.success(function(data) {
+					console.log(data);
+				});
 			}, function(error) {
 				alert(error);
 			});
