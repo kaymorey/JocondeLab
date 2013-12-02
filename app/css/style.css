@@ -195,3 +195,11 @@ ul.accordion li {
 	height: 100%;
 	position: absolute;
 }
+ul.accordion li div.infos {
+	height: 54px;
+	width: 100%;
+	background-color: #000;
+	color: #FFF;
+	position: absolute;
+	bottom: 0;
+}

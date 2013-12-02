@@ -84,6 +84,10 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 			});
 		});
 	}
+
+	$scope.displayArtwork = function(index) {
+		$scope.activeArtwork = index;
+	}
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {
