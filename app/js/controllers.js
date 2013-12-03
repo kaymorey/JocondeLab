@@ -88,6 +88,16 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 	$scope.displayArtwork = function(index) {
 		$scope.activeArtwork = index;
 	}
+
+	$scope.next = function() {
+
+	}
+	$scope.like = function() {
+
+	}
+	$scope.remove = function(index) {
+		$scope.artworks.splice(index, 1);
+	}
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {
