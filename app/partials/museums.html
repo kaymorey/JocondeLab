@@ -3,7 +3,7 @@
 </section>
 <section class="artwork" accordion-init>
 	<ul class="accordion">
-		<li ng-repeat="artwork in artworks" ng-click="displayArtwork($index)">
+		<li ng-repeat="artwork in artworks" ng-mouseover="displayArtwork($index)">
 			<img ng-src="http://www.culture.gouv.fr/Wave/image/joconde/{{ artwork.image }}" alt="" />
 			<div class="actions" ng-show="activeArtwork == $index">
 				<a href="#" class="next"></a>

@@ -62,6 +62,7 @@
     $.fn.accordion = function(options)
     {
         var defauts = {
+            "action": "mouseover",
             "minWidth": 30
         };  
            
@@ -107,18 +108,21 @@
                 'left': closeWidth * index +'px'
             });
 
-            $(this).on("mouseover", function() {
+
+            if(parameters.action == "click") {
+                $(this).on("mouseover", function() {
                 if(settings.openIndex != index) {
                     $(this).css('opacity', '1');
                 }
-            });
-            $(this).on("mouseout", function() {
-                if(settings.openIndex != index) {
-                    $(this).css('opacity', '0.5');
-                }
-            });
+                });
+                $(this).on("mouseout", function() {
+                    if(settings.openIndex != index) {
+                        $(this).css('opacity', '0.5');
+                    }
+                });
+            }
 
-            $(this).on("click", function() {
+            $(this).on(parameters.action, function() {
                 var imageWidth = $(this).find('img').width();
                 settings.openIndex = index;
                 var openWidth;
