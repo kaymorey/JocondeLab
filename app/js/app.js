@@ -2,7 +2,7 @@ var app = angular.module('JocondeLab', [
 	'ngRoute',
 	'JocondeLabControllers',
 	'Accordion'
-]);
+	]);
 
 app.config(['$routeProvider',
 	function($routeProvider) {
@@ -35,7 +35,7 @@ app.config(['$routeProvider',
 			redirectTo: '/'
 		});
 	}
-]);
+	]);
 
 app.factory('Geocoder', function ($q) {
 	return {
@@ -72,7 +72,7 @@ app.factory('Geocoder', function ($q) {
 });
 
 var accordion = angular.module('Accordion', []);
- 
+
 accordion.directive('accordionInit', function() {
 	return {
 		restrict: 'A',
@@ -88,57 +88,57 @@ accordion.directive('accordionInit', function() {
 });
 
 app.directive('showSlide', function() {
-   return {
-	 restrict: 'A',
+	return {
+		restrict: 'A',
 
 	 //set up the directive.
 	 link: function(scope, element, attrs) {
-		var watchField = attrs.showSlide;
+	 	var watchField = attrs.showSlide;
 
-		scope.$watch(attrs.showSlide, function(show) {
-			if(scope.slideLeft) {
-				$('.home.right').animate({
-					left: '90%',
-					width: '10%',
-				}, {duration: 500, queue: false });
-				$('.home.left').animate({
-					width: '90%'
-				}, 
-				{
-					duration: 500, 
-					queue: false, 
-					complete: function() {
-						scope.$apply(function() {
-							scope.showLeft = true;
-							scope.showLeftTitle = true;
-						});
-					} 
-				});
-				scope.slideLeft = false;
-			}
-			else if(scope.slideRight) {
-				$('.home.left').animate({
-					width: '10%',
-				}, {duration: 500, queue: false });
-				$('.home.right').animate({
-					left: '10%',
-					width: '90%',
-				}, 
-				{
-					duration: 500, 
-					queue: false, 
-					complete: function() {
-						scope.$apply(function() {
-							scope.showRight = true;
-							scope.showRightTitle = true;
-						});
-					} 
-				});
-			   scope.slideRight = false;
-			}
-		});
+	 	scope.$watch(attrs.showSlide, function(show) {
+	 		if(scope.slideLeft) {
+	 			$('.home.right').animate({
+	 				left: '90%',
+	 				width: '10%',
+	 			}, {duration: 500, queue: false });
+	 			$('.home.left').animate({
+	 				width: '90%'
+	 			}, 
+	 			{
+	 				duration: 500, 
+	 				queue: false, 
+	 				complete: function() {
+	 					scope.$apply(function() {
+	 						scope.showLeft = true;
+	 						scope.showLeftTitle = true;
+	 					});
+	 				} 
+	 			});
+	 			scope.slideLeft = false;
+	 		}
+	 		else if(scope.slideRight) {
+	 			$('.home.left').animate({
+	 				width: '10%',
+	 			}, {duration: 500, queue: false });
+	 			$('.home.right').animate({
+	 				left: '10%',
+	 				width: '90%',
+	 			}, 
+	 			{
+	 				duration: 500, 
+	 				queue: false, 
+	 				complete: function() {
+	 					scope.$apply(function() {
+	 						scope.showRight = true;
+	 						scope.showRightTitle = true;
+	 					});
+	 				} 
+	 			});
+	 			scope.slideRight = false;
+	 		}
+	 	});
 	 }
-   }
+	}
 });
 
 app.directive('autoSuggest', function() {
@@ -161,7 +161,7 @@ app.directive('full', function() {
 			if(scope.full) {
 				var sectionHeight = $(window).height() - $('footer').height();
 				element.height(sectionHeight);
-				 angular.element($(window)).bind('resize',function() {
+				angular.element($(window)).bind('resize',function() {
 					var sectionHeight = $(window).height() - $('footer').height();
 					element.height(sectionHeight);
 				});
@@ -187,26 +187,49 @@ app.directive('googleMap', function() {
 
 				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-				var mapStyles = [{
-				    featureType: "all",
-				    stylers: [{ 
-				    	visibility: "off" 
-				    }]
-			    }];
 
-			    var markerCenter = new google.maps.Marker({
-						position: center,
-						map: map,
-						title:"Hello World!",
-						icon: 'images/markerCenter.png'
-					});
+				var mapStyles = [ 
+					{ 
+						"stylers": [{ 
+							"color": "#000000" 
+						}, 
+						{ 
+							"visibility": "off" 
+						}] 
+					},
+					{ 
+						"featureType": "water", 
+						"stylers": [{ 
+							"color": "#808080" 
+						}, { 
+							"visibility": "on" 
+						}] 
+					},{
+						"featureType": "landscape",
+						"stylers": [{
+							"visibility": "on"
+						}] 
+					},{
+						"elementType": "labels",
+						"stylers": [{
+							"visibility": "off"
+						}]
+					}
+				];
 
-			    var latlngbounds = new google.maps.LatLngBounds();
+				var markerCenter = new google.maps.Marker({
+					position: center,
+					map: map,
+					title:"Hello World!",
+					icon: 'images/markerCenter.png'
+				});
 
-			    var markersTab = [];
+				var latlngbounds = new google.maps.LatLngBounds();
 
-			    var defaultIcon = 'images/marker.png';
-			    var activeIcon = 'images/markerActive.png';
+				var markersTab = [];
+
+				var defaultIcon = 'images/marker.png';
+				var activeIcon = 'images/markerActive.png';
 
 				// Créer des marqueurs pour les différents musées
 				angular.forEach(scope.artworks, function(museum, index) {
@@ -237,6 +260,6 @@ app.directive('googleMap', function() {
 					prevActive = index;
 				})
 			});
-		}
-	}
+}
+}
 });
