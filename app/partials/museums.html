@@ -5,7 +5,11 @@
 	<ul class="accordion">
 		<li ng-repeat="artwork in artworks" ng-click="displayArtwork($index)">
 			<img ng-src="http://www.culture.gouv.fr/Wave/image/joconde/{{ artwork.image }}" alt="" />
-			<div class="infos" ng-class="">coucou</div>
+			<div class="actions" ng-show="activeArtwork == $index">
+				<a href="#" class="next"></a>
+				<a href="#" class="like"></a>
+				<a href="#" class="remove"></a>
+			</div>
 		</li>
 	</ul>
 </section>

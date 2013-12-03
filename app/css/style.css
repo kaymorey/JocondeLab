@@ -73,13 +73,13 @@ section.left {
 	position: absolute;
 	top: 0;
 	z-index: 100;
-	background: url(../images/home-top.jpg) no-repeat center center; 
+	background: url('../images/home-top.jpg') no-repeat center center; 
 }
 
 section.right {
 	position: absolute;
 	left: 50%;
-	background: url(../images/home-bottom.jpg) no-repeat center center; 
+	background: url('../images/home-bottom.jpg') no-repeat center center; 
 }
 section.right h2 {
 	margin-bottom: 10px;
@@ -195,11 +195,27 @@ ul.accordion li {
 	height: 100%;
 	position: absolute;
 }
-ul.accordion li div.infos {
-	height: 54px;
+ul.accordion li div.actions {
+	height: 58px;
 	width: 100%;
+	border-top: solid #262626 1px;
 	background-color: #000;
 	color: #FFF;
 	position: absolute;
 	bottom: 0;
+}
+ul.accordion li div.actions a {
+	width: 60px;
+	height: 58px;
+	display: inline-block;
+	border-right: solid #262626 1px;
+}
+ul.accordion li div.actions a.next {
+	background: url('../images/buttons-accordion/next.png') center no-repeat;
+}
+ul.accordion li div.actions a.like {
+	background: url('../images/buttons-accordion/like.png') center no-repeat;
+}
+ul.accordion li div.actions a.remove {
+	background: url('../images/buttons-accordion/remove.png') center no-repeat;
 }
