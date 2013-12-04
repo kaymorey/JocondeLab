@@ -108,7 +108,6 @@
                 'left': closeWidth * index +'px'
             });
 
-
             if(parameters.action == "click") {
                 $(this).on("mouseover", function() {
                 if(settings.openIndex != index) {
@@ -126,7 +125,10 @@
                 var imageWidth = $(this).find('img').width();
                 settings.openIndex = index;
                 var openWidth;
-                var leftPos = 0;
+                var minOpenWidth;
+                if(settings.contentWidth / 4 < closeWidth) {
+                    minOpenWidth = closeWidth;
+                }
 
                 if(imageWidth > settings.maxWidth) {
                     openWidth = settings.maxWidth;
@@ -135,9 +137,18 @@
                     openWidth = imageWidth;
                 }
 
+                if(openWidth < minOpenWidth) {
+                    openWidth = minOpenWidth;
+                }
+
                 closeWidth = (settings.contentWidth - openWidth) / (settings.nbImages - 1);
 
                 items.each(function(index) {
+
+                    if($(this).find('img').width() < openWidth) {
+                        $(this).find('img').width(openWidth);
+                    }
+
                     if(index == 0) {
                         leftPos = 0;
                     }
