@@ -71,7 +71,7 @@
         var width  = this.width(),
         height = this.height();
 
-        var nbImages = this.find('li').find('img').length;
+        var nbImages = this.find('li').length;
         items = this.find('li');
         content = this;
 

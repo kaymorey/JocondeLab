@@ -97,6 +97,9 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 	}
 	$scope.remove = function(index) {
 		$scope.artworks.splice(index, 1);
+		$scope.$watch('artworks', function() {
+			angular.element('ul.accordion').accordion();
+		});
 	}
 });
 
