@@ -20,6 +20,9 @@
                 $(this).css({
                     'left': closeWidth * index +'px'
                 });
+                $(this).find('img').css({
+                    'margin-left': '-'+$(this).find('img').width() / 2+'px'
+                });  
             });
         }
         else {
@@ -55,9 +58,12 @@
                 $(this).css({
                     'width': itemWidth,
                     'left': leftPos
-                })
+                });
+                $(this).find('img').css({
+                    'margin-left': '-'+$(this).find('img').width() / 2+'px'
+                });
             });
-        }    
+        }
     }
     $.fn.accordion = function(options)
     {
@@ -134,11 +140,6 @@
                 settings.openIndex = index;
                 var openWidth;
                 var minOpenWidth = 0;
-                var resize = false;
-
-                // Images eventually previous resized
-                items.find('img').width('auto');
-                items.find('img').height('auto');
 
                 if(closeWidth + 50 > 184) {
                     minOpenWidth = closeWidth + 50;
@@ -156,7 +157,6 @@
 
                 if(openWidth < minOpenWidth) {
                     openWidth = minOpenWidth;
-                    resize = true;
                 }
 
                 closeWidth = (settings.contentWidth - openWidth) / (settings.nbImages - 1);
@@ -180,17 +180,10 @@
                     $(this).css('opacity', '0.5');
                 });
 
-                if(resize) {
-                    $(this).find('img').width(openWidth);
-                    $(this).find('img').height('auto');
-                    resize = false;
-                }
-
                 $(this).animate({
                     width: openWidth
                 }, {duration: 500, queue: false });
                 $(this).css('opacity', '1');
-
             });
 
             $(window).bind("resize", function () {
