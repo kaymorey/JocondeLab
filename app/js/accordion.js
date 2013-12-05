@@ -108,6 +108,14 @@
                 'left': closeWidth * index +'px'
             });
 
+            $(this).find('img').on('load',function(){
+                $(this).css({
+                    'position': 'absolute',
+                    'left': '50%',
+                    'margin-left': '-'+$(this).width() / 2+'px'
+                });
+            });
+
             if(parameters.action == "click") {
                 $(this).on("mouseover", function() {
                 if(settings.openIndex != index) {
@@ -125,9 +133,18 @@
                 var imageWidth = $(this).find('img').width();
                 settings.openIndex = index;
                 var openWidth;
-                var minOpenWidth;
-                if(settings.contentWidth / 4 < closeWidth) {
-                    minOpenWidth = closeWidth;
+                var minOpenWidth = 0;
+                var resize = false;
+
+                // Images eventually previous resized
+                items.find('img').width('auto');
+                items.find('img').height('auto');
+
+                if(closeWidth + 50 > 184) {
+                    minOpenWidth = closeWidth + 50;
+                }
+                else {
+                    minOpenWidth = 184;
                 }
 
                 if(imageWidth > settings.maxWidth) {
@@ -139,15 +156,12 @@
 
                 if(openWidth < minOpenWidth) {
                     openWidth = minOpenWidth;
+                    resize = true;
                 }
 
                 closeWidth = (settings.contentWidth - openWidth) / (settings.nbImages - 1);
 
                 items.each(function(index) {
-
-                    if($(this).find('img').width() < openWidth) {
-                        $(this).find('img').width(openWidth);
-                    }
 
                     if(index == 0) {
                         leftPos = 0;
@@ -165,6 +179,12 @@
                     }, {duration: 500, queue: false });
                     $(this).css('opacity', '0.5');
                 });
+
+                if(resize) {
+                    $(this).find('img').width(openWidth);
+                    $(this).find('img').height('auto');
+                    resize = false;
+                }
 
                 $(this).animate({
                     width: openWidth
