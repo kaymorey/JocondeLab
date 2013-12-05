@@ -260,7 +260,7 @@ app.directive('googleMap', function() {
 
 				var prevActive = -1;
 
-				$('.accordion li').click(function() {
+				$('.accordion li').mouseover(function() {
 					if(prevActive != -1) {
 						markersTab[prevActive].setIcon(defaultIcon);
 					}
