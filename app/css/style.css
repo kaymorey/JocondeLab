@@ -202,6 +202,19 @@ ul.accordion li div.actions {
 	background-color: #000;
 	color: #FFF;
 	position: absolute;
+	bottom: -35px;
+
+	-webkit-transition-property: bottom;
+	-webkit-transition-duration: 0.3s;
+	-webkit-transition-timing-function: ease-in;
+	-moz-transition-property: bottom;
+	-moz-transition-duration: 0.3s;
+	-moz-transition-timing-function: ease-in;
+	transition-property: bottom;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in; 
+}
+ul.accordion li div.actions:hover {
 	bottom: 0;
 }
 ul.accordion li div.actions a {
