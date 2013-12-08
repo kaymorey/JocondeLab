@@ -261,7 +261,7 @@ app.directive('googleMap', function() {
 				var prevActive = -1;
 
 				$('.accordion li').mouseover(function() {
-					if(prevActive != -1) {
+					if(prevActive != -1 && prevActive < markersTab.length && markersTab.length > 1) {
 						markersTab[prevActive].setIcon(defaultIcon);
 					}
 					var index = $(this).index();
@@ -270,8 +270,11 @@ app.directive('googleMap', function() {
 				});
 
 				$('.accordion li .actions .remove').click(function() {
-					var index = $(this).parent('.actions').attr('data-index');
-					markersTab[index].setMap(null);
+					if(markersTab.length > 1) {
+						var index = $(this).parent('.actions').attr('data-index');
+						markersTab[index].setMap(null);
+						markersTab.splice(index, 1);
+					}
 				});
 			});
 		}

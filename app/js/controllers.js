@@ -96,10 +96,15 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 
 	}
 	$scope.remove = function(index) {
-		$scope.artworks.splice(index, 1);
-		$scope.$watch('artworks', function() {
-			angular.element('ul.accordion').accordion();
-		});
+		if($scope.artworks.length == 1) {
+			alert('Vous devez sélectionner au moins une oeuvre');
+		}
+		else {
+			$scope.artworks.splice(index, 1);
+			$scope.$watch('artworks', function() {
+				angular.element('ul.accordion').accordion();
+			});
+		}
 	}
 });
 
