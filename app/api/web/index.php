@@ -22,9 +22,63 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 	)
 ));
 
-$app->post('/museums', function(Request $request) use($app) {
-    $city = $request->getContent();
+$app->get('/museums', function(Request $request) use($app) {
+    //$city = $request->getContent();
 
+    $city = 'Paris';
+
+    SELECT P.*, COUNT(*) AS ct
+   FROM people P
+   JOIN (SELECT MIN(Birthyear) AS Birthyear
+              FROM people 
+              GROUP by City) P2 ON P2.Birthyear = P.Birthyear
+   GROUP BY P.City
+   ORDER BY P.Birthyear ASC 
+   LIMIT 10;
+
+    $sql = 'SELECT notice.id
+    FROM core_notice as notice
+    JOIN (SELECT loca
+            FROM core_notice
+            GROUP BY loca) notice2 ON notice2.loca = notice.loca
+    GROUP BY notice.loca
+    ORDER BY rand()';
+
+
+
+
+
+
+
+
+
+    $sql = 'SELECT museum.id 
+    FROM museum
+    WHERE museum.city = "'.$city.'"
+    ORDER BY rand()
+    LIMIT 0, 5';
+
+    $museums = $app['db']->fetchAll($sql);
+
+    foreach($museums as $museum) {
+        $sql = 'SELECT noticeimage.relative_url as image
+        FROM core_noticeimage as noticeimage, core_notice as notice
+        WHERE noticeimage.notice_id = notice.id
+        AND notice.museum_id = '.$museum['id'].'
+        ORDER BY rand()
+        LIMIT 0, 1';
+
+        $artwork = $app['db']->fetchAssoc($sql);
+
+        var_dump($artwork);
+        array_push($museum, $artwork);
+    }
+
+    echo('<pre>');
+    var_dump($museums);
+    echo('</pre>');
+
+/*
     $sql = 'SELECT notice.loca, notice.id, geoloc.museum as geoloc, noticeimage.relative_url as image
     FROM core_notice as notice
     INNER JOIN geoloc
@@ -38,22 +92,7 @@ $app->post('/museums', function(Request $request) use($app) {
     $result = $app['db']->fetchAll($sql);
 
     return new JsonResponse($result);
-});
-
-$app->get('/get-museums', function() use ($app) {
-    $sql = 'SELECT notice.loca, notice.id
-    FROM core_notice as notice
-    WHERE notice.loca IS NOT NULL
-    AND notice.loca != ""
-    AND notice.loca LIKE "%;%"
-    AND notice.loca NOT LIKE "%oeuvre disparue%"
-    AND notice.loca NOT LIKE "%oeuvre détruite%"
-    AND notice.loca NOT LIKE "%oeuvre volée%"
-    AND SUBSTRING_INDEX(notice.loca2, ";", 1) LIKE "%France%"
-    GROUP BY notice.loca';
-    $result = $app['db']->fetchAll($sql);
-
-    return new JsonResponse($result);
+    */
 });
 
 $app->get('/cities', function() use($app) {
@@ -93,6 +132,95 @@ $app->post('/geoloc-museums', function(Request $request) use($app) {
     return new JsonResponse($result);
 });
 
+$app->post('/search', function(Request $request) use($app) {
+	$keywords = $request->getContent();
+    $sql = 'SELECT notice.titr as titre, noticeimage.relative_url as url
+    FROM core_term as term
+    INNER JOIN core_noticeterm as noticeterm
+    ON term.id = noticeterm.term_id
+    INNER JOIN core_notice as notice
+    ON noticeterm.notice_id = notice.id
+    INNER JOIN core_noticeimage as noticeimage
+    ON notice.id = noticeimage.notice_id
+    WHERE notice.titr LIKE "%'.$keywords.'%"
+    GROUP BY notice.id
+    LIMIT 0, 5';
+    $result = $app['db']->fetchAll($sql);
+
+    return new JsonResponse($result);
+});
+
+$app->get('/hello/{name}', function ($name) use ($app) {
+    return 'Hello '.$app->escape($name);
+});
+
+
+$app->get('/get-museums', function() use ($app) {
+    $sql = 'SELECT notice.loca, notice.id
+    FROM core_notice as notice
+    WHERE notice.loca IS NOT NULL
+    AND notice.loca != ""
+    AND notice.loca LIKE "%;%"
+    AND notice.loca NOT LIKE "%oeuvre disparue%"
+    AND notice.loca NOT LIKE "%oeuvre détruite%"
+    AND notice.loca NOT LIKE "%oeuvre volée%"
+    AND SUBSTRING_INDEX(notice.loca2, ";", 1) LIKE "%France%"
+    GROUP BY notice.loca';
+    $result = $app['db']->fetchAll($sql);
+
+    return new JsonResponse($result);
+});
+
+/* MUSEUMS TABLE REQUEST */
+$app->get('/insert-museums', function(Request $request) use($app) {
+    $sql = 'SELECT notice.id, notice.loca as museum, RTRIM(SUBSTRING_INDEX(notice.loca, ";", 1)) as city, geoloc.museum as museumCode, geoloc.city as cityCode
+    FROM core_notice as notice, geoloc
+    WHERE notice.loca IS NOT NULL
+    AND notice.loca != ""
+    AND notice.loca LIKE "%;%"
+    AND notice.loca NOT LIKE "%oeuvre disparue%"
+    AND notice.loca NOT LIKE "%oeuvre détruite%"
+    AND notice.loca NOT LIKE "%oeuvre volée%"
+    AND SUBSTRING_INDEX(notice.loca2, ";", 1) LIKE "%France%"
+    AND geoloc.notice_id = notice.id
+    GROUP BY notice.loca';
+
+    $museums = $app['db']->fetchAll($sql);
+
+    foreach($museums as $museum) {
+        $sql = 'INSERT INTO museum(id, museum, city, museumCode, cityCode)
+        values("", ?, ?, ?, ?)';
+
+        $result = $app['db']->executeUpdate($sql, array($museum['museum'], $museum['city'], $museum['museumCode'], $museum['cityCode']));
+    }
+
+    return "Lignes insérées dans la table museum";
+});
+
+$app->get('/set-notice-museum', function(Request $request) use($app) {
+    $sql = 'SELECT museum.id, museum.museum FROM museum';
+
+    $museums = $app['db']->fetchAll($sql);
+
+    $sql = 'SELECT notice.id, notice.loca 
+    FROM core_notice as notice';
+
+    $notices = $app['db']->fetchAll($sql);
+
+    foreach($notices as $notice) {
+        foreach($museums as $museum) {
+            if(trim($notice['loca']) == $museum['museum']) {
+                $sql = 'UPDATE core_notice SET museum_id = ? WHERE core_notice.id = ?';
+                $result = $app['db']->executeUpdate($sql, array($museum['id'], $notice['id']));
+                break;
+            }
+        }
+    }
+
+    return "Notices mises à jour avec l'id du musée";
+});
+
+/* GEOLOC TABLE REQUEST */
 $app->post('/insert-geoloc', function(Request $request) use($app) {
     $data = $request->getContent();
     $data = json_decode($data);
@@ -126,25 +254,4 @@ $app->post('/insert-geoloc', function(Request $request) use($app) {
     return "Lignes insérées pour le musée ".$loca;
 });
 
-$app->post('/search', function(Request $request) use($app) {
-	$keywords = $request->getContent();
-    $sql = 'SELECT notice.titr as titre, noticeimage.relative_url as url
-    FROM core_term as term
-    INNER JOIN core_noticeterm as noticeterm
-    ON term.id = noticeterm.term_id
-    INNER JOIN core_notice as notice
-    ON noticeterm.notice_id = notice.id
-    INNER JOIN core_noticeimage as noticeimage
-    ON notice.id = noticeimage.notice_id
-    WHERE notice.titr LIKE "%'.$keywords.'%"
-    GROUP BY notice.id
-    LIMIT 0, 5';
-    $result = $app['db']->fetchAll($sql);
-
-    return new JsonResponse($result);
-});
-
-$app->get('/hello/{name}', function ($name) use ($app) {
-    return 'Hello '.$app->escape($name);
-});
 $app->run();
