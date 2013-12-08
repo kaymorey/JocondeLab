@@ -2,7 +2,7 @@ var app = angular.module('JocondeLab', [
 	'ngRoute',
 	'JocondeLabControllers',
 	'Accordion'
-	]);
+]);
 
 app.config(['$routeProvider',
 	function($routeProvider) {
@@ -35,7 +35,7 @@ app.config(['$routeProvider',
 			redirectTo: '/'
 		});
 	}
-	]);
+]);
 
 app.factory('Geocoder', function ($q) {
 	return {
@@ -267,8 +267,13 @@ app.directive('googleMap', function() {
 					var index = $(this).index();
 					markersTab[index].setIcon(activeIcon);
 					prevActive = index;
-				})
+				});
+
+				$('.accordion li .actions .remove').click(function() {
+					var index = $(this).parent('.actions').attr('data-index');
+					markersTab[index].setMap(null);
+				});
 			});
-}
-}
+		}
+	}
 });
