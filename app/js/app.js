@@ -236,6 +236,7 @@ app.directive('googleMap', function() {
 				var latlngbounds = new google.maps.LatLngBounds();
 
 				var markersTab = [];
+				var latlngTab = [];
 
 				var defaultIcon = 'images/marker.png';
 				var activeIcon = 'images/markerActive.png';
@@ -252,6 +253,7 @@ app.directive('googleMap', function() {
 						icon: 'images/marker.png'
 					});
 					markersTab.push(marker);
+					latlngTab.push(markerLatlng);
 					latlngbounds.extend(markerLatlng);
 				});
 
@@ -274,6 +276,13 @@ app.directive('googleMap', function() {
 						var index = $(this).parent('.actions').attr('data-index');
 						markersTab[index].setMap(null);
 						markersTab.splice(index, 1);
+						latlngTab.splice(index, 1);
+
+						latlngbounds = new google.maps.LatLngBounds();
+						angular.forEach(latlngTab, function(latlng, index) {
+							latlngbounds.extend(latlng);
+						});
+						map.fitBounds(latlngbounds);
 					}
 				});
 			});
