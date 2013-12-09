@@ -22,77 +22,42 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 	)
 ));
 
-$app->get('/museums', function(Request $request) use($app) {
-    //$city = $request->getContent();
+$app->post('/museums', function(Request $request) use($app) {
+    $city = $request->getContent();
 
-    $city = 'Paris';
+    // QUERY TO SELECT 5 RANDOM ARTWORKS THAT HAVE A DIFFERENT LOCA
 
-    SELECT P.*, COUNT(*) AS ct
-   FROM people P
-   JOIN (SELECT MIN(Birthyear) AS Birthyear
-              FROM people 
-              GROUP by City) P2 ON P2.Birthyear = P.Birthyear
-   GROUP BY P.City
-   ORDER BY P.Birthyear ASC 
-   LIMIT 10;
-
-    $sql = 'SELECT notice.id
-    FROM core_notice as notice
-    JOIN (SELECT loca
-            FROM core_notice
-            GROUP BY loca) notice2 ON notice2.loca = notice.loca
-    GROUP BY notice.loca
-    ORDER BY rand()';
-
-
-
-
-
-
-
-
-
-    $sql = 'SELECT museum.id 
-    FROM museum
-    WHERE museum.city = "'.$city.'"
-    ORDER BY rand()
+    // select 5 random locations that contains at least one artworks with image
+    $sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca
+    FROM core_noticeimage as noticeimage
+    INNER JOIN core_notice as notice
+    ON noticeimage.notice_id = notice.id
+    WHERE notice.loca LIKE "'.$city.'"
+    AND noticeimage.relative_url LIKE "%_p.jpg%"
+    ORDER BY RAND()
     LIMIT 0, 5';
 
     $museums = $app['db']->fetchAll($sql);
 
+    $artworks = array();
+
+    // select 1 random artwork per museum
     foreach($museums as $museum) {
-        $sql = 'SELECT noticeimage.relative_url as image
-        FROM core_noticeimage as noticeimage, core_notice as notice
-        WHERE noticeimage.notice_id = notice.id
-        AND notice.museum_id = '.$museum['id'].'
-        ORDER BY rand()
-        LIMIT 0, 1';
+        $sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca, geoloc.museum as geoloc
+        FROM core_noticeimage as noticeimage
+        INNER JOIN core_notice as notice
+        ON noticeimage.notice_id = notice.id
+        INNER JOIN geoloc
+        ON notice.id = geoloc.notice_id
+        WHERE notice.loca = "'.$museum['loca'].'"
+        ORDER BY RAND()
+        LIMIT 1';
 
         $artwork = $app['db']->fetchAssoc($sql);
-
-        var_dump($artwork);
-        array_push($museum, $artwork);
+        array_push($artworks, $artwork);
     }
 
-    echo('<pre>');
-    var_dump($museums);
-    echo('</pre>');
-
-/*
-    $sql = 'SELECT notice.loca, notice.id, geoloc.museum as geoloc, noticeimage.relative_url as image
-    FROM core_notice as notice
-    INNER JOIN geoloc
-    ON notice.id = geoloc.notice_id
-    INNER JOIN core_noticeimage as noticeimage
-    ON notice.id = noticeimage.notice_id
-    WHERE notice.loca LIKE "%'.$city.' ; %"
-    GROUP BY notice.loca
-    ORDER BY rand()
-    LIMIT 0, 5';
-    $result = $app['db']->fetchAll($sql);
-
-    return new JsonResponse($result);
-    */
+    return new JsonResponse($artworks);
 });
 
 $app->get('/cities', function() use($app) {
