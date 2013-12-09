@@ -25,6 +25,13 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app->post('/museums', function(Request $request) use($app) {
     $city = $request->getContent();
 
+    /*
+    $data = $request->getContent();
+    $data = json_decode($data);
+
+    $city = $data->city;
+    */
+
     // QUERY TO SELECT 5 RANDOM ARTWORKS THAT HAVE A DIFFERENT LOCA
 
     // select 5 random locations that contains at least one artworks with image
