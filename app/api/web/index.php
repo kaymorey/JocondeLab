@@ -32,7 +32,7 @@ $app->post('/museums', function(Request $request) use($app) {
     FROM core_noticeimage as noticeimage
     INNER JOIN core_notice as notice
     ON noticeimage.notice_id = notice.id
-    WHERE notice.loca LIKE "'.$city.'"
+    WHERE notice.loca LIKE "%'.$city.'%"
     AND noticeimage.relative_url LIKE "%_p.jpg%"
     ORDER BY RAND()
     LIMIT 0, 5';
