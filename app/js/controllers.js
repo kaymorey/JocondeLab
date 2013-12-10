@@ -62,6 +62,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 	$scope.cityCode = [];
 
 	$scope.artworksHistory = [];
+	$scope.museums = [];
 
 	$scope.getData = function() {
 		$http({
@@ -73,6 +74,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 			$scope.artworks = data;
 			angular.forEach($scope.artworks, function(data, index) {
 				$scope.artworksHistory.push(data['id']);
+				$scope.museums.push(data['loca']);
 			});
 			var geocode = Geocoder.getGeocode($routeParams.city+' France');
 			geocode.then(function(data) {
@@ -94,17 +96,24 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 		$scope.activeArtwork = index;
 	}
 
-	$scope.next = function() {
+	$scope.next = function(index) {
 		$http({
 			method: 'POST',
-			url: 'api/web/index.php/nextArtwork',
+			url: 'api/web/index.php/next-artwork',
 			data: {
 				'city': $routeParams.city,
-				'history': $scope.artworksHistory
+				'history': $scope.artworksHistory,
+				'museums': $scope.museums
 			}
 		})
 		.success(function(data) {
-			$scope.artworksHistory.push(data.['id']);
+			$scope.artworks[index] = data;
+			$scope.museums[index] = data['loca'];
+			$scope.artworksHistory.push(data['id']);
+			$scope.$watch('artworks', function() {
+				angular.element('ul.accordion').accordion();
+			});
+			console.log($scope.artworks);
 		});
 	}
 	$scope.like = function() {

@@ -22,6 +22,42 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 	)
 ));
 
+$app->post('/next-artwork', function(Request $request) use($app) {
+    $data = $request->getContent();
+    $data = json_decode($data);
+
+    $city = $data->city;
+    $history = $data->history;
+    $museums = $data->museums;
+
+    $historyIds = implode(',', $history);
+    $museumsLoca = "";
+    $length = count($museums);
+    $i = 0;
+    foreach($museums as $museum) {
+        $museumsLoca .= '"'.$museum.'"';
+        if($i != $length - 1) {
+            $museumsLoca .= ',';
+        }
+        $i++;
+    }
+
+    $sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca
+    FROM core_noticeimage as noticeimage
+    INNER JOIN core_notice as notice
+    ON noticeimage.notice_id = notice.id
+    WHERE notice.loca LIKE "%'.$city.'%"
+    AND notice.id NOT IN ('.$historyIds.')
+    AND notice.loca NOT IN ('.$museumsLoca.')
+    AND noticeimage.relative_url LIKE "%_p.jpg%"
+    ORDER BY RAND()
+    LIMIT 0, 1';
+
+    $result = $app['db']->fetchAll($sql);
+
+    return new JsonResponse($result);
+});
+
 $app->post('/museums', function(Request $request) use($app) {
     $city = $request->getContent();
 
@@ -41,6 +77,7 @@ $app->post('/museums', function(Request $request) use($app) {
     ON noticeimage.notice_id = notice.id
     WHERE notice.loca LIKE "%'.$city.'%"
     AND noticeimage.relative_url LIKE "%_p.jpg%"
+    GROUP BY notice.loca
     ORDER BY RAND()
     LIMIT 0, 5';
 
@@ -57,6 +94,7 @@ $app->post('/museums', function(Request $request) use($app) {
         INNER JOIN geoloc
         ON notice.id = geoloc.notice_id
         WHERE notice.loca = "'.$museum['loca'].'"
+        AND noticeimage.relative_url LIKE "%_p.jpg%"
         ORDER BY RAND()
         LIMIT 1';
 
@@ -224,6 +262,24 @@ $app->post('/insert-geoloc', function(Request $request) use($app) {
     }
 
     return "Lignes insérées pour le musée ".$loca;
+});
+
+/* PARIS REQUEST */
+$app->get('insert-paris', function(Request $request) use($app) {
+    $sql = 'SELECT notice.id
+    FROM core_notice as notice
+    WHERE notice.loca = "Paris"';
+
+    $notices = $app['db']->fetchAll($sql);
+
+    foreach($notices as $notice) {
+        $sql = 'INSERT INTO geoloc(id, notice_id, museum, city)
+        values("", ?, ?, ?)';
+
+        $result = $app['db']->executeUpdate($sql, array((int) $notice['id'], '{"lat":48.856614,"lng":2.3522219}', '{"lat":48.856614,"lng":2.3522219}'));
+    }
+
+    return "Lignes insérées pour les musées ayant la loca Paris";
 });
 
 $app->run();

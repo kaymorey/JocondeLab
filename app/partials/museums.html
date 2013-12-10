@@ -6,7 +6,7 @@
 		<li ng-repeat="artwork in artworks" ng-mouseover="displayArtwork($index)">
 			<img ng-src="http://www.culture.gouv.fr/Wave/image/joconde/{{ artwork.image }}" alt="" />
 			<div class="actions" ng-show="activeArtwork == $index" data-index="{{$index}}">
-				<a href="" class="next" ng-click="next()"></a>
+				<a href="" class="next" ng-click="next($index)"></a>
 				<a href="" class="like" ng-click="like()"></a>
 				<a href="" class="remove" ng-click="remove($index)"></a>
 			</div>
