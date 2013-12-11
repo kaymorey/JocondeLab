@@ -42,18 +42,20 @@ $app->post('/next-artwork', function(Request $request) use($app) {
         $i++;
     }
 
-    $sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca
+    $sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca, geoloc.museum as geoloc
     FROM core_noticeimage as noticeimage
     INNER JOIN core_notice as notice
     ON noticeimage.notice_id = notice.id
+    INNER JOIN geoloc
+    ON notice.id = geoloc.notice_id
     WHERE notice.loca LIKE "%'.$city.'%"
     AND notice.id NOT IN ('.$historyIds.')
     AND notice.loca NOT IN ('.$museumsLoca.')
     AND noticeimage.relative_url LIKE "%_p.jpg%"
     ORDER BY RAND()
-    LIMIT 0, 1';
+    LIMIT 1';
 
-    $result = $app['db']->fetchAll($sql);
+    $result = $app['db']->fetchAssoc($sql);
 
     return new JsonResponse($result);
 });
@@ -76,7 +78,10 @@ $app->post('/museums', function(Request $request) use($app) {
     INNER JOIN core_notice as notice
     ON noticeimage.notice_id = notice.id
     WHERE notice.loca LIKE "%'.$city.'%"
-    AND noticeimage.relative_url LIKE "%_p.jpg%"
+    AND notice.loca LIKE "%;%"
+    AND notice.loca NOT LIKE "%oeuvre disparue%"
+    AND notice.loca NOT LIKE "%oeuvre détruite%"
+    AND notice.loca NOT LIKE "%oeuvre volée%"
     GROUP BY notice.loca
     ORDER BY RAND()
     LIMIT 0, 5';
@@ -95,6 +100,11 @@ $app->post('/museums', function(Request $request) use($app) {
         ON notice.id = geoloc.notice_id
         WHERE notice.loca = "'.$museum['loca'].'"
         AND noticeimage.relative_url LIKE "%_p.jpg%"
+        AND notice.loca != ""
+        AND notice.loca LIKE "%;%"
+        AND notice.loca NOT LIKE "%oeuvre disparue%"
+        AND notice.loca NOT LIKE "%oeuvre détruite%"
+        AND notice.loca NOT LIKE "%oeuvre volée%"
         ORDER BY RAND()
         LIMIT 1';
 
