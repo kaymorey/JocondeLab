@@ -63,13 +63,6 @@ $app->post('/next-artwork', function(Request $request) use($app) {
 $app->post('/museums', function(Request $request) use($app) {
     $city = $request->getContent();
 
-    /*
-    $data = $request->getContent();
-    $data = json_decode($data);
-
-    $city = $data->city;
-    */
-
     // QUERY TO SELECT 5 RANDOM ARTWORKS THAT HAVE A DIFFERENT LOCA
 
     // select 5 random locations that contains at least one artworks with image
@@ -109,6 +102,9 @@ $app->post('/museums', function(Request $request) use($app) {
         LIMIT 1';
 
         $artwork = $app['db']->fetchAssoc($sql);
+        if($artwork == false) {
+            var_dump($museum);
+        }
         array_push($artworks, $artwork);
     }
 
@@ -272,6 +268,24 @@ $app->post('/insert-geoloc', function(Request $request) use($app) {
     }
 
     return "Lignes insérées pour le musée ".$loca;
+});
+
+/* INSERT MUSEUM */
+$app->get('insert-museum', function(Request $request) use($app) {
+    $sql = 'SELECT notice.id
+    FROM core_notice as notice
+    WHERE notice.loca = "Paris ; Bibliothèque Nationale de France ; département des Estampes et de la Photographie"';
+
+    $notices = $app['db']->fetchAll($sql);
+
+    foreach($notices as $notice) {
+        $sql = 'INSERT INTO geoloc(id, notice_id, museum, city)
+        values("", ?, ?, ?)';
+
+        $result = $app['db']->executeUpdate($sql, array((int) $notice['id'], '{"lat":48.833584,"lng":2.375766}', '{"lat":48.856614,"lng":2.3522219}'));
+    }
+
+    return "Lignes insérées pour le musée : Paris ; Bibliothèque Nationale de France ; département des Estampes et de la Photographie";
 });
 
 /* PARIS REQUEST */

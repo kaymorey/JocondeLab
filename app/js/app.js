@@ -235,8 +235,8 @@ app.directive('googleMap', function() {
 
 				var latlngbounds = new google.maps.LatLngBounds();
 
-				var markersTab = [];
-				var latlngTab = [];
+				markersTab = [];
+				latlngTab = [];
 
 				var defaultIcon = 'images/marker.png';
 				var activeIcon = 'images/markerActive.png';
@@ -260,9 +260,9 @@ app.directive('googleMap', function() {
 				map.setOptions({styles: mapStyles});
 				map.fitBounds(latlngbounds);
 
-				var prevActive = -1;
+				prevActive = -1;
 
-				$('.accordion li').mouseover(function() {
+				$(document).on('mouseenter', '.accordion li', function() {
 					if(prevActive != -1 && prevActive < markersTab.length && markersTab.length > 1) {
 						markersTab[prevActive].setIcon(defaultIcon);
 					}
@@ -284,6 +284,32 @@ app.directive('googleMap', function() {
 						});
 						map.fitBounds(latlngbounds);
 					}
+				});
+				$('.accordion li .actions .next').click(function() {
+					elmt = $(this);
+					scope.$watch('artworks', function() {
+						var index = elmt.parent('.actions').attr('data-index');
+
+						var geoloc = JSON.parse(scope.artworks[index].geoloc);
+						var markerLatlng = new google.maps.LatLng(geoloc.lat, geoloc.lng);
+
+						var marker = new google.maps.Marker({
+							position: markerLatlng,
+							map: map,
+							title:"Hello World!",
+							icon: 'images/marker.png'
+						});
+
+						markersTab[index].setMap(null);
+						markersTab[index] = marker;
+						latlngTab[index] = markerLatlng;
+
+						latlngbounds = new google.maps.LatLngBounds();
+						angular.forEach(latlngTab, function(latlng, index) {
+							latlngbounds.extend(latlng);
+						});
+						map.fitBounds(latlngbounds);
+					});
 				});
 			});
 		}

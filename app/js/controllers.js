@@ -113,7 +113,6 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
 			$scope.$watch('artworks', function() {
 				angular.element('ul.accordion').accordion();
 			});
-			console.log($scope.artworks);
 		});
 	}
 	$scope.like = function() {
