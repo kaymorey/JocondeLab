@@ -67,20 +67,20 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
     });
 
     $scope.$watch('cityCode', function() {
-        $http({
+        /*$http({
             method: 'GET',
             url: 'http://api.geonames.org/findNearbyPlaceNameJSON?lat='+$scope.cityCode['lat']+'&lng='+$scope.cityCode['lng']+'&featureCode=PPL&radius=10&maxRows=50&username=kaymorey'
         })
         .success(function(data) {
             console.log(data);
-        });
+        });*/
 
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 userLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
                 var distance = google.maps.geometry.spherical.computeDistanceBetween(userLocation, $scope.cityCode);
                 if(distance > 30) {
-                    
+
                 }
             }, function() {
               handleNoGeolocation(browserSupportFlag);

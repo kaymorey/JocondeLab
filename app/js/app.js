@@ -174,7 +174,7 @@ app.directive('googleMap', function() {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
-			scope.$watch('cityCode', function(update) {
+			scope.$watch('artworks', function(update) {
 				var center = new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng']);
 
 				var mapOptions = {
