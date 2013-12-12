@@ -173,10 +173,33 @@ footer h1 {
 	font-size: 27px;
 	line-height: 60px;
 	padding-left: 18px;
+	position: absolute;
 }
 footer h1 strong {
 	color: #FFF;
 	font-family: 'GtwalsheimMed', Arial, sans-serif;
+}
+footer nav {
+	position: absolute;
+	right: 0;
+}
+footer nav li {
+	width: 60px;
+	height: 60px;
+	border-left: solid #262626 1px;
+	display: inline-block;
+}
+footer nav li.validate {
+	background: url('../images/nav/validate.png') no-repeat center center;
+}
+footer nav li.more-less {
+	background: url('../images/nav/more-less.png') no-repeat center center;
+}
+footer nav li.breadcrumbs {
+	background: url('../images/nav/breadcrumbs.png') no-repeat center center;
+}
+footer nav li.lock {
+	background: url('../images/nav/lock.png') no-repeat center center;
 }
 
 /*************************
