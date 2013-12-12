@@ -170,15 +170,6 @@ app.directive('full', function() {
 	}
 });
 
-app.directive('actionAccordion', function() {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			
-		}
-	}
-});
-
 app.directive('googleMap', function() {
 	return {
 		restrict: 'A',
