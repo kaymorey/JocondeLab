@@ -188,9 +188,34 @@ footer nav li {
 	height: 60px;
 	border-left: solid #262626 1px;
 	display: inline-block;
+	overflow: hidden;
+
+	-webkit-transition-property: width;
+	-webkit-transition-duration: 0.2s;
+	-webkit-transition-timing-function: ease-in;
+	-moz-transition-property: width;
+	-moz-transition-duration: 0.2s;
+	-moz-transition-timing-function: ease-in;
+	transition-property: width;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in; 
+}
+footer nav li span {
+	display: none;
 }
 footer nav li.validate {
 	background: url('../images/nav/validate.png') no-repeat center center;
+}
+footer nav li.validate:hover {
+	width: 180px;
+	background-position: 139px center;
+}
+footer nav li.validate:hover span {
+	height: 60px;
+	display: inline-block;
+	position: relative;
+	top: 20px;
+	left: 10px;
 }
 footer nav li.more-less {
 	background: url('../images/nav/more-less.png') no-repeat center center;
