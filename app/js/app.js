@@ -170,6 +170,45 @@ app.directive('full', function() {
 	}
 });
 
+/*app.directive('menuSlide', function() {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			var width = element.attr('data-width');
+			element.on('mouseenter', function() {
+				element.animate({
+					width: width
+				},
+				{
+					duration: 200, 
+					queue: false, 
+					complete: function() {
+						$(this).find('span').css({
+							'display': 'inline-block',
+							'height': '60px',
+							'position': 'relative',
+							'top': '20px',
+							'left': '10px'
+						});
+					} 
+				});
+				
+			});
+			element.on('mouseleave', function() {
+				element.animate({
+					width: 42
+				}, {
+					duration: 200, 
+					queue: false,
+				});
+				$(this).find('span').css({
+					'display': 'none'
+				});
+			});
+		}
+	}
+});*/
+
 app.directive('googleMap', function() {
 	return {
 		restrict: 'A',

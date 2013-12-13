@@ -189,6 +189,7 @@ footer nav li {
 	border-left: solid #262626 1px;
 	display: inline-block;
 	overflow: hidden;
+	cursor: pointer;
 
 	-webkit-transition-property: width;
 	-webkit-transition-duration: 0.2s;
@@ -207,15 +208,20 @@ footer nav li.validate {
 	background: url('../images/nav/validate.png') no-repeat center center;
 }
 footer nav li.validate:hover {
-	width: 180px;
-	background-position: 139px center;
+	width: 165px;
+	background-position: 134px center;
 }
-footer nav li.validate:hover span {
+footer nav li.validate:hover span,
+footer nav li.breadcrumbs:hover span {
 	height: 60px;
 	display: inline-block;
 	position: relative;
 	top: 20px;
-	left: 10px;
+	left: 15px;
+}
+footer nav li.breadcrumbs:hover {
+	width: 255px;
+	background-position: 230px center;
 }
 footer nav li.more-less {
 	background: url('../images/nav/more-less.png') no-repeat center center;
