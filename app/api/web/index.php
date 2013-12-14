@@ -69,10 +69,25 @@ $app->post('/museums', function(Request $request) use($app) {
     $sphinx->SetServer('localhost', 3312);
     $sphinx->SetConnectTimeout(5);
 
+    // Include
+    // $sphinx->SetFilter('loca', array(";");
+    // Excludes
+    //$sphinx->SetGroupBy('loca', SPH_GROUPBY_ATTR);
+    $sphinx->SetLimits(0, 5);
+
+    $result = $sphinx->Query('Paris');
+
+    $ids = array_keys($result['matches']);
+
+    $sql = 'SELECT * FROM core_notice WHERE id IN('.implode(',', $ids).')';
+    $museums = $app['db']->fetchAll($sql);
+
+    var_dump($museums);
+
     // QUERY TO SELECT 5 RANDOM ARTWORKS THAT HAVE A DIFFERENT LOCA
 
-    // select 5 random locations that contains at least one artworks with image
-    $sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca
+    // select 5 random locations that contains at least one artwork with image
+    /*$sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca
     FROM core_noticeimage as noticeimage
     INNER JOIN core_notice as notice
     ON noticeimage.notice_id = notice.id
@@ -112,9 +127,9 @@ $app->post('/museums', function(Request $request) use($app) {
             var_dump($museum);
         }
         array_push($artworks, $artwork);
-    }
+    }*/
 
-    return new JsonResponse($artworks);
+    return new JsonResponse($museums);
 });
 
 $app->get('/cities', function() use($app) {
