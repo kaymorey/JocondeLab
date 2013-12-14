@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
+require '../../sphinx/sphinxapi.php';
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +63,11 @@ $app->post('/next-artwork', function(Request $request) use($app) {
 
 $app->post('/museums', function(Request $request) use($app) {
     $city = $request->getContent();
+
+    $sphinx = new SphinxClient;
+    
+    $sphinx->SetServer('localhost', 3312);
+    $sphinx->SetConnectTimeout(5);
 
     // QUERY TO SELECT 5 RANDOM ARTWORKS THAT HAVE A DIFFERENT LOCA
 
