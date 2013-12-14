@@ -170,6 +170,29 @@ app.directive('full', function() {
 	}
 });
 
+app.directive('moreLess', function() {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			var indicators = element.find('span');
+			nbIndicators = indicators.length;
+			indicators.each(function() {
+				$(this).on('mouseenter', function() {
+					var index = $(this).index();
+					indicators.css({
+						'background-color': '#666'
+					});
+					for(var i = index; i <= nbIndicators; i++) {
+						indicators.eq(i).css({
+							'background-color': '#FFF'
+						});
+					}
+				});
+			});
+		}
+	}
+});
+
 /*app.directive('menuSlide', function() {
 	return {
 		restrict: 'A',

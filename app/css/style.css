@@ -226,6 +226,20 @@ footer nav li.breadcrumbs:hover {
 footer nav li.more-less {
 	background: url('../images/nav/more-less.png') no-repeat center center;
 }
+footer nav li.more-less:hover {
+	width: 129px;
+	background-position: 90px center;	
+}
+footer nav li.more-less:hover span {
+	width: 2px;
+	height: 20px;
+	margin-left: 3px;
+	display: inline-block;
+	background-color: #666;
+	position: relative;
+	top: 20px;
+	left: 24px;
+}
 footer nav li.breadcrumbs {
 	background: url('../images/nav/breadcrumbs.png') no-repeat center center;
 }
