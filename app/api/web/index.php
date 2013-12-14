@@ -73,13 +73,14 @@ $app->post('/museums', function(Request $request) use($app) {
     // $sphinx->SetFilter('loca', array(";");
     // Excludes
     //$sphinx->SetGroupBy('loca', SPH_GROUPBY_ATTR);
+    $sphinx->SetSortMode(SPH_SORT_EXTENDED, '@random');
     $sphinx->SetLimits(0, 5);
 
     $result = $sphinx->Query('Paris');
 
     $ids = array_keys($result['matches']);
 
-    $sql = 'SELECT * FROM core_notice WHERE id IN('.implode(',', $ids).')';
+    $sql = 'SELECT id, loca FROM core_notice WHERE id IN('.implode(',', $ids).')';
     $museums = $app['db']->fetchAll($sql);
 
     var_dump($museums);
