@@ -76,7 +76,7 @@ $app->post('/museums', function(Request $request) use($app) {
     $sphinx->SetSortMode(SPH_SORT_EXTENDED, '@random');
     $sphinx->SetLimits(0, 5);
 
-    $result = $sphinx->Query('Paris');
+    $result = $sphinx->Query($city);
 
     $ids = array_keys($result['matches']);
 
@@ -99,7 +99,7 @@ $app->post('/museums', function(Request $request) use($app) {
         $sphinx->SetLimits(0, 1);
         $sphinx->SetFilter('museum_id', array($museum['museum_id']));
 
-        $artwork = $sphinx->Query('Paris');
+        $artwork = $sphinx->Query($city);
 
         $ids = array_keys($artwork['matches']);
 
