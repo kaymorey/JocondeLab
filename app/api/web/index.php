@@ -80,10 +80,39 @@ $app->post('/museums', function(Request $request) use($app) {
 
     $ids = array_keys($result['matches']);
 
-    $sql = 'SELECT id, loca FROM core_notice WHERE id IN('.implode(',', $ids).')';
+    $sql = 'SELECT notice.id, notice.loca, museum.id as museum_id
+    FROM core_notice as notice
+    INNER JOIN museum
+    ON museum.id = notice.museum_id
+    WHERE notice.id IN('.implode(',', $ids).')';
+    
     $museums = $app['db']->fetchAll($sql);
 
-    var_dump($museums);
+    $artworks = array();
+
+    foreach($museums as $museum) {
+        $sphinx = new SphinxClient;
+        $sphinx->SetServer('localhost', 3312);
+        $sphinx->SetConnectTimeout(5);
+
+        $sphinx->SetSortMode(SPH_SORT_EXTENDED, '@random');
+        $sphinx->SetLimits(0, 1);
+        $sphinx->SetFilter('museum_id', array($museum['museum_id']));
+
+        $artwork = $sphinx->Query('Paris');
+
+        $ids = array_keys($artwork['matches']);
+
+        $sql = 'SELECT notice.id, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc
+                    FROM core_noticeimage as noticeimage
+                    INNER JOIN core_notice as notice ON (noticeimage.notice_id = notice.id)
+                    INNER JOIN museum ON (notice.museum_id = museum.id)
+                    WHERE notice.id IN('.implode(',', $ids).')';
+
+        $artwork = $app['db']->fetchAssoc($sql);
+
+        array_push($artworks, $artwork);
+    }
 
     // QUERY TO SELECT 5 RANDOM ARTWORKS THAT HAVE A DIFFERENT LOCA
 
@@ -130,7 +159,7 @@ $app->post('/museums', function(Request $request) use($app) {
         array_push($artworks, $artwork);
     }*/
 
-    return new JsonResponse($museums);
+    return new JsonResponse($artworks);
 });
 
 $app->get('/cities', function() use($app) {
