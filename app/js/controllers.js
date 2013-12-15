@@ -102,8 +102,8 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
         .success(function(data) {
             $scope.artworks = data;
             angular.forEach($scope.artworks, function(data, index) {
-                $scope.artworksHistory.push(data['id']);
-                $scope.museums.push(data['loca']);
+                $scope.artworksHistory.push(parseInt(data['id']));
+                $scope.museums.push(parseInt(data['museum_id']));
             });
         });
     }
@@ -124,7 +124,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
         })
         .success(function(data) {
             $scope.artworks[index] = data;
-            $scope.museums[index] = data['loca'];
+            $scope.museums[index] = data['museum_id'];
             $scope.artworksHistory.push(data['id']);
             $scope.$watch('artworks', function() {
                 angular.element('ul.accordion').accordion();

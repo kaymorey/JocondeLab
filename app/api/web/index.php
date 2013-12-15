@@ -32,33 +32,32 @@ $app->post('/next-artwork', function(Request $request) use($app) {
     $museums = $data->museums;
 
     $historyIds = implode(',', $history);
-    $museumsLoca = "";
-    $length = count($museums);
-    $i = 0;
-    foreach($museums as $museum) {
-        $museumsLoca .= '"'.$museum.'"';
-        if($i != $length - 1) {
-            $museumsLoca .= ',';
-        }
-        $i++;
-    }
+    $museumsIds = implode(',', $museums);
 
-    $sql = 'SELECT noticeimage.relative_url as image, notice.id, notice.loca, geoloc.museum as geoloc
-    FROM core_noticeimage as noticeimage
-    INNER JOIN core_notice as notice
-    ON noticeimage.notice_id = notice.id
-    INNER JOIN geoloc
-    ON notice.id = geoloc.notice_id
-    WHERE notice.loca LIKE "%'.$city.'%"
-    AND notice.id NOT IN ('.$historyIds.')
-    AND notice.loca NOT IN ('.$museumsLoca.')
-    AND noticeimage.relative_url LIKE "%_p.jpg%"
-    ORDER BY RAND()
-    LIMIT 1';
+    $sphinx = new SphinxClient;
+    
+    $sphinx->SetServer('localhost', 3312);
+    $sphinx->SetConnectTimeout(5);
+    $sphinx->SetSortMode(SPH_SORT_EXTENDED, '@random');
+    $sphinx->SetLimits(0, 1);
+    // Exclude notices in history
+    $sphinx->SetFilter('notice_id', $history, true);
+    // Exclude museums in history
+    $sphinx->SetFilter('museum_id', $museums, true);
 
-    $result = $app['db']->fetchAssoc($sql);
+    $result = $sphinx->Query($city);
 
-    return new JsonResponse($result);
+    $ids = array_keys($result['matches']);
+
+    $sql = 'SELECT notice.id, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc, museum.id as museum_id
+            FROM core_noticeimage as noticeimage
+            INNER JOIN core_notice as notice ON (noticeimage.notice_id = notice.id)
+            INNER JOIN museum ON (notice.museum_id = museum.id)
+            WHERE notice.id IN ('.implode(',', $ids).')';
+
+    $artwork = $app['db']->fetchAssoc($sql);
+
+    return new JsonResponse($artwork);
 });
 
 $app->post('/museums', function(Request $request) use($app) {
@@ -103,11 +102,11 @@ $app->post('/museums', function(Request $request) use($app) {
 
         $ids = array_keys($artwork['matches']);
 
-        $sql = 'SELECT notice.id, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc
-                    FROM core_noticeimage as noticeimage
-                    INNER JOIN core_notice as notice ON (noticeimage.notice_id = notice.id)
-                    INNER JOIN museum ON (notice.museum_id = museum.id)
-                    WHERE notice.id IN('.implode(',', $ids).')';
+        $sql = 'SELECT notice.id, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc, museum.id as museum_id
+                FROM core_noticeimage as noticeimage
+                INNER JOIN core_notice as notice ON (noticeimage.notice_id = notice.id)
+                INNER JOIN museum ON (notice.museum_id = museum.id)
+                WHERE notice.id IN('.implode(',', $ids).')';
 
         $artwork = $app['db']->fetchAssoc($sql);
 
