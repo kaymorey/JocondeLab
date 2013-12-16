@@ -149,6 +149,25 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
             alert('Vous avez validé cette oeuvre');
         }
     }
+    $scope.add = function() {
+        $http({
+            method: 'POST',
+            url: 'api/web/index.php/next-artwork',
+            data: {
+                'city': $routeParams.city,
+                'history': $scope.artworksHistory,
+                'museums': $scope.museums
+            }
+        })
+        .success(function(data) {
+            $scope.artworks.push(data);
+            $scope.museums.push(data['museum_id']);
+            $scope.artworksHistory.push(data['id']);
+            $scope.$watch('artworks', function() {
+                angular.element('ul.accordion').accordion();
+            });
+        })
+    }
     $scope.like = function(index) {
         $scope.artworksValidated.push($scope.artworks[index]);
     }
@@ -177,10 +196,10 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
             }
             else {
                 var removed = 0;
-                for(var i = 0; i < ArtworksService.nbArtworks; i++) {
+                for(var i = 0; i < ArtworksService.nbArtworks; i++) {;
                     if($scope.artworksValidated.indexOf($scope.artworks[i]) == -1) {
                         $scope.$apply(function () {
-                            $scope.remove(i);
+                            $scope.remove(0);
                         });
                         removed++;
                     }
@@ -194,7 +213,12 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
         }
         // Add artworks
         else if(itemsToLoad > 0) {
-
+            for(var i = 0; i < itemsToLoad; i++) {
+                $scope.$apply(function () {
+                    $scope.add();
+                });
+            }
+            ArtworksService.nbArtworks += itemsToLoad;
         }
     });
 });
