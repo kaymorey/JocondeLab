@@ -115,23 +115,28 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
     }
 
     $scope.next = function(index) {
-        $http({
-            method: 'POST',
-            url: 'api/web/index.php/next-artwork',
-            data: {
-                'city': $routeParams.city,
-                'history': $scope.artworksHistory,
-                'museums': $scope.museums
-            }
-        })
-        .success(function(data) {
-            $scope.artworks[index] = data;
-            $scope.museums[index] = data['museum_id'];
-            $scope.artworksHistory.push(data['id']);
-            $scope.$watch('artworks', function() {
-                angular.element('ul.accordion').accordion();
+        if($scope.artworksValidated.indexOf($scope.artworks[index]) == -1) {
+            $http({
+                method: 'POST',
+                url: 'api/web/index.php/next-artwork',
+                data: {
+                    'city': $routeParams.city,
+                    'history': $scope.artworksHistory,
+                    'museums': $scope.museums
+                }
+            })
+            .success(function(data) {
+                $scope.artworks[index] = data;
+                $scope.museums[index] = data['museum_id'];
+                $scope.artworksHistory.push(data['id']);
+                $scope.$watch('artworks', function() {
+                    angular.element('ul.accordion').accordion();
+                });
             });
-        });
+        }
+        else {
+            alert('Vous avez validé cette oeuvre');
+        }
     }
     $scope.like = function(index) {
         $scope.artworksValidated.push($scope.artworks[index]);
