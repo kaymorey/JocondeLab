@@ -53,6 +53,16 @@ JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scop
     }
 });
 
+JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, ArtworksService) {
+    $scope.maxArtworks = ArtworksService.maxArtworks;
+    $scope.nbArtworks = ArtworksService.nbArtworks;
+    $scope.minArtworks = ArtworksService.minArtworks;
+    
+    $scope.getmaxArtworks = function(num) {
+        return new Array(num);   
+    }
+});
+
 
 JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $http, Geocoder, $routeParams) {
     // Affichage full page

@@ -69,7 +69,7 @@
     {
         var defauts = {
             "action": "mouseover",
-            "minWidth": 30
+            "minWidth": 45
         };  
            
         parameters = $.extend(defauts, options);

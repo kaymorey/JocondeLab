@@ -39,7 +39,7 @@ app.config(['$routeProvider',
 
 app.factory('Geocoder', function ($q) {
 	return {
-		getGeocode: function(address, reference = null) {
+		getGeocode: function(address, reference) {
 			var deferred = $q.defer();
 
 			var geocoder = new google.maps.Geocoder();
@@ -174,19 +174,44 @@ app.directive('moreLess', function() {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
-			var indicators = element.find('span');
-			nbIndicators = indicators.length;
-			indicators.each(function() {
-				$(this).on('mouseenter', function() {
-					var index = $(this).index();
+			scope.$watch('maxArtworks', function() {
+				var indicators = element.find('span');
+				nbIndicators = indicators.length;
+				indicators.each(function() {
+					$(this).on('mouseenter', function() {
+						var index = $(this).index();
+						for(var i = 0; i <= nbIndicators; i++) {
+							if((scope.maxArtworks - scope.minArtworks) <= i) {
+								indicators.eq(i).css({
+									'background-color': '#FFF'
+								});
+							}
+							else {
+								indicators.eq(i).css({
+									'background-color': '#666'
+								});
+							}
+						}
+						for(var i = index; i <= nbIndicators; i++) {
+							indicators.eq(i).css({
+								'background-color': '#FFF'
+							});
+						}
+					});
+				});
+
+				element.on('mouseleave', function() {
+					var indicators = element.find('span');
 					indicators.css({
 						'background-color': '#666'
 					});
-					for(var i = index; i <= nbIndicators; i++) {
-						indicators.eq(i).css({
-							'background-color': '#FFF'
-						});
-					}
+					indicators.each(function() {
+						if($(this).hasClass('selected')) {
+							$(this).css({
+								'background-color': '#FFF'
+							});
+						}
+					});
 				});
 			});
 		}
@@ -351,7 +376,7 @@ app.directive('googleMap', function() {
 						var marker = new google.maps.Marker({
 							position: markerLatlng,
 							map: map,
-							title:"Hello World!",
+							title: "Hello World!",
 							icon: 'images/marker.png'
 						});
 
@@ -369,4 +394,11 @@ app.directive('googleMap', function() {
 			});
 		}
 	}
+});
+app.factory('ArtworksService', function() {
+  return {
+      maxArtworks : 9,
+      nbArtworks : 5,
+      minArtworks : 3
+  };
 });

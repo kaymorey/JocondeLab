@@ -190,6 +190,7 @@ footer nav li {
 	display: inline-block;
 	overflow: hidden;
 	cursor: pointer;
+	position: relative;
 
 	-webkit-transition-property: width;
 	-webkit-transition-duration: 0.2s;
@@ -226,19 +227,27 @@ footer nav li.breadcrumbs:hover {
 footer nav li.more-less {
 	background: url('../images/nav/more-less.png') no-repeat center center;
 }
+footer nav li.more-less .indicators {
+	position: absolute;
+	top: 0;
+	left: -4px;
+}
 footer nav li.more-less:hover {
-	width: 129px;
-	background-position: 90px center;	
+	width: 135px;
+	background-position: 90px center;
 }
 footer nav li.more-less:hover span {
 	width: 2px;
 	height: 20px;
-	margin-left: 3px;
+	margin-left: 7px;
 	display: inline-block;
 	background-color: #666;
 	position: relative;
 	top: 20px;
 	left: 24px;
+}
+footer nav li.more-less span.selected {
+	background-color: #FFF;
 }
 footer nav li.breadcrumbs {
 	background: url('../images/nav/breadcrumbs.png') no-repeat center center;
