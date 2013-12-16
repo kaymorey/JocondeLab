@@ -261,14 +261,14 @@ app.directive('moreLess', function($rootScope, ArtworksService) {
     }
 });*/
 
-app.directive('googleMap', function() {
+app.directive('googleMap', function($rootScope) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            scope.$watch('cityCode', function(update) {
-                var center = new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng']);
+            scope.$watch('cityCode', function() {
+                center = new google.maps.LatLng(scope.cityCode['lat'], scope.cityCode['lng']);
 
-                var mapOptions = {
+                mapOptions = {
                     zoom: 8,
                     // Centrer sur la ville
                     center: center,
@@ -276,7 +276,7 @@ app.directive('googleMap', function() {
                     disableDefaultUI: true
                 };
 
-                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 
                 var mapStyles = [ 
@@ -315,7 +315,7 @@ app.directive('googleMap', function() {
                     icon: 'images/markerCenter.png'
                 });
 
-                var latlngbounds = new google.maps.LatLngBounds();
+                latlngbounds = new google.maps.LatLngBounds();
 
                 markersTab = [];
                 latlngTab = [];
@@ -395,6 +395,23 @@ app.directive('googleMap', function() {
                         map.fitBounds(latlngbounds);
                     });
                 });
+            });
+            $rootScope.$on('addMarker', function(event, data) {
+                console.log(event);
+                var geoloc = JSON.parse(data.geoloc);
+                var markerLatlng = new google.maps.LatLng(geoloc.lat, geoloc.lng);
+
+                var marker = new google.maps.Marker({
+                    position: markerLatlng,
+                    map: map,
+                    title: "Hello World!",
+                    icon: 'images/marker.png'
+                });
+
+                markersTab.push(marker);
+                latlngTab.push(markerLatlng);
+                latlngbounds.extend(markerLatlng);
+                map.fitBounds(latlngbounds);
             });
         }
     }

@@ -139,7 +139,6 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
             .success(function(data) {
                 $scope.artworks[index] = data;
                 $scope.museums[index] = data['museum_id'];
-                $scope.artworksHistory.push(data['id']);
                 $scope.$watch('artworks', function() {
                     angular.element('ul.accordion').accordion();
                 });
@@ -162,10 +161,11 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
         .success(function(data) {
             $scope.artworks.push(data);
             $scope.museums.push(data['museum_id']);
-            $scope.artworksHistory.push(data['id']);
             $scope.$watch('artworks', function() {
                 angular.element('ul.accordion').accordion();
             });
+            $rootScope.$broadcast('addMarker', data);
+            console.log('add');
         })
     }
     $scope.like = function(index) {
@@ -179,7 +179,10 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
             alert('Vous avez validé cette oeuvre');
         }
         else {
+            var artwork = $scope.artworks[index];
+            $scope.artworksHistory.push(artwork['id']);
             $scope.artworks.splice(index, 1);
+            $scope.museums.splice(index, 1);
             $scope.$watch('artworks', function() {
                 angular.element('ul.accordion').accordion();
             });
@@ -213,9 +216,13 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
         }
         // Add artworks
         else if(itemsToLoad > 0) {
+            var updated = false;
             for(var i = 0; i < itemsToLoad; i++) {
                 $scope.$apply(function () {
                     $scope.add();
+                });
+                $scope.$watch('artworks', function() {
+                    updated = true;
                 });
             }
             ArtworksService.nbArtworks += itemsToLoad;
