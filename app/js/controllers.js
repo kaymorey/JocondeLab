@@ -54,17 +54,18 @@ JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scop
 });
 
 JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, ArtworksService) {
+    // Handle more-less indicators
     $scope.maxArtworks = ArtworksService.maxArtworks;
     $scope.nbArtworks = ArtworksService.nbArtworks;
     $scope.minArtworks = ArtworksService.minArtworks;
-    
+
     $scope.getmaxArtworks = function(num) {
         return new Array(num);   
     }
 });
 
 
-JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $http, Geocoder, $routeParams) {
+JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $rootScope, $http, Geocoder, $routeParams, ArtworksService) {
     // Affichage full page
     $scope.full = true;
 
@@ -165,6 +166,37 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
             });
         }
     }
+
+    // When click on more-less indicators (event emitted in a directive, app.js)
+    $rootScope.$on('loadItems', function(event, itemsToLoad) {
+        // Remove artworks
+        if(itemsToLoad < 0) {
+            itemsToLoad = itemsToLoad * (-1);
+            if(ArtworksService.nbArtworks - $scope.artworksValidated.length < itemsToLoad) {
+                alert('Vous avez déjà validé '+$scope.artworksValidated.length+' oeuvres');
+            }
+            else {
+                var removed = 0;
+                for(var i = 0; i < ArtworksService.nbArtworks; i++) {
+                    if($scope.artworksValidated.indexOf($scope.artworks[i]) == -1) {
+                        $scope.$apply(function () {
+                            $scope.remove(i);
+                        });
+                        removed++;
+                    }
+                    if(removed == itemsToLoad) {
+                        break;
+                    }
+                }
+                ArtworksService.nbArtworks -= itemsToLoad;
+            }
+            angular.element('ul.accordion').accordion();
+        }
+        // Add artworks
+        else if(itemsToLoad > 0) {
+
+        }
+    });
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {

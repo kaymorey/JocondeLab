@@ -170,7 +170,7 @@ app.directive('full', function() {
 	}
 });
 
-app.directive('moreLess', function() {
+app.directive('moreLess', function($rootScope, ArtworksService) {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
@@ -199,8 +199,8 @@ app.directive('moreLess', function() {
 						}
 					});
 					$(this).on('click', function() {
-						var itemsToLoad = scope.maxArtworks - scope.nbArtworks - $(this).index();
-						console.log(itemsToLoad);
+						var itemsToLoad = scope.maxArtworks - ArtworksService.nbArtworks - $(this).index();
+						$rootScope.$broadcast('loadItems', itemsToLoad);
 					});
 				});
 
