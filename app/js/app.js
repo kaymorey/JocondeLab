@@ -198,6 +198,10 @@ app.directive('moreLess', function() {
 							});
 						}
 					});
+					$(this).on('click', function() {
+						var itemsToLoad = scope.maxArtworks - scope.nbArtworks - $(this).index();
+						console.log(itemsToLoad);
+					});
 				});
 
 				element.on('mouseleave', function() {
