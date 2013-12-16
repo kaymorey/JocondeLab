@@ -287,7 +287,7 @@ ul.accordion li div.actions:hover {
 }
 ul.accordion li div.actions a {
 	width: 60px;
-	height: 58px;
+	height: 60px;
 	display: inline-block;
 	border-right: solid #262626 1px;
 }
@@ -296,6 +296,10 @@ ul.accordion li div.actions a.next {
 }
 ul.accordion li div.actions a.like {
 	background: url('../images/buttons-accordion/like.png') center no-repeat;
+	background-position: center top;
+}
+ul.accordion li div.actions a.like.selected {
+	background-position: center bottom;
 }
 ul.accordion li div.actions a.remove {
 	background: url('../images/buttons-accordion/remove.png') center no-repeat;

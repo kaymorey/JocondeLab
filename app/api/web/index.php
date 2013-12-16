@@ -31,9 +31,6 @@ $app->post('/next-artwork', function(Request $request) use($app) {
     $history = $data->history;
     $museums = $data->museums;
 
-    $historyIds = implode(',', $history);
-    $museumsIds = implode(',', $museums);
-
     $sphinx = new SphinxClient;
     
     $sphinx->SetServer('localhost', 3312);
@@ -74,6 +71,8 @@ $app->post('/museums', function(Request $request) use($app) {
     //$sphinx->SetGroupBy('loca', SPH_GROUPBY_ATTR);
     $sphinx->SetSortMode(SPH_SORT_EXTENDED, '@random');
     $sphinx->SetLimits(0, 5);
+    // Exlude notice with id 292717 (because of loca Paris;Nantes)
+    $sphinx->setFilter('notice_id', array(292717), true);
 
     $result = $sphinx->Query($city);
 

@@ -93,6 +93,8 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
     $scope.artworksHistory = [];
     $scope.museums = [];
 
+    $scope.artworksValidated = [];
+
     $scope.getData = function() {
         $http({
             method: 'POST',
@@ -131,12 +133,15 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ht
             });
         });
     }
-    $scope.like = function() {
-
+    $scope.like = function(index) {
+        $scope.artworksValidated.push($scope.artworks[index]);
     }
     $scope.remove = function(index) {
         if($scope.artworks.length == 1) {
             alert('Vous devez sélectionner au moins une oeuvre');
+        }
+        else if($scope.artworksValidated.indexOf($scope.artworks[index]) != -1) {
+            alert('Vous avez validé cette oeuvre');
         }
         else {
             $scope.artworks.splice(index, 1);
