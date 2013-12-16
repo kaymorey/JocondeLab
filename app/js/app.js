@@ -397,7 +397,6 @@ app.directive('googleMap', function($rootScope) {
                 });
             });
             $rootScope.$on('addMarker', function(event, data) {
-                console.log(event);
                 var geoloc = JSON.parse(data.geoloc);
                 var markerLatlng = new google.maps.LatLng(geoloc.lat, geoloc.lng);
 
@@ -411,6 +410,17 @@ app.directive('googleMap', function($rootScope) {
                 markersTab.push(marker);
                 latlngTab.push(markerLatlng);
                 latlngbounds.extend(markerLatlng);
+                map.fitBounds(latlngbounds);
+            });
+            $rootScope.$on('removeMarker', function(event, index) {
+                markersTab[index].setMap(null);
+                markersTab.splice(index, 1);
+                latlngTab.splice(index, 1);
+
+                latlngbounds = new google.maps.LatLngBounds();
+                angular.forEach(latlngTab, function(latlng, index) {
+                    latlngbounds.extend(latlng);
+                });
                 map.fitBounds(latlngbounds);
             });
         }

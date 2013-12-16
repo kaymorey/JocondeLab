@@ -165,7 +165,6 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
                 angular.element('ul.accordion').accordion();
             });
             $rootScope.$broadcast('addMarker', data);
-            console.log('add');
         })
     }
     $scope.like = function(index) {
@@ -186,6 +185,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
             $scope.$watch('artworks', function() {
                 angular.element('ul.accordion').accordion();
             });
+            $rootScope.$broadcast('removeMarker', index);
         }
     }
 
