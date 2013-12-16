@@ -171,8 +171,8 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
         $scope.artworksValidated.push($scope.artworks[index]);
     }
     $scope.remove = function(index) {
-        if($scope.artworks.length == 1) {
-            alert('Vous devez sélectionner au moins une oeuvre');
+        if($scope.artworks.length <= 3) {
+            alert('Vous devez sélectionner au moins 3 oeuvres');
         }
         else if($scope.artworksValidated.indexOf($scope.artworks[index]) != -1) {
             alert('Vous avez validé cette oeuvre');

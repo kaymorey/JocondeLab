@@ -199,8 +199,11 @@ app.directive('moreLess', function($rootScope, ArtworksService) {
                         }
                     });
                     $(this).on('click', function() {
-                        var itemsToLoad = scope.maxArtworks - ArtworksService.nbArtworks - $(this).index();
-                        $rootScope.$broadcast('loadItems', itemsToLoad);
+                        // 3 artworks at least
+                        if($(this).index() != scope.maxArtworks - 1 && $(this).index() != scope.maxArtworks - 2) {
+                            var itemsToLoad = scope.maxArtworks - ArtworksService.nbArtworks - $(this).index();
+                            $rootScope.$broadcast('loadItems', itemsToLoad);
+                        }
                     });
                 });
 
