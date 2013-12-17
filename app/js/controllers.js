@@ -167,7 +167,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
             $rootScope.$broadcast('addMarker', data);
         })
     }
-    $scope.like = function(index) {
+    $scope.check = function(index) {
         $scope.artworksValidated.push($scope.artworks[index]);
     }
     $scope.remove = function(index) {

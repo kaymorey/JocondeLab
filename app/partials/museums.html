@@ -7,7 +7,7 @@
 			<img ng-src="http://www.culture.gouv.fr/Wave/image/joconde/{{ artwork.image }}" alt="" />
 			<div class="actions" ng-show="activeArtwork == $index" data-index="{{$index}}">
 				<a href="" class="next" ng-click="next($index)"></a>
-				<a href="" class="like" ng-click="like($index)" ng-class="{'selected': artworksValidated.indexOf(artwork) != -1}"></a>
+				<a href="" class="check" ng-click="check($index)" ng-class="{'selected': artworksValidated.indexOf(artwork) != -1}"></a>
 				<a href="" class="remove" ng-click="remove($index)"></a>
 			</div>
 		</li>

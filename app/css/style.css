@@ -304,11 +304,11 @@ ul.accordion li div.actions a {
 ul.accordion li div.actions a.next {
 	background: url('../images/buttons-accordion/next.png') center no-repeat;
 }
-ul.accordion li div.actions a.like {
-	background: url('../images/buttons-accordion/like.png') center no-repeat;
+ul.accordion li div.actions a.check {
+	background: url('../images/buttons-accordion/check.png') center no-repeat;
 	background-position: center top;
 }
-ul.accordion li div.actions a.like.selected {
+ul.accordion li div.actions a.check.selected {
 	background-position: center bottom;
 }
 ul.accordion li div.actions a.remove {
