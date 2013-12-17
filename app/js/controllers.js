@@ -168,7 +168,13 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
         })
     }
     $scope.check = function(index) {
-        $scope.artworksValidated.push($scope.artworks[index]);
+        var indexValidated = $scope.artworksValidated.indexOf($scope.artworks[index]);
+        if(indexValidated == -1) {
+            $scope.artworksValidated.push($scope.artworks[index]);
+        }
+        else {
+            $scope.artworksValidated.splice(indexValidated, 1);
+        }
     }
     $scope.remove = function(index) {
         if($scope.artworks.length <= 3) {
