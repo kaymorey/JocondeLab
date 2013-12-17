@@ -198,13 +198,28 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
                 alert('Vous avez déjà validé '+$scope.artworksValidated.length+' oeuvres');
             }
             else {
+                console.log(itemsToLoad);
                 var removed = 0;
-                for(var i = 0; i < ArtworksService.nbArtworks; i++) {;
-                    if($scope.artworksValidated.indexOf($scope.artworks[i]) == -1) {
+                var indexToRemove = 0;
+                for(var i = 0; i < ArtworksService.nbArtworks; i++) {
+                    if($scope.artworksValidated.indexOf($scope.artworks[0]) == -1) {
                         $scope.$apply(function () {
                             $scope.remove(0);
                         });
                         removed++;
+                        console.log('removed item '+indexToRemove);
+                        indexToRemove = 0;
+                    }
+                    else {
+                        for(indexToRemove = 0; indexToRemove < ArtworksService.nbArtworks; indexToRemove++) {
+                            if($scope.artworksValidated.indexOf($scope.artworks[indexToRemove]) == -1) {
+                                $scope.$apply(function () {
+                                    $scope.remove(indexToRemove);
+                                });
+                                removed++;
+                                break;
+                            }
+                        }
                     }
                     if(removed == itemsToLoad) {
                         break;
