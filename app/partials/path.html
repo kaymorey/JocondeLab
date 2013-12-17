@@ -4,7 +4,7 @@
 			<img src="images/path/{{ city.content.museums.artwork.image }}" alt="" />
 			<div class="actions" data-index="{{$index}}">
 				<a href="" class="next"></a>
-				<a href="" class="check"></a>
+				<a href="" class="check" ng-click="check($index)" ng-class="{'selected': checked[$index]}"></a>
 				<a href="" class="remove"></a>
 			</div>
 		</li>

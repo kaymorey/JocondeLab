@@ -269,7 +269,9 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
 JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScope, $http) {
     // Affichage full page
     $scope.full = true;
-    
+
+    $scope.checked = [false, false, false, false, false];
+
     $scope.getData = function() {
         $http({
         method: 'GET',
@@ -278,6 +280,21 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
         .success(function(data) {
             $scope.artworks = data;
         });
+    }
+
+    $scope.check = function(index) {
+        var artwork = $scope.artworks[index];
+        var data = {
+            "geoloc": {
+                "lat": artwork.content.museums.lat,
+                "lng": artwork.content.museums.lng
+            },
+            "loca": artwork.content.museums.name
+        };
+
+        $rootScope.artworksValidated.push(data);
+        console.log($rootScope.artworksValidated);
+        $scope.checked[index] = true;
     }
 });
 
