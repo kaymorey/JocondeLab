@@ -167,15 +167,16 @@ footer {
 	border-top: solid #262626 1px;
 	z-index:100;
 }
-footer h1 {
+footer h1 a {
 	color: #666666;
 	text-transform: uppercase;
 	font-size: 27px;
 	line-height: 60px;
 	padding-left: 18px;
 	position: absolute;
+	text-decoration: none;
 }
-footer h1 strong {
+footer h1 a strong {
 	color: #FFF;
 	font-family: 'GtwalsheimMed', Arial, sans-serif;
 }
