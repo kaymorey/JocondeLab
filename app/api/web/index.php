@@ -42,7 +42,7 @@ $app->post('/next-artwork', function(Request $request) use($app) {
     // Exclude museums in history
     $sphinx->SetFilter('museum_id', $museums, true);
 
-    $result = $sphinx->Query($city);
+    $result = $sphinx->Query($city, 'notice');
 
     $ids = array_keys($result['matches']);
 
@@ -74,7 +74,7 @@ $app->post('/museums', function(Request $request) use($app) {
     // Exlude notice with id 292717 (because of loca Paris;Nantes)
     $sphinx->setFilter('notice_id', array(292717), true);
 
-    $result = $sphinx->Query($city);
+    $result = $sphinx->Query($city, 'notice');
 
     $ids = array_keys($result['matches']);
 
@@ -97,7 +97,7 @@ $app->post('/museums', function(Request $request) use($app) {
         $sphinx->SetLimits(0, 1);
         $sphinx->SetFilter('museum_id', array($museum['museum_id']));
 
-        $artwork = $sphinx->Query($city);
+        $artwork = $sphinx->Query($city, 'notice');
 
         $ids = array_keys($artwork['matches']);
 
@@ -161,12 +161,22 @@ $app->post('/museums', function(Request $request) use($app) {
 });
 
 $app->get('/cities', function() use($app) {
-    $sql = 'SELECT RTRIM(SUBSTRING_INDEX(notice.loca, ";", 1)) as city, COUNT(DISTINCT SUBSTRING_INDEX(notice.loca, ";", 2)) as nbMuseums
+    $sphinx = new SphinxClient;
+    $sphinx->SetServer('localhost', 3312);
+    $sphinx->SetConnectTimeout(5);
+
+    $sphinx->SetLimits(0, 360);
+    $sphinx->SetSortMode(SPH_SORT_ATTR_DESC, 'nbMuseums');
+
+    $cities = $sphinx->Query('France', 'cities');
+
+    $ids = array_keys($cities['matches']);
+
+    $sql = 'SELECT RTRIM(SUBSTRING_INDEX(notice.loca, ";", 1)) as city
     FROM core_notice as notice
-    WHERE SUBSTRING_INDEX(notice.loca2, ";", 1) LIKE "%France%"
-    AND notice.loca IS NOT NULL
-    GROUP BY city
-    ORDER BY nbMuseums DESC';
+    WHERE notice.id IN('.implode(',', $ids).')
+    ORDER BY FIELD(id,'.implode(',', $ids).')';
+
     $result = $app['db']->fetchAll($sql);
 
     return new JsonResponse($result);
