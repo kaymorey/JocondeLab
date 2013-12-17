@@ -49,11 +49,11 @@ JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scop
 JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scope, $location) {
     $scope.submit = function(city) {
         $scope.city = angular.copy(city);
-        $location.path('/partir/'+city);
+        $location.path('/partir/'+city)
     }
 });
 
-JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, ArtworksService) {
+JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $rootScope, $location, ArtworksService) {
     // Handle more-less indicators
     $scope.maxArtworks = ArtworksService.maxArtworks;
     $scope.nbArtworks = ArtworksService.nbArtworks;
@@ -62,12 +62,26 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, Artwo
     $scope.getmaxArtworks = function(num) {
         return new Array(num);   
     }
+
+    $scope.validate = function() {
+        if($rootScope.artworksValidated.length < 3) {
+            alert('Vous devez sélectionner au moins 3 oeuvres pour passer à l\'étape suivante');
+        }
+        else {
+            $rootScope.$broadcast('path');
+            /*$location.path('/partir/'+$rootScope.city+'/trajet').search({
+                artworksValidated: $rootScope.artworksValidated
+            });*/
+        }
+    }
 });
 
 
 JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $rootScope, $http, Geocoder, $routeParams, ArtworksService) {
     // Affichage full page
     $scope.full = true;
+
+    $rootScope.city = $routeParams.city;
 
     $scope.cityCode = [];
     var geocode = Geocoder.getGeocode($routeParams.city+' France');
@@ -104,7 +118,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
     $scope.artworksHistory = [];
     $scope.museums = [];
 
-    $scope.artworksValidated = [];
+    $rootScope.artworksValidated = [];
 
     $scope.getData = function() {
         $http({
@@ -126,7 +140,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
     }
 
     $scope.next = function(index) {
-        if($scope.artworksValidated.indexOf($scope.artworks[index]) == -1) {
+        if($rootScope.artworksValidated.indexOf($scope.artworks[index]) == -1) {
             $http({
                 method: 'POST',
                 url: 'api/web/index.php/next-artwork',
@@ -168,19 +182,20 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
         })
     }
     $scope.check = function(index) {
-        var indexValidated = $scope.artworksValidated.indexOf($scope.artworks[index]);
+        var indexValidated = $rootScope.artworksValidated.indexOf($scope.artworks[index]);
         if(indexValidated == -1) {
-            $scope.artworksValidated.push($scope.artworks[index]);
+            $rootScope.artworksValidated.push($scope.artworks[index]);
+            ArtworksService
         }
         else {
-            $scope.artworksValidated.splice(indexValidated, 1);
+            $rootScope.artworksValidated.splice(indexValidated, 1);
         }
     }
     $scope.remove = function(index) {
         if($scope.artworks.length <= 3) {
             alert('Vous devez sélectionner au moins 3 oeuvres');
         }
-        else if($scope.artworksValidated.indexOf($scope.artworks[index]) != -1) {
+        else if($rootScope.artworksValidated.indexOf($scope.artworks[index]) != -1) {
             alert('Vous avez validé cette oeuvre');
         }
         else {
@@ -200,15 +215,15 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
         // Remove artworks
         if(itemsToLoad < 0) {
             itemsToLoad = itemsToLoad * (-1);
-            if(ArtworksService.nbArtworks - $scope.artworksValidated.length < itemsToLoad) {
-                alert('Vous avez déjà validé '+$scope.artworksValidated.length+' oeuvres');
+            if(ArtworksService.nbArtworks - $rootScope.artworksValidated.length < itemsToLoad) {
+                alert('Vous avez déjà validé '+$rootScope.artworksValidated.length+' oeuvres');
             }
             else {
                 console.log(itemsToLoad);
                 var removed = 0;
                 var indexToRemove = 0;
                 for(var i = 0; i < ArtworksService.nbArtworks; i++) {
-                    if($scope.artworksValidated.indexOf($scope.artworks[0]) == -1) {
+                    if($rootScope.artworksValidated.indexOf($scope.artworks[0]) == -1) {
                         $scope.$apply(function () {
                             $scope.remove(0);
                         });
@@ -218,7 +233,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
                     }
                     else {
                         for(indexToRemove = 0; indexToRemove < ArtworksService.nbArtworks; indexToRemove++) {
-                            if($scope.artworksValidated.indexOf($scope.artworks[indexToRemove]) == -1) {
+                            if($rootScope.artworksValidated.indexOf($scope.artworks[indexToRemove]) == -1) {
                                 $scope.$apply(function () {
                                     $scope.remove(indexToRemove);
                                 });
@@ -249,6 +264,10 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
             ArtworksService.nbArtworks += itemsToLoad;
         }
     });
+});
+
+JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScope, $http) {
+    console.log($rootScope.artworksValidated);
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {

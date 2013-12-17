@@ -6,6 +6,7 @@
 
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="js/fancybox/jquery.fancybox.css" />
 
 	<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
 </head>
@@ -18,7 +19,7 @@
 		<h1><a href="#"><strong>Joconde</strong>Lab</a></h1>
 		<nav>
 			<ul>
-				<li class="validate"><span>étape suivante</span></li>
+				<li class="validate" ng-click="validate()" go-path><span>étape suivante</span></li>
 				<li class="more-less" more-less>
 					<div class="indicators">
 						<span ng-repeat="i in getmaxArtworks(maxArtworks) track by $index" ng-class="{'selected' : (maxArtworks - nbArtworks) <= $index}"></span>
@@ -50,5 +51,8 @@
 
 	<!-- JQUERY SUGGEST PLUGIN -->
 	<script type="text/javascript"src="js/jquery.suggest.js"></script>
+
+	<!-- FANCYBOX PLUGIN -->
+	<script type="text/javascript"src="js/fancybox/jquery.fancybox.js"></script>
 </body>
 </html>

@@ -140,13 +140,11 @@
           // accept suggestion with 'enter' or 'tab'
           // if the suggestion hasn't been accepted yet
           if (code == 9 || code == 13) {
-            console.log($(this).val());
             // only accept if there's anything suggested
             if ($suggest.text().length > 0) {
               e.preventDefault();
               var suggestions = $(this).data('suggestions');
               $(this).val(suggestions.terms[suggestions.index]);
-              console.log($(this).val());
               // clean the suggestion for the looks
               $suggest.empty();
               return false;

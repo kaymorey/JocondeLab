@@ -15,6 +15,10 @@ app.config(['$routeProvider',
             templateUrl: 'partials/museums.html',
             controller: 'MuseumsCtrl'
         })
+        .when('/partir/:city/trajet', {
+            templateUrl: 'partials/path.html',
+            controller: 'PathCtrl'
+        })
         .when('/destination', {
             templateUrl: 'partials/destination.html',
             controller: 'DestCtrl'
@@ -264,6 +268,45 @@ app.directive('moreLess', function($rootScope, ArtworksService) {
     }
 });*/
 
+app.directive('goPath', function($rootScope, $location) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            $rootScope.$on('path', function(event) {
+                var content = '<section class="path-lightbox">';
+                    content += '<h1>Félicitations !</h1>';
+                    content += '<p><em>Vous venez de créer votre premier parcours.</em></p>';
+                    content += '<p>Souhaitez vous  découvrir les musées qui se trouvent sur votre trajet ?</p>';
+                    content += '<div>';
+                        content += '<a href="#" class="yes-btn">oui</a>';
+                        content += '<a href="#">non</a>'
+                    content += '</div>';
+                content += '</section>';
+                $.fancybox.open({
+                    content: content,
+                    closeBtn: false,
+                    width: 325,
+                    height: 244,
+                    fitToView: false,
+                    autoSize: false,
+                    helpers : {
+                        overlay : {
+                            opacity    : 0.1
+                        },
+                    },
+                    afterShow: function() {
+                        $('.path-lightbox .yes-btn').on('click', function(e) {
+                            e.preventDefault();
+                            $location.path('/partir/'+$rootScope.city+'/trajet');
+                            $.fancybox.close();
+                        });
+                    }
+                });
+            });
+        }
+    }
+});
+
 app.directive('googleMap', function($rootScope) {
     return {
         restrict: 'A',
@@ -368,7 +411,7 @@ app.directive('googleMap', function($rootScope) {
                 $('.accordion li .actions .remove').click(function() {
                     if(markersTab.length > 1) {
                         var index = $(this).parent('.actions').attr('data-index');
-                        if(scope.artworksValidated.indexOf(scope.artworks[index]) == -1) {
+                        if($rootScope.artworksValidated.indexOf(scope.artworks[index]) == -1) {
                             markersTab[index].setMap(null);
                             markersTab.splice(index, 1);
                             latlngTab.splice(index, 1);
