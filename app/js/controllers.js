@@ -267,7 +267,18 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
 });
 
 JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScope, $http) {
-    console.log($rootScope.artworksValidated);
+    // Affichage full page
+    $scope.full = true;
+    
+    $scope.getData = function() {
+        $http({
+        method: 'GET',
+        url: 'js/path.json'
+        })
+        .success(function(data) {
+            $scope.artworks = data;
+        });
+    }
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {

@@ -1,1 +1,26 @@
-<section></section>
+<section class="artwork-path" accordion-init path-accordion>
+	<ul class="accordion">
+		<li ng-repeat="city in artworks">
+			<img src="images/path/{{ city.content.museums.artwork.image }}" alt="" />
+			<div class="actions" data-index="{{$index}}">
+				<a href="" class="next"></a>
+				<a href="" class="check"></a>
+				<a href="" class="remove"></a>
+			</div>
+		</li>
+	</ul>
+</section>
+<section class="route">
+	<section class="content">
+		<span class="from extrems">Marseille</span>
+		<div class="center">
+			<hr />
+			<span class="marker"></span>
+			<span class="marker"></span>
+			<span class="marker"></span>
+			<span class="marker"></span>
+			<span class="marker"></span>
+		</div>
+		<span class="to extrems">Paris</span>
+	</section>
+</section>

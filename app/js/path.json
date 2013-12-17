@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Avignon",
+        "content": {
+            "lat": 43.949317,
+            "lng": 4.805528,
+            "museums": {
+                "name": "musée Calvet",
+                "lat": 43.947001,
+                "lng": 4.803432,
+                "artwork": {
+                    "author": "Jean Raoux",
+                    "title": "Jeune femme lisant une lettre",
+                    "image": "Avignon.jpg"
+                }
+            }
+        }
+    },
+    {
+        "name": "Lyon",
+        "content": {
+            "lat": 45.764043,
+            "lng": 4.835659,
+            "museums": {
+                "name": "musée des Beaux-Arts",
+                "lat": 45.767169,
+                "lng": 4.833537,
+                "artwork": {
+                    "author": "Nicolas Poussin",
+                    "title": "La fuite en Egypte",
+                    "image": "Lyon.jpg"
+                }
+            }
+        }
+    },
+    {
+        "name": "Mâcon",
+        "content": {
+            "lat": 46.306884,
+            "lng": 4.828731,
+            "museums": {
+                "name": "musée Lamartine",
+                "lat": 46.368218,
+                "lng": 4.834219,
+                "artwork": {
+                    "author": "Henri Decaisne",
+                    "title": "Portrait d'Alphonse de Lamartine",
+                    "image": "Macon.jpg"
+                }
+            }
+        }
+    },
+    {
+        "name": "Beaune",
+        "content": {
+            "lat": 47.026030,
+            "lng": 4.840004,
+            "museums": {
+                "name": "musée des Beaux-Arts",
+                "lat": 47.026030,
+                "lng": 4.840004,
+                "artwork": {
+                    "author": "Felix Ziem",
+                    "title": "Le quai des Esclavons",
+                    "image": "Beaune.jpg"
+                }
+            }
+        }
+    },
+    {
+        "name": "Auxerre",
+        "content": {
+            "lat": 47.798202,
+            "lng": 3.573781,
+            "museums": {
+                "name": "musée Leblanc Duvernoy",
+                "lat": 47.795369,
+                "lng": 3.566458,
+                "artwork": {
+                    "author": "Jacques Hupin",
+                    "title": "Nature morte aux pièces d'orfèvrerie",
+                    "image": "Auxerre.jpg"
+                }
+            }
+        }
+    }
+]

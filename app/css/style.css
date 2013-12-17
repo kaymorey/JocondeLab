@@ -173,6 +173,81 @@ section.artwork {
 }
 
 /*************************
+*          PATH          *
+**************************/
+section.artwork-path {
+	width: 100%;
+	height: 75%;
+	position: absolute;
+}
+section.route {
+	width: 100%;
+	height: 25%;
+	position: absolute;
+	top: 75%;
+	background-color: #1a1a19;
+	color: #666;
+}
+section.route .content {
+	height: 100%;
+	padding: 0px 70px;
+	margin: 0 auto;
+}
+section.route span.extrems {
+	display: inline-block;
+	min-width: 50px;
+	padding-bottom: 58px;
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	margin-top: -45px;
+} 
+section.route span.from {
+	background: url('../images/path/from.png') center bottom no-repeat;
+}
+section.route span.to {
+	background: url('../images/path/to.png') center bottom no-repeat;
+	right: 70px;
+}
+section.route .center {
+	width: 80%;
+	height: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+section.route .center hr {
+	width: 100%;
+	height: 2px;
+	margin: 0 auto;
+	background-color: #666;
+	position: relative;
+	top: 50%;
+}
+section.route span.marker {
+	width: 18px;
+	height: 17px;
+	background: url('../images/path/marker.png') center bottom #1a1a19;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+section.route span.marker:nth-child(2) {
+	left: 8%;
+}
+section.route span.marker:nth-child(3) {
+	left: 15%;
+}
+section.route span.marker:nth-child(4) {
+	left: 30%;
+}
+section.route span.marker:nth-child(5) {
+	left: 50%;
+}
+section.route span.marker:nth-child(6) {
+	left: 75%;
+}
+/*************************
 *         FOOTER         *
 **************************/
 footer {

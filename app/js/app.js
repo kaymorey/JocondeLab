@@ -91,6 +91,53 @@ accordion.directive('accordionInit', function() {
     };
 });
 
+app.directive('pathAccordion', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            $(document).on('mouseenter', '.accordion li', function() {
+                var index = $(this).index();
+                $('.route .content .marker').css({
+                    'background-position': 'center bottom'
+                });
+                $('.route .content .marker').eq(index).css({
+                    'background-position': 'center top'
+                });
+            });
+            $(document).on('click', '.accordion li .actions .next', function(e) {
+                e.preventDefault;
+
+                var index = $(this).parent('.actions').attr('data-index');
+                if(index == 0) {
+                    scope.$apply(function() {
+                        scope.artworks[0] = {
+                            "name": "Aix-en-provence",
+                            "content": {
+                                "lat": 43.529742,
+                                "lng": 5.447427,
+                                "museums": {
+                                    "name": "musée Granet",
+                                    "lat": 43.525386,
+                                    "lng": 5.452802,
+                                    "artwork": {
+                                        "author": "Paul Cézanne",
+                                        "title": "Les grandes baigneuses",
+                                        "image": "Aix-en-provence.jpg"
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    $('.artwork-path').accordion();
+                    $('.route .content .marker').eq(0).css({
+                        'left': '5%'
+                    });
+                }
+            });
+        }
+    };
+});
+
 app.directive('showSlide', function() {
     return {
         restrict: 'A',
