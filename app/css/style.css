@@ -211,7 +211,7 @@ footer nav li.validate {
 }
 footer nav li.validate:hover {
 	width: 165px;
-	background-position: 134px center;
+	background-position: 114px center;
 }
 footer nav li.validate:hover span,
 footer nav li.breadcrumbs:hover span {
@@ -223,7 +223,7 @@ footer nav li.breadcrumbs:hover span {
 }
 footer nav li.breadcrumbs:hover {
 	width: 255px;
-	background-position: 230px center;
+	background-position: 206px center;
 }
 footer nav li.more-less {
 	background: url('../images/nav/more-less.png') no-repeat center center;
@@ -245,7 +245,7 @@ footer nav li.more-less:hover span {
 	background-color: #666;
 	position: relative;
 	top: 20px;
-	left: 24px;
+	left: 43px;
 }
 footer nav li.more-less span.selected {
 	background-color: #FFF;
