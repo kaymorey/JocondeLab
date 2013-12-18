@@ -1,0 +1,13 @@
+<h1><a href="#"><strong>Joconde</strong>Lab</a></h1>
+<nav>
+	<ul>
+		<li class="validate" ng-click="validate()" go-path><span>étape suivante</span></li>
+		<li class="more-less" more-less>
+			<div class="indicators">
+				<span ng-repeat="i in getmaxArtworks(maxArtworks) track by $index" ng-class="{'selected' : (maxArtworks - nbArtworks) <= $index}"></span>
+			</div>
+		</li>
+		<li class="breadcrumbs"><span>trajet - sur place - parcours</span></li>
+		<li class="lock"></li>
+	</ul>
+</nav>

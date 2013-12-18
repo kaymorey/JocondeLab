@@ -319,6 +319,7 @@ footer nav {
 	right: 0;
 }
 footer nav li {
+	display: none;
 	width: 60px;
 	height: 60px;
 	border-left: solid #262626 1px;
@@ -389,6 +390,23 @@ footer nav li.breadcrumbs {
 }
 footer nav li.lock {
 	background: url('../images/nav/lock.png') no-repeat center center;
+}
+
+footer nav li.lang {
+	width: 103px;
+	text-align: center;
+}
+footer nav li.lang span {
+	padding: 5px 7px;
+	cursor: pointer;
+	display: inline;
+	color: #333;
+	position: relative;
+	top: 24px;
+}
+footer nav li.lang span:first-child {
+	border-right: solid #333333 1px;
+	color: #FFF;
 }
 
 /*************************

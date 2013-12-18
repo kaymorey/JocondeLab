@@ -1,8 +1,11 @@
 var JocondeLabControllers = angular.module('JocondeLabControllers', []);
 
-JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scope, $http) {
+JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scope, $rootScope, $http) {
     // Affichage full page
     $scope.full = true;
+
+    $rootScope.step = false;
+    $rootScope.home = true;
 
     $scope.slideLeft = false;
     $scope.slideRight = false;
@@ -54,6 +57,14 @@ JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scop
 });
 
 JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $rootScope, $location, ArtworksService) {
+    // Show or not elements footer
+    $rootScope.$watch('step', function() {
+        $scope.step = $rootScope.step;
+    });
+    $rootScope.$watch('home', function() {
+        $scope.home = $rootScope.home;
+    });
+    
     // Handle more-less indicators
     $scope.maxArtworks = ArtworksService.maxArtworks;
     $scope.nbArtworks = ArtworksService.nbArtworks;
@@ -80,6 +91,9 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
 JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $rootScope, $http, Geocoder, $routeParams, ArtworksService) {
     // Affichage full page
     $scope.full = true;
+
+    $rootScope.step = true;
+    $rootScope.home = false;
 
     $rootScope.city = $routeParams.city;
 
@@ -269,6 +283,9 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
 JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScope, $http) {
     // Affichage full page
     $scope.full = true;
+
+    $rootScope.step = true;
+    $rootScope.home = false;
 
     $scope.checked = [false, false, false, false, false];
 
