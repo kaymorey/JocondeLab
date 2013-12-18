@@ -477,6 +477,28 @@ ul.accordion li div.actions a.check.selected {
 ul.accordion li div.actions a.remove {
 	background: url('../images/buttons-accordion/remove.png') center no-repeat;
 }
+ul.accordion li div.infos {
+	width: 100%;
+	color: #333333;
+	background-color: #FFF;
+	display: none;
+	position: absolute;
+	bottom: 60px;
+	z-index: 200;
+}
+ul.accordion li div.infos p {
+	padding: 20px 40px 20px 20px;
+}
+ul.accordion li div.infos .close {
+	width: 13px;
+	height: 12px;
+	background: url('../images/buttons-accordion/close.png') center no-repeat;
+	display: inline-block;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
+}
 
 /*************************
 *      PATH LIGHTBOX     *

@@ -9,6 +9,16 @@
 				<a href="" class="next" ng-click="next($index)"></a>
 				<a href="" class="check" ng-click="check($index)" ng-class="{'selected': artworksValidated.indexOf(artwork) != -1}"></a>
 				<a href="" class="remove" ng-click="remove($index)"></a>
+				<a href="" class="infos">infos</a>
+			</div>
+			<div class="infos" data-index="{{$index}}">
+				<p>
+					<span ng-hide="!artwork.titr">{{ artwork.titr }}<br /></span>
+					<span ng-hide="!artwork.autr">{{ artwork.autr }}</span><span ng-hide="!artwork.ddpt">, {{ artwork.ddpt }}</span>
+					<br ng-hide="!artwork.autr and !artwork.ddpt" />
+					<span ng-hide="!artwork.loca">{{ artwork.loca }}</span>
+				</p>
+				<a href="" class="close"></a>
 			</div>
 		</li>
 	</ul>

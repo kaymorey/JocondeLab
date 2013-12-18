@@ -91,6 +91,15 @@ accordion.directive('accordionInit', function() {
                     $(element).accordion();
                 }
             });
+            $(document).on('click', '.accordion .actions .infos', function() {
+                var index = $(this).parent('.actions').attr('data-index');
+                $('.accordion div.infos').eq(index).slideDown();
+            });
+            $(document).on('click', '.accordion div.infos .close', function(e) {
+                e.preventDefault();
+                var index = $(this).parent('.infos').attr('data-index');
+                $('.accordion div.infos').eq(index).slideUp();
+            });
         }
     };
 });
@@ -469,6 +478,7 @@ app.directive('googleMap', function($rootScope) {
                 prevActive = -1;
 
                 $(document).on('mouseenter', '.accordion li', function() {
+                    $('.accordion div.infos').slideUp();
                     if(prevActive != -1 && prevActive < markersTab.length && markersTab.length > 1) {
                         var prevItem = $('.accordion li').eq(prevActive);
                         if(prevItem.find('.actions .check').hasClass('selected')) {
@@ -566,6 +576,45 @@ app.directive('googleMap', function($rootScope) {
                 map.fitBounds(latlngbounds);
             });
         }
+    }
+});
+app.directive('dndList', function() {
+ 
+    return function(scope, element, attrs) {
+ 
+        // variables used for dnd
+        var toUpdate;
+        var startIndex = -1;
+ 
+        // watch the model, so we always know what element
+        // is at a specific position
+        scope.$watch(attrs.dndList, function(value) {
+            toUpdate = value;
+        },true);
+ 
+        // use jquery to make the element sortable (dnd). This is called
+        // when the element is rendered
+        $(element[0]).sortable({
+            items:'li',
+            start:function (event, ui) {
+                // on start we define where the item is dragged from
+                startIndex = ($(ui.item).index());
+            },
+            stop:function (event, ui) {
+                // on stop we determine the new index of the
+                // item and store it there
+                var newIndex = ($(ui.item).index());
+                var toMove = toUpdate[startIndex];
+                toUpdate.splice(startIndex,1);
+                toUpdate.splice(newIndex,0,toMove);
+ 
+                // we move items in the array, if we want
+                // to trigger an update in angular use $apply()
+                // since we're outside angulars lifecycle
+                scope.$apply(scope.model);
+            },
+            axis:'y'
+        })
     }
 });
 app.factory('ArtworksService', function() {

@@ -39,6 +39,8 @@ $app->post('/next-artwork', function(Request $request) use($app) {
     $sphinx->SetLimits(0, 1);
     // Exclude notices in history
     $sphinx->SetFilter('notice_id', $history, true);
+    // Exlude notice with id 292717 (because of loca Paris;Nantes)
+    $sphinx->setFilter('notice_id', array(292717), true);
     // Exclude museums in history
     $sphinx->SetFilter('museum_id', $museums, true);
 
@@ -46,11 +48,14 @@ $app->post('/next-artwork', function(Request $request) use($app) {
 
     $ids = array_keys($result['matches']);
 
-    $sql = 'SELECT notice.id, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc, museum.id as museum_id
+    $sql = 'SELECT notice.id, notice.titr, notice.ddpt, term.label as autr, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc, museum.id as museum_id
             FROM core_noticeimage as noticeimage
             INNER JOIN core_notice as notice ON (noticeimage.notice_id = notice.id)
             INNER JOIN museum ON (notice.museum_id = museum.id)
-            WHERE notice.id IN ('.implode(',', $ids).')';
+            RIGHT JOIN core_noticeterm as noticeterm ON (noticeterm.notice_id = notice.id)
+            INNER JOIN core_term as term ON (term.id = noticeterm.term_id)
+            WHERE notice.id IN ('.implode(',', $ids).')
+            AND term.thesaurus_id = 1';
 
     $artwork = $app['db']->fetchAssoc($sql);
 
@@ -65,10 +70,6 @@ $app->post('/museums', function(Request $request) use($app) {
     $sphinx->SetServer('localhost', 3312);
     $sphinx->SetConnectTimeout(5);
 
-    // Include
-    // $sphinx->SetFilter('loca', array(";");
-    // Excludes
-    //$sphinx->SetGroupBy('loca', SPH_GROUPBY_ATTR);
     $sphinx->SetSortMode(SPH_SORT_EXTENDED, '@random');
     $sphinx->SetLimits(0, 5);
     // Exlude notice with id 292717 (because of loca Paris;Nantes)
@@ -101,11 +102,14 @@ $app->post('/museums', function(Request $request) use($app) {
 
         $ids = array_keys($artwork['matches']);
 
-        $sql = 'SELECT notice.id, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc, museum.id as museum_id
+        $sql = 'SELECT notice.id, notice.titr, notice.ddpt, term.label as autr, noticeimage.relative_url as image, notice.loca, museum.museumCode as geoloc, museum.id as museum_id
                 FROM core_noticeimage as noticeimage
                 INNER JOIN core_notice as notice ON (noticeimage.notice_id = notice.id)
                 INNER JOIN museum ON (notice.museum_id = museum.id)
-                WHERE notice.id IN('.implode(',', $ids).')';
+                RIGHT JOIN core_noticeterm as noticeterm ON (noticeterm.notice_id = notice.id)
+                INNER JOIN core_term as term ON (term.id = noticeterm.term_id)
+                WHERE notice.id IN('.implode(',', $ids).')
+                AND term.thesaurus_id = 1';
 
         $artwork = $app['db']->fetchAssoc($sql);
 

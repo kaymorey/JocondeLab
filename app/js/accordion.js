@@ -142,11 +142,11 @@
                     var openWidth;
                     var minOpenWidth = 0;
 
-                    if(closeWidth + 50 > 184) {
+                    if(closeWidth + 50 > 240) {
                         minOpenWidth = closeWidth + 50;
                     }
                     else {
-                        minOpenWidth = 184;
+                        minOpenWidth = 240;
                     }
 
                     if(imageWidth > settings.maxWidth) {
