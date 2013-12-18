@@ -52,7 +52,7 @@ JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scop
 JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scope, $location) {
     $scope.submit = function(city) {
         $scope.city = angular.copy(city);
-        $location.path('/partir/'+city)
+        $location.path('/partir/'+city);
     }
 });
 
@@ -85,6 +85,9 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
             else {
                 $rootScope.$broadcast('path');
             }
+        }
+        else if(page == 'path') {
+            $location.path('/partir/'+$rootScope.city+'/parcours');
         }
     }
 });
@@ -326,6 +329,13 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
             'display': 'none'
         });
     }
+});
+
+JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootScope, $http) {
+    // Affichage full page
+    $scope.full = true;
+    
+    $scope.artworks = $rootScope.artworksValidated;
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {

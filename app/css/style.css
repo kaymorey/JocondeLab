@@ -300,6 +300,29 @@ section.route span.marker.beaune {
 section.route span.marker.auxerre {
 	left: 75%;
 }
+
+/*************************
+*         ROUTE          *
+**************************/
+section.final-route {
+	width: 75%;
+	height: 100%;
+	background-color: #000;
+	position: absolute;
+	color: #FFF;
+	overflow: scroll;
+}
+section.final-route ul li {
+	padding: 20px;
+	border: solid #666 1px;
+}
+section.final-map {
+	width: 25%;
+	height: 100%;
+	background-color: #666;
+	position: absolute;
+	left: 75%;
+}
 /*************************
 *         FOOTER         *
 **************************/
