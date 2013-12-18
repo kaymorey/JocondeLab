@@ -139,29 +139,27 @@ app.directive('pathAccordion', function() {
                 e.preventDefault;
 
                 var index = $(this).parent('.actions').attr('data-index');
-                if(index == 0) {
-                    scope.$apply(function() {
-                        scope.artworks[0] = {
-                            "name": "Aix-en-provence",
-                            "class": "aix",
-                            "content": {
-                                "lat": 43.529742,
-                                "lng": 5.447427,
-                                "museums": {
-                                    "name": "musée Granet",
-                                    "lat": 43.525386,
-                                    "lng": 5.452802,
-                                    "artwork": {
-                                        "author": "Paul Cézanne",
-                                        "title": "Les grandes baigneuses",
-                                        "image": "Aix-en-provence.jpg"
-                                    }
+                scope.$apply(function() {
+                    scope.artworks[index] = {
+                        "name": "Aix-en-provence",
+                        "class": "aix",
+                        "content": {
+                            "lat": 43.529742,
+                            "lng": 5.447427,
+                            "museums": {
+                                "name": "musée Granet",
+                                "lat": 43.525386,
+                                "lng": 5.452802,
+                                "artwork": {
+                                    "author": "Paul Cézanne",
+                                    "title": "Les grandes baigneuses",
+                                    "image": "Aix-en-provence.jpg"
                                 }
                             }
                         }
-                    });
-                    $('.artwork-path').accordion();
-                }
+                    }
+                });
+                $('.artwork-path').accordion();
             });
         }
     };
