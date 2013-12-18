@@ -129,13 +129,19 @@ section.left {
 	position: absolute;
 	top: 0;
 	z-index: 100;
-	background: url('../images/home/home-left.jpg') no-repeat center center; 
+	background: url('../images/home/home-left.jpg') no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
 }
 
 section.right {
 	position: absolute;
 	left: 50%;
-	background: url('../images/home/home-right.jpg') no-repeat center center; 
+	background: url('../images/home/home-right.jpg') no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
 }
 section.right h2 {
 	margin-bottom: 10px;
