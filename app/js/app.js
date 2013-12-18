@@ -97,7 +97,14 @@ accordion.directive('accordionInit', function() {
             });
             $(document).on('click', '.accordion .actions .infos', function() {
                 var index = $(this).parent('.actions').attr('data-index');
-                $('.accordion div.infos').eq(index).slideDown();
+                var infos = $('.accordion div.infos').eq(index);
+                if(infos.is(':visible')) {
+                    console.log('visible');
+                    $('.accordion div.infos').eq(index).slideUp();
+                }
+                else {
+                    $('.accordion div.infos').eq(index).slideDown();   
+                }
             });
             $(document).on('click', '.accordion div.infos .close', function(e) {
                 e.preventDefault();
