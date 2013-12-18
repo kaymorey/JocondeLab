@@ -504,6 +504,9 @@ ul.accordion li div.actions a.check.selected {
 ul.accordion li div.actions a.remove {
 	background: url('../images/buttons-accordion/remove.png') center no-repeat;
 }
+ul.accordion li div.actions a.infos {
+	background: url('../images/buttons-accordion/infos.png') center no-repeat;
+}
 ul.accordion li div.infos {
 	width: 100%;
 	color: #333333;
