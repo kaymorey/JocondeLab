@@ -386,7 +386,7 @@ footer nav li.more-less:hover span {
 	width: 9px;
 	height: 20px;
 	display: inline-block;
-	background: url('../nav/indicator.png') no-repeat center center;
+	background: url('../images/nav/indicator.png') no-repeat center center;
 	position: relative;
 	top: 20px;
 	left: 43px;

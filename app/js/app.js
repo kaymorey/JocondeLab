@@ -468,22 +468,6 @@ app.directive('googleMap', function($rootScope) {
                     prevActive = index;
                 });
 
-                $('.accordion li .actions .remove').click(function() {
-                    if(markersTab.length > 1) {
-                        var index = $(this).parent('.actions').attr('data-index');
-                        if($rootScope.artworksValidated.indexOf(scope.artworks[index]) == -1) {
-                            markersTab[index].setMap(null);
-                            markersTab.splice(index, 1);
-                            latlngTab.splice(index, 1);
-
-                            latlngbounds = new google.maps.LatLngBounds();
-                            angular.forEach(latlngTab, function(latlng, index) {
-                                latlngbounds.extend(latlng);
-                            });
-                            map.fitBounds(latlngbounds);
-                        }
-                    }
-                });
                 $('.accordion li .actions .next').click(function() {
                     elmt = $(this);
                     scope.$watch('artworks', function() {
