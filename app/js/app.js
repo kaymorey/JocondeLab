@@ -109,6 +109,7 @@ app.directive('pathAccordion', function() {
         restrict: 'A',
         link: function(scope, element, attrs) {
             $(document).on('mouseenter', '.accordion li', function() {
+                $('.accordion div.infos').slideUp();
                 var index = $(this).index();
                 var items = $('.route .content .marker');
                 items.each(function() {

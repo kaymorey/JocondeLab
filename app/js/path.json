@@ -12,7 +12,8 @@
                 "artwork": {
                     "author": "Henri Decaisne",
                     "title": "Portrait d'Alphonse de Lamartine",
-                    "image": "Macon.jpg"
+                    "image": "Macon.jpg",
+                    "date": "1978"
                 }
             }
         }
@@ -30,7 +31,8 @@
                 "artwork": {
                     "author": "Jean Raoux",
                     "title": "Jeune femme lisant une lettre",
-                    "image": "Avignon.jpg"
+                    "image": "Avignon.jpg",
+                    "date": "1978"
                 }
             }
         }
@@ -48,7 +50,8 @@
                 "artwork": {
                     "author": "Felix Ziem",
                     "title": "Le quai des Esclavons",
-                    "image": "Beaune.jpg"
+                    "image": "Beaune.jpg",
+                    "date": "1978"
                 }
             }
         }
@@ -66,7 +69,8 @@
                 "artwork": {
                     "author": "Nicolas Poussin",
                     "title": "La fuite en Egypte",
-                    "image": "Lyon.jpg"
+                    "image": "Lyon.jpg",
+                    "date": "1978"
                 }
             }
         }
@@ -84,7 +88,8 @@
                 "artwork": {
                     "author": "Jacques Hupin",
                     "title": "Nature morte aux pièces d'orfèvrerie",
-                    "image": "Auxerre.jpg"
+                    "image": "Auxerre.jpg",
+                    "date": "1978"
                 }
             }
         }

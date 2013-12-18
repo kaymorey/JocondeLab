@@ -6,9 +6,16 @@
 				<a href="" class="next"></a>
 				<a href="" class="check" ng-click="check($index)" ng-class="{'selected': checked[$index]}"></a>
 				<a href="" class="remove" ng-click="remove($index)"></a>
+				<a href="" class="infos">infos</a>
 			</div>
 			<div class="infos">
-				
+				<p>
+					{{ city.content.museums.artwork.title }}<br />
+					{{ city.content.museums.artwork.author }}, {{ city.content.museums.artwork.date }}
+					<br />
+					{{ city.name }} ; {{ city.content.museums.name }}
+				</p>
+				<a href="" class="close"></a>
 			</div>
 		</li>
 	</ul>
