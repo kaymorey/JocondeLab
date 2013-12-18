@@ -352,6 +352,9 @@ footer nav li {
 footer nav li span {
 	display: none;
 }
+footer nav li hr {
+	display: none;
+}
 footer nav li.validate {
 	background: url('../images/nav/validate.png') no-repeat center center;
 }
@@ -360,7 +363,7 @@ footer nav li.validate:hover {
 	background-position: 114px center;
 }
 footer nav li.validate:hover span,
-footer nav li.breadcrumbs:hover span {
+footer nav li.breadcrumbs:hover div {
 	height: 60px;
 	display: inline-block;
 	position: relative;
@@ -368,8 +371,30 @@ footer nav li.breadcrumbs:hover span {
 	left: 15px;
 }
 footer nav li.breadcrumbs:hover {
-	width: 255px;
-	background-position: 206px center;
+	width: 320px;
+	background-position: 266px center;
+}
+footer nav li.breadcrumbs:hover span {
+	display: inline;
+}
+footer nav li.breadcrumbs span {
+	color: #666;
+}
+footer nav li.breadcrumbs:hover hr {
+	width: 34px;
+	height: 2px;
+	margin: 0 2px;
+	border: none;
+	background-color: #666;
+	display: inline-block;
+	position: relative;
+	top: -3px;
+}
+footer nav li.breadcrumbs hr.selected {
+	background-color: #FFF;
+}
+footer nav li.breadcrumbs span.selected {
+	color: #FFF;
 }
 footer nav li.more-less {
 	background: url('../images/nav/more-less.png') no-repeat center center;

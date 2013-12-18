@@ -64,6 +64,9 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
     $rootScope.$watch('home', function() {
         $scope.home = $rootScope.home;
     });
+    $rootScope.$watch('page', function() {
+        $scope.page = $rootScope.page;
+    });
     
     // Handle more-less indicators
     $scope.maxArtworks = ArtworksService.maxArtworks;
@@ -74,15 +77,14 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
         return new Array(num);   
     }
 
-    $scope.validate = function() {
-        if($rootScope.artworksValidated.length < 3) {
+    $scope.validate = function(page) {
+        if(page == 'city') {
+            if($rootScope.artworksValidated.length < 3) {
             alert('Vous devez sélectionner au moins 3 oeuvres pour passer à l\'étape suivante');
-        }
-        else {
-            $rootScope.$broadcast('path');
-            /*$location.path('/partir/'+$rootScope.city+'/trajet').search({
-                artworksValidated: $rootScope.artworksValidated
-            });*/
+            }
+            else {
+                $rootScope.$broadcast('path');
+            }
         }
     }
 });
@@ -94,6 +96,7 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
 
     $rootScope.step = true;
     $rootScope.home = false;
+    $rootScope.page = 'city';
 
     $rootScope.city = $routeParams.city;
 
@@ -286,6 +289,7 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
 
     $rootScope.step = true;
     $rootScope.home = false;
+    $rootScope.page = 'path';
 
     $scope.checked = [false, false, false, false, false];
 
