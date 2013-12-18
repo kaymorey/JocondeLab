@@ -97,11 +97,17 @@ app.directive('pathAccordion', function() {
         link: function(scope, element, attrs) {
             $(document).on('mouseenter', '.accordion li', function() {
                 var index = $(this).index();
-                $('.route .content .marker').css({
+                $('.route .content .marker .icon').css({
                     'background-position': 'center bottom'
                 });
-                $('.route .content .marker').eq(index).css({
+                $('.route .content .marker .city').css({
+                    'color': '#666'
+                });
+                $('.route .content .marker .icon').eq(index).css({
                     'background-position': 'center top'
+                });
+                $('.route .content .marker .city').eq(index).css({
+                    'color': '#c1a061'
                 });
             });
             $(document).on('click', '.accordion li .actions .next', function(e) {
@@ -112,6 +118,7 @@ app.directive('pathAccordion', function() {
                     scope.$apply(function() {
                         scope.artworks[0] = {
                             "name": "Aix-en-provence",
+                            "class": "aix",
                             "content": {
                                 "lat": 43.529742,
                                 "lng": 5.447427,
@@ -129,15 +136,7 @@ app.directive('pathAccordion', function() {
                         }
                     });
                     $('.artwork-path').accordion();
-                    $('.route .content .marker').eq(0).css({
-                        'left': '5%'
-                    });
                 }
-            });
-            $(document).on('click', '.accordion li .actions .remove', function() {
-                alert('pop');
-                var index = $(this).parent('.actions').attr('data-index');
-                
             });
         }
     };
@@ -421,6 +420,7 @@ app.directive('googleMap', function($rootScope) {
 
                 var defaultIcon = 'images/marker.png';
                 var activeIcon = 'images/markerActive.png';
+                var validatedIcon = 'images/markerValidated.png';
 
                 // Créer des marqueurs pour les différents musées
                 angular.forEach(scope.artworks, function(museum, index) {
@@ -455,7 +455,13 @@ app.directive('googleMap', function($rootScope) {
 
                 $(document).on('mouseenter', '.accordion li', function() {
                     if(prevActive != -1 && prevActive < markersTab.length && markersTab.length > 1) {
-                        markersTab[prevActive].setIcon(defaultIcon);
+                        var prevItem = $('.accordion li').eq(prevActive);
+                        if(prevItem.find('.actions .check').hasClass('selected')) {
+                            markersTab[prevActive].setIcon(validatedIcon);
+                        }
+                        else {
+                            markersTab[prevActive].setIcon(defaultIcon);
+                        }
                     }
                     var index = $(this).index();
                     markersTab[index].setIcon(activeIcon);
@@ -513,6 +519,15 @@ app.directive('googleMap', function($rootScope) {
                             infowindow.open(map, marker);
                         });
                     });
+                });
+                $('.accordion li .actions .check').click(function() {
+                    var index = $(this).parent('.actions').attr('data-index');
+                    if($(this).hasClass('selected')) {
+                        markersTab[index].setIcon(validatedIcon);
+                    }
+                    else {
+                        markersTab[index].setIcon(defaultIcon);
+                    }
                 });
             });
             $rootScope.$on('addMarker', function(event, data) {

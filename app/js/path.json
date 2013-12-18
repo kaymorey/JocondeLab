@@ -1,40 +1,7 @@
 [
     {
-        "name": "Avignon",
-        "content": {
-            "lat": 43.949317,
-            "lng": 4.805528,
-            "museums": {
-                "name": "musée Calvet",
-                "lat": 43.947001,
-                "lng": 4.803432,
-                "artwork": {
-                    "author": "Jean Raoux",
-                    "title": "Jeune femme lisant une lettre",
-                    "image": "Avignon.jpg"
-                }
-            }
-        }
-    },
-    {
-        "name": "Lyon",
-        "content": {
-            "lat": 45.764043,
-            "lng": 4.835659,
-            "museums": {
-                "name": "musée des Beaux-Arts",
-                "lat": 45.767169,
-                "lng": 4.833537,
-                "artwork": {
-                    "author": "Nicolas Poussin",
-                    "title": "La fuite en Egypte",
-                    "image": "Lyon.jpg"
-                }
-            }
-        }
-    },
-    {
         "name": "Mâcon",
+        "class": "macon",
         "content": {
             "lat": 46.306884,
             "lng": 4.828731,
@@ -51,7 +18,26 @@
         }
     },
     {
+        "name": "Avignon",
+        "class": "avignon",
+        "content": {
+            "lat": 43.949317,
+            "lng": 4.805528,
+            "museums": {
+                "name": "musée Calvet",
+                "lat": 43.947001,
+                "lng": 4.803432,
+                "artwork": {
+                    "author": "Jean Raoux",
+                    "title": "Jeune femme lisant une lettre",
+                    "image": "Avignon.jpg"
+                }
+            }
+        }
+    },
+    {
         "name": "Beaune",
+        "class": "beaune",
         "content": {
             "lat": 47.026030,
             "lng": 4.840004,
@@ -68,7 +54,26 @@
         }
     },
     {
+        "name": "Lyon",
+        "class": "lyon",
+        "content": {
+            "lat": 45.764043,
+            "lng": 4.835659,
+            "museums": {
+                "name": "musée des Beaux-Arts",
+                "lat": 45.767169,
+                "lng": 4.833537,
+                "artwork": {
+                    "author": "Nicolas Poussin",
+                    "title": "La fuite en Egypte",
+                    "image": "Lyon.jpg"
+                }
+            }
+        }
+    },
+    {
         "name": "Auxerre",
+        "class": "auxerre",
         "content": {
             "lat": 47.798202,
             "lng": 3.573781,
