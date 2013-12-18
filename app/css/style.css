@@ -20,6 +20,15 @@
     font-style: normal;
 }
 @font-face {
+    font-family: 'GtwalsheimThin';
+    src: url('../fonts/Gt-Walsheim-Web/gt-walsheim-thin-web.eot');
+    src: url('../fonts/Gt-Walsheim-Web/gt-walsheim-thin-web.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Gt-Walsheim-Web/gt-walsheim-thin-web.woff') format('woff'),
+         url('../fonts/Gt-Walsheim-Web/gt-walsheim-thin-web.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: 'Gothamhtf';
     src: url('../fonts/Gotham-Htf/gothamhtf-book-webfont.eot.eot');
     src: url('../fonts/Gotham-Htf/gothamhtf-book-webfont.eot?#iefix') format('embedded-opentype'),
@@ -62,13 +71,19 @@ section.home {
 	text-align: center;
 	cursor: pointer;
 }
+section.home .overlay {
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+	filter: alpha(opacity=40);
+	opacity: 0.4;
+}
 section.home h2 {
-	color: #FFF;
-	font-size: 1.5em;
+	color: #c3a261;
+	font-size: 30px;
 	text-decoration: none;
-	display: inline-block;
-	vertical-align: middle;
-	line-height: 1.2em;
+	font-family: 'Gtwalsheim', Arial, sans-serif;
 }
 section.home img.arrow {
 	position: absolute;
@@ -76,57 +91,84 @@ section.home img.arrow {
 	margin-top: -23px;
 }
 section.home div.content {
-	height: 200px;
-	line-height: 200px;
-	width: 100%;
+	width: 330px;
+	height: 174px;
+	margin-top: -106px;
+	margin-left: -165px;
+	padding: 15px;
+	background-color: #FFF;
+	text-align: center;
+	font-size: 20px;
+	font-family: 'GtwalsheimThin', Arial, sans-serif;
 	position: absolute;
 	top: 50%;
-	margin-top: -100px;
+	left: 50%;
+}
+section.home div.content p {
+	padding: 17px 0;
+	color: #1a1a1a;
+}
+section.home div.content a {
+	margin-top: 20px;
+	padding: 8px 17px;
+	border: solid #838383 1px;
+	color: #838383;
+	text-decoration: none;
+	display: inline-block;
 }
 section.selected {
 	cursor: default;
+}
+section.selected .overlay {
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
 }
 
 section.left {
 	position: absolute;
 	top: 0;
 	z-index: 100;
-	background: url('../images/home-top.jpg') no-repeat center center; 
+	background: url('../images/home/home-left.jpg') no-repeat center center; 
 }
 
 section.right {
 	position: absolute;
 	left: 50%;
-	background: url('../images/home-bottom.jpg') no-repeat center center; 
+	background: url('../images/home/home-right.jpg') no-repeat center center; 
 }
 section.right h2 {
 	margin-bottom: 10px;
 }
 section.right form {
-	position: absolute;
-	left: 50%;
-	width: 264px;
-	margin-left: -132px;
-	line-height: 1.2em;
+	width: 300px;
+	margin: 15px 0 0 20px;
+	text-align: left;
+	position: relative;
 }
 section.right form input {
-	border: solid #FFF 2px;
 	background-color: transparent;
-	font-size: 1.3em;
-	color: #FFF;
-	font-family: 'Gtwalsheim', Arial, sans-serif;
+	font-size: 20px;
+	font-family: 'GtwalsheimThin', Arial, sans-serif;
+	color: #1a1a1a;
 }
 section.right form input[type="text"] {
-	width: 250px;
+	width: 246px;
 	padding: 5px;
+	border: solid #f1f1f1 2px;
 	position: relative;
 	z-index: 100;
 }
 section.right form input[type="submit"] {
+	padding: 5px;
+	border: solid #808080 1px;
+	color: #808080;
+	background-color: #FFF;
+	cursor: pointer;
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: 4px;
+	z-index: 200;
 }
 section.right span.suggest-more {
 	display: none !important;
@@ -137,13 +179,6 @@ section.right div.suggest div {
 }
 section.right.selected div.content {
 	line-height: 1em;
-}
-section.right.selected h2 {
-	position: relative;
-	top: 60px;
-}
-section.right.selected form {
-	bottom: 41px;
 }
 
 /*************************

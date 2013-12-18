@@ -198,7 +198,9 @@ app.directive('autoSuggest', function() {
         link: function(scope, element, attrs) {
             scope.$watch('cities', function(update) {
                 if(update) {
-                    $(element).suggest(scope.cities);
+                    $(element).suggest(scope.cities, {
+                        'suggestionColor': '#b2b2b2'
+                    });
                 }
             });
         }
