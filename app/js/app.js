@@ -105,7 +105,7 @@ app.directive('pathAccordion', function() {
                 items.each(function() {
                     if($(this).hasClass('selected')) {
                         $(this).find('.icon').css({
-                            'background-position': 'center bottom'
+                            'background-position': 'center -41px'
                         });
                     }
                     else {
