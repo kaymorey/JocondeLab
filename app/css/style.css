@@ -272,9 +272,9 @@ section.route span.marker {
 }
 section.route span.marker .icon {
 	width: 23px;
-	height: 17px;
+	height: 20px;
 	margin-top: 5px;
-	background: url('../images/path/marker.png') no-repeat center bottom #1a1a19;
+	background: url('../images/path/marker.png') no-repeat center top #1a1a19;
 	display: inline-block;
 }
 section.route span.marker .city {
@@ -383,10 +383,11 @@ footer nav li.more-less:hover {
 	background-position: 90px center;
 }
 footer nav li.more-less:hover span {
-	width: 9px;
+	width: 2px;
 	height: 20px;
+	margin-left: 7px;
 	display: inline-block;
-	background: url('../images/nav/indicator.png') no-repeat center center;
+	background-color: #666;
 	position: relative;
 	top: 20px;
 	left: 43px;

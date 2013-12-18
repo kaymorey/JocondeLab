@@ -4,6 +4,10 @@ var app = angular.module('JocondeLab', [
     'Accordion'
 ]);
 
+app.run(['$rootScope', function($rootScope){
+    $rootScope.artworksValidated = [];
+}]);
+
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider
@@ -97,14 +101,25 @@ app.directive('pathAccordion', function() {
         link: function(scope, element, attrs) {
             $(document).on('mouseenter', '.accordion li', function() {
                 var index = $(this).index();
-                $('.route .content .marker .icon').css({
-                    'background-position': 'center bottom'
+                var items = $('.route .content .marker');
+                items.each(function() {
+                    if($(this).hasClass('selected')) {
+                        $(this).find('.icon').css({
+                            'background-position': 'center bottom'
+                        });
+                    }
+                    else {
+                       $(this).find('.icon').css({
+                            'background-position': 'center top'
+                        }); 
+                    }
+                    $(this).find('.city').css({
+                        'color': '#666'
+                    });
                 });
-                $('.route .content .marker .city').css({
-                    'color': '#666'
-                });
+
                 $('.route .content .marker .icon').eq(index).css({
-                    'background-position': 'center top'
+                    'background-position': 'center -21px'
                 });
                 $('.route .content .marker .city').eq(index).css({
                     'color': '#c1a061'

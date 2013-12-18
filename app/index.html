@@ -26,7 +26,8 @@
 				<li class="validate" ng-click="validate()" go-path ng-show="step"><span>étape suivante</span></li>
 				<li class="more-less" more-less ng-show="step">
 					<div class="indicators">
-						<span ng-repeat="i in getmaxArtworks(maxArtworks) track by $index" ng-class="{'selected' : (maxArtworks - nbArtworks) <= $index}"></span>
+						<span ng-repeat="i in getmaxArtworks(maxArtworks) track by $index" ng-class="{'selected' : (maxArtworks - nbArtworks) <= $index}">
+						</span>
 					</div>
 				</li>
 				<li class="breadcrumbs" ng-show="step"><span>trajet - sur place - parcours</span></li>

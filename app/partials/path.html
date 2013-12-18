@@ -15,7 +15,7 @@
 		<span class="from extrems">Marseille</span>
 		<div class="center">
 			<hr />
-			<span class="marker {{ city.class }}" ng-repeat="city in artworks">
+			<span class="marker {{ city.class }}" ng-repeat="city in artworks" ng-class="{'selected': checked[$index]}">
 				<span class="city">{{ city.name }}</span><br />
 				<span class="icon"></span>
 			</span>
