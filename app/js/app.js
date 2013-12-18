@@ -114,7 +114,7 @@ app.directive('pathAccordion', function() {
                         }); 
                     }
                     $(this).find('.city').css({
-                        'color': '#666'
+                        'visibility': 'hidden'
                     });
                 });
 
@@ -122,7 +122,7 @@ app.directive('pathAccordion', function() {
                     'background-position': 'center -21px'
                 });
                 $('.route .content .marker .city').eq(index).css({
-                    'color': '#c1a061'
+                    'visibility': 'visible'
                 });
             });
             $(document).on('click', '.accordion li .actions .next', function(e) {

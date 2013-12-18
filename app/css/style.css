@@ -278,7 +278,8 @@ section.route span.marker .icon {
 	display: inline-block;
 }
 section.route span.marker .city {
-	
+	color: #c1a061;
+	visibility: hidden;	
 }
 section.route span.marker.aix {
 	left: 2%;
