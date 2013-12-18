@@ -310,8 +310,17 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
         };
 
         $rootScope.artworksValidated.push(data);
-        console.log($rootScope.artworksValidated);
         $scope.checked[index] = true;
+    }
+
+    $scope.remove = function(index) {
+        $scope.artworks.splice(index, 1);
+        $scope.$watch('artworks', function() {
+            angular.element('ul.accordion').accordion();
+        });
+        $('.route .content .marker').eq(index).css({
+            'display': 'none'
+        });
     }
 });
 

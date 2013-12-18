@@ -134,6 +134,11 @@ app.directive('pathAccordion', function() {
                     });
                 }
             });
+            $(document).on('click', '.accordion li .actions .remove', function() {
+                alert('pop');
+                var index = $(this).parent('.actions').attr('data-index');
+                
+            });
         }
     };
 });
