@@ -1,4 +1,4 @@
-<section class="left home" ng-class="{selected: showLeft}" ng-click="chooseHomeLeft()" show-slide="slideLeft">
+<section class="left home" ng-class="{selected: showLeft}" ng-mouseover="chooseHomeLeft()" show-slide="slideLeft">
 	<div class="overlay"></div>
 	<div class="content" ng-show="showLeft">
 		<h2>
@@ -12,10 +12,10 @@
 			<a href="">c'est parti !</a>
 		</div>
 	</div>
-	<img src="images/arrow-left.png" ng-show="showRight" alt="" class="arrow" />
+	<img src="images/home/arrow-left.png" ng-show="showRight" alt="" class="arrow" />
 </section>
 
-<section class="right home" ng-class="{selected: showRight}" ng-click="chooseHomeRight()" show-slide="slideRight">
+<section class="right home" ng-class="{selected: showRight}" ng-mouseover="chooseHomeRight()" show-slide="slideRight">
 	<div class="overlay"></div>
 	<div class="content" ng-show="showRight">
 		<h2>
@@ -25,10 +25,10 @@
 			Trouvez les musées qui vous
 			intéressent, où que vous alliez.
 		</p>
-		<img src="images/arrow-right.png" ng-show="showLeft" alt="" class="arrow" />
 		<form action="" name="cityForm" ng-controller="ChooseCityCtrl" ng-submit="submit(city)">
 			<input type="text" name="city" placeholder="Ville" auto-suggest ng-model="city"/>
 			<input type="submit" value="go !" />
 		</form>
 	</div>
+	<img src="images/home/arrow-right.png" ng-show="showLeft" alt="" class="arrow" />
 </section>

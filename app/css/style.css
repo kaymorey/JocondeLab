@@ -88,7 +88,7 @@ section.home h2 {
 section.home img.arrow {
 	position: absolute;
 	top: 50%;
-	margin-top: -23px;
+	margin-top: -7px;
 }
 section.home div.content {
 	width: 330px;
@@ -105,7 +105,7 @@ section.home div.content {
 	left: 50%;
 }
 section.home div.content p {
-	padding: 17px 0;
+	padding: 20px 0;
 	color: #1a1a1a;
 }
 section.home div.content a {
@@ -115,6 +115,10 @@ section.home div.content a {
 	color: #838383;
 	text-decoration: none;
 	display: inline-block;
+}
+section.home div.content a:hover {
+	border: solid #c3a261 1px;
+	color: #c3a261;
 }
 section.selected {
 	cursor: default;
@@ -175,6 +179,10 @@ section.right form input[type="submit"] {
 	top: 0;
 	right: 0;
 	z-index: 200;
+}
+section.right form input[type="submit"]:hover {
+	border: solid #c3a261 1px;
+	color: #c3a261;
 }
 section.right span.suggest-more {
 	display: none !important;
@@ -363,6 +371,7 @@ footer nav li {
 	overflow: hidden;
 	cursor: pointer;
 	position: relative;
+	float: left;
 
 	-webkit-transition-property: width;
 	-webkit-transition-duration: 0.2s;
