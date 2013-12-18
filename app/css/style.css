@@ -224,10 +224,11 @@ section.artwork-path {
 section.route {
 	width: 100%;
 	height: 25%;
-	position: absolute;
-	top: 75%;
 	background-color: #1a1a19;
 	color: #666;
+	letter-spacing: 0.05em;
+	position: absolute;
+	top: 75%;
 }
 section.route .content {
 	height: 100%;
@@ -316,6 +317,7 @@ footer h1 a {
 	color: #666666;
 	text-transform: uppercase;
 	font-size: 27px;
+	letter-spacing: 0.05em;
 	line-height: 60px;
 	padding-left: 18px;
 	position: absolute;
