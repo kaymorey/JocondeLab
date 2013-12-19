@@ -62,6 +62,7 @@ JocondeLabControllers.controller('FilterCtrl', function FilterCtrl($scope, $root
     $scope.artworks = '';
     // Footer btn
     $rootScope.validateBtn = true;
+    $rootScope.home = false;
 
     $rootScope.page = 'filter';
     $rootScope.city = $routeParams.city;
