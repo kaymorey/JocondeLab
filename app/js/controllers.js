@@ -49,10 +49,20 @@ JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scop
    };
 });
 
-JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scope, $location) {
+JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scope, $rootScope, $location) {
     $scope.submit = function(city) {
-        $scope.city = angular.copy(city);
-        $location.path('/partir/'+city);
+        $rootScope.city = angular.copy(city);
+        $location.path('/filtre');
+    }
+});
+
+JocondeLabControllers.controller('FilterCtrl', function FilterCtrl($scope, $rootScope, $http) {
+    // Affichage full page
+    $scope.full = true;
+    $scope.artworks = '';
+
+    $scope.getData = function() {
+
     }
 });
 

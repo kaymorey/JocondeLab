@@ -382,6 +382,55 @@ section.final-route li .content-right p {
 	cursor: -moz-grabbing;
 }
 /*************************
+*         FILTER         *
+**************************/
+section.filter {
+	width: 100%;
+	height: 100%;
+}
+section.filter li div {
+	width: 100%;
+	height: 24%;
+	color: #FFF;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	background-image: linear-gradient(transparent, black);
+	display: none;
+}
+section.filter li:hover div {
+	display: block;
+}
+section.filter li span {
+	-moz-text-shadow: 0px 0px 9px #333;
+	text-shadow: 0px 0px 9px #333;
+}
+section.filter li span.medium {
+	font-size: 26px;
+	font-family: 'GtwalsheimThin', Arial, sans-serif;
+}
+section.filter li span.type {
+	font-size: 26px;
+	font-family: 'Gtwalsheim', Arial, sans-serif;
+}
+section.filter li a {
+	padding: 5px 8px;
+	border: solid #FFF 1px;
+	color: #FFF;
+	text-decoration: none;
+	position: relative;
+	top: 35px;
+}
+section.filter li a:hover {
+	color: #c1a061;
+	border: solid #c1a061 1px;
+}
+section.filter li a.selected {
+	color: #FFF;
+	background-color: #c1a061;
+	border: solid #c1a061 1px;
+}
+/*************************
 *         FOOTER         *
 **************************/
 footer {
@@ -623,31 +672,41 @@ ul.accordion li div.infos .close {
 
 	background-color: red;
 }
-.path-lightbox {
+.lightbox {
+
+}
+.lightbox {
 	padding: 8px;
 	text-align: center;
 }
-.path-lightbox h1 {
+.lightbox h1 {
 	padding-bottom: 20px;
 	color: #c3a261;
 	font-size: 24px;
 }
-.path-lightbox a {
+.lightbox a {
 	width: 142px;
 	height: 20px;
 	padding: 10px 0;
-	margin: 0 3px;
 	border: solid #f1f1f1 1px;
 	color: #808080;
 	font-size: 20px;
 	text-decoration: none;
 	display: inline-block;
 }
-.path-lightbox p {
+.lightbox a:hover {
+	color: #c3a261;
+	border: solid #c3a261 1px;
+}
+.lightbox p {
 	padding : 0 13px 20px 13px;
 	font-family: 'Gothamhtf', Arial, sans-serif;
 	font-size: 16px;
 	line-height: 17px;
+}
+
+.path-lightbox a {
+	margin: 0 3px;
 }
 .path-lightbox em {
 	font-family: 'GothamhtfItalic', Arial, sans-serif;

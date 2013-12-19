@@ -21,6 +21,10 @@ app.config(['$routeProvider',
             templateUrl: 'partials/home.html',
             controller: 'HomeChoiceCtrl'
         })
+        .when('/filtre', {
+            templateUrl: 'partials/filter.html',
+            controller: 'FilterCtrl'
+        })
         .when('/partir/:city', {
             templateUrl: 'partials/museums.html',
             controller: 'MuseumsCtrl'
@@ -95,12 +99,19 @@ accordion.directive('accordionInit', function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            scope.getData();
-            scope.$watch('artworks', function(update) {
-                if(update) {
+            if(element.hasClass('filter')) {
+                scope.$watch('artworks', function() {
                     $(element).accordion();
-                }
-            });
+                });
+            }
+            else {
+                scope.getData();
+                scope.$watch('artworks', function(update) {
+                    if(update) {
+                        $(element).accordion();
+                    }
+                });
+            } 
             $(document).on('click', '.accordion .actions .infos', function() {
                 var index = $(this).parent('.actions').attr('data-index');
                 var infos = $('.accordion div.infos').eq(index);
@@ -180,6 +191,48 @@ app.directive('pathAccordion', function() {
             });
         }
     };
+});
+app.directive('filterAccordion', function($rootScope) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var content = '<section class="filter-lightbox lightbox">';
+                content += '<h1>À propos de vous...</h1>';
+                content += '<p>Aidez-nous à mieux vous connaître en sélectionnant la ou les œuvres qui vous intéressent.</p>';
+                content += '<div>';
+                    content += '<a href="#" class="yes-btn">c\'est parti !</a>';
+                content += '</div>';
+            content += '</section>';
+
+            $.fancybox.open({
+                content: content,
+                closeBtn: false,
+                width: 325,
+                height: 175,
+                fitToView: false,
+                autoSize: false,
+                helpers : {
+                    overlay : {
+                        opacity    : 0.1
+                    },
+                },
+                afterShow: function() {
+                    $('.filter-lightbox a').on('click', function(e) {
+                        e.preventDefault();
+                        $.fancybox.close();
+                    });
+                }
+            });
+
+            var items = element.find('li');
+            items.each(function() {
+                $(this).on('click', function(e) {
+                    e.preventDefault();
+                    $(this).find('a').toggleClass('selected');
+                });
+            });
+        }
+    }
 });
 
 app.directive('showSlide', function() {
