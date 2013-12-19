@@ -315,7 +315,9 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
                 "lat": artwork.content.museums.lat,
                 "lng": artwork.content.museums.lng
             },
-            "loca": artwork.content.museums.name
+            "loca": artwork.content.museums.name,
+            "image": artwork.content.museums.artwork.image,
+            "type": "json"
         };
 
         $rootScope.artworksValidated.push(data);
@@ -352,6 +354,10 @@ JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootSc
                     result[element['types']] = element['long_name'];
                 });
                 artwork.address = result;
+                if(artwork.type != 'json') {
+                    var loca = artwork.loca.split(';');
+                    artwork.loca = loca[1];
+                }
             });
         });
     });

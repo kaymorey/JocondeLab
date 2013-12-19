@@ -2,10 +2,11 @@
 	<ul dnd-list="artworks">
 		<li ng-repeat="artwork in artworks" class="grab">
 			<div class="image">
-				<img src="images/path/Macon.jpg" alt="" />
+				<img src="images/path/{{ artwork.image }}" alt="" ng-if="artwork.type == 'json'" />
+				<img src="http://www.culture.gouv.fr/Wave/image/joconde/{{ artwork.image }}" alt="" ng-if="artwork.type != 'json'" />
 			</div>
 			<div class="content-left">
-				<h3>Musée du Louvre</h3>
+				<h3>{{ artwork.loca }}</h3>
 				<p class="address">
 					{{ artwork.address['street_number'] }} {{ artwork.address['route'] }}, <br />
 					{{ artwork.address['postal_code'] }} {{ artwork.address['locality,political'] }}<br />
