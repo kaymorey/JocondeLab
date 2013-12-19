@@ -498,6 +498,8 @@ footer nav li.validate:hover {
 	background-position: 124px center;
 }
 footer nav li.validate:hover span,
+footer nav li.maps:hover span,
+footer nav li.lock:hover span,
 footer nav li.breadcrumbs:hover div {
 	height: 60px;
 	display: inline-block;
@@ -562,6 +564,10 @@ footer nav li.breadcrumbs {
 footer nav li.lock {
 	background: url('../images/nav/user.png') no-repeat center center;
 }
+footer nav li.lock:hover {
+	width: 145px;
+	background-position: 94px center;
+}
 
 footer nav li.lang {
 	width: 103px;
@@ -585,6 +591,11 @@ footer nav li.send-to {
 }
 footer nav li.maps {
 	background: url('../images/nav/maps.png') no-repeat center center;
+}
+
+footer nav li.maps:hover {
+	width: 165px;
+	background-position: 114px center;
 }
 
 /*************************
