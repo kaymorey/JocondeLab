@@ -749,6 +749,14 @@ app.directive('finalRoute', function() {
                 content += '</div>';
             content += '</section>';
 
+            var content2 = '<section class="route-lightbox lightbox">';
+                content2 += '<h1>Félicitations !</h1>';
+                content2 += '<p>Vous pouvez ensuite accéder à votre itinéraire sur mesure dans Google maps, l’envoyer par mail, le publier sur facebook ou tout simplement l’imprimer.</p>';
+                content2 += '<div>';
+                    content2 += '<a href="#"">j\'ai compris</a>';
+                content2 += '</div>';
+            content2 += '</section>';
+
             $.fancybox.open({
                 content: content,
                 closeBtn: false,
@@ -764,7 +772,25 @@ app.directive('finalRoute', function() {
                 afterShow: function() {
                     $('.route-lightbox a').on('click', function(e) {
                         e.preventDefault();
-                        $.fancybox.close();
+                        $.fancybox.open({
+                            content: content2,
+                            closeBtn: false,
+                            width: 325,
+                            height: 215,
+                            fitToView: false,
+                            autoSize: false,
+                            helpers : {
+                                overlay : {
+                                    opacity    : 0.1
+                                },
+                            },
+                            afterShow: function() {
+                                $('.route-lightbox a').on('click', function(e) {
+                                    e.preventDefault();
+                                    $.fancybox.close();
+                                });
+                            }
+                        });
                     });
                 }
             });
