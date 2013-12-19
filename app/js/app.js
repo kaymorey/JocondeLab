@@ -458,9 +458,16 @@ app.directive('connexion', function() {
                     wrapCSS: 'fancy-connexion',
                     afterShow: function() {
                         $('.fancy-connexion').on('click', function() {
-                            $('.fancybox-inner').html('<image src="images/inscription.jpg" alt="" />');
-                            $(".fancybox-skin").css({
-                                'height': 260
+                            $.fancybox.open({
+                                href: 'images/inscription.jpg',
+                                type: 'image',
+                                closeBtn: false,
+                                helpers : {
+                                    overlay : {
+                                        opacity    : 0.1
+                                    },
+                                },
+                                wrapCSS: 'fancy-connexion'
                             });
                         });
                     }
