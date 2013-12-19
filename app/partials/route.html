@@ -1,17 +1,25 @@
 <section class="final-route">
 	<ul dnd-list="artworks">
-		<li>pop 1</li>
-		<li>pop 2</li>
-		<li>pop 3</li>
-		<li>pop 4</li>
-		<li>pop 5</li>
-		<li>pop 6</li>
-		<li>pop 7</li>
-		<li ng-repeat="artwork in artworks">
-			{{ artwork.loca }}
+		<li ng-repeat="artwork in artworks" class="grab">
+			<div class="image">
+				<img src="images/path/Macon.jpg" alt="" />
+			</div>
+			<div class="content-left">
+				<h3>Musée du Louvre</h3>
+				<p class="address">
+					{{ artwork.address['street_number'] }} {{ artwork.address['route'] }}, <br />
+					{{ artwork.address['postal_code'] }} {{ artwork.address['locality,political'] }}<br />
+					T 01 53 67 40 00
+				</p>
+			</div>
+			<div class="content-right">
+				<p>
+					Horaires :<br />
+					Lun à ven - 10h à 19h<br />
+					Samedi - 10h à 20h<br />
+				</p>
+			</div>
+			<div class="clear"></div>
 		</li>
 	</ul>
-</section>
-<section class="final-map">
-	
 </section>

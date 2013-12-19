@@ -56,7 +56,7 @@ JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scop
     }
 });
 
-JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $rootScope, $location, ArtworksService) {
+JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $rootScope, $location, ArtworksService, localStorageService) {
     // Show or not elements footer
     $rootScope.$watch('step', function() {
         $scope.step = $rootScope.step;
@@ -83,10 +83,12 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
             alert('Vous devez sélectionner au moins 3 oeuvres pour passer à l\'étape suivante');
             }
             else {
+                localStorageService.add('artworks', $rootScope.artworksValidated);
                 $rootScope.$broadcast('path');
             }
         }
         else if(page == 'path') {
+            localStorageService.add('artworks', $rootScope.artworksValidated);
             $location.path('/partir/'+$rootScope.city+'/parcours');
         }
     }
@@ -331,11 +333,28 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
     }
 });
 
-JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootScope, $http) {
+JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootScope, $http, localStorageService) {
     // Affichage full page
     $scope.full = true;
 
-    $scope.artworks = $rootScope.artworksValidated;
+    $rootScope.$broadcast("restoreArtworks");
+    $scope.artworks = localStorageService.get('artworks');
+    $scope.$watch('artworks', function() {
+        angular.forEach($scope.artworks, function(artwork, index) {
+            var geoloc = angular.fromJson(artwork.geoloc);
+            $http({
+                method:'GET',
+                url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+geoloc.lat+','+geoloc.lng+'&sensor=false'
+            })
+            .success(function(data) {
+                result = [];
+                angular.forEach(data['results']['0']['address_components'], function(element, index) {
+                    result[element['types']] = element['long_name'];
+                });
+                artwork.address = result;
+            });
+        });
+    });
 });
 
 JocondeLabControllers.controller('CitiesCtrl', function CitiesCtrl($scope, $http) {

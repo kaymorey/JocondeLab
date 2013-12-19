@@ -313,7 +313,7 @@ section.route span.marker.auxerre {
 *         ROUTE          *
 **************************/
 section.final-route {
-	width: 75%;
+	width: 100%;
 	height: 100%;
 	background-color: #000;
 	position: absolute;
@@ -321,15 +321,65 @@ section.final-route {
 	overflow: scroll;
 }
 section.final-route ul li {
-	padding: 20px;
-	border: solid #666 1px;
+	border: solid #333 1px;
+	position: relative;
+	letter-spacing: 0.05em;
+	height: 181px;
 }
-section.final-map {
-	width: 25%;
+section.final-route li .image {
+	width: 30%;
+	height: 181px;
+	overflow: hidden;
+	float: left;
+}
+section.final-route li .image img {
+	max-width: 100%;
+}
+section.final-route li .content-left {
+	width: 35%;
 	height: 100%;
-	background-color: #666;
+	background-color: #000;
+	font-size: 16px;
+	color: #f7f8f9;
+	font-family: 'GtwalsheimThin', Arial, sans-serif;
+	float: left;
+}
+section.final-route li .content-left h3 {
+	margin-bottom: 50px;
+	padding: 20px 0 0 20px;
+	color: #c3a261;
+	font-size: 20px;
+	font-family: 'Gtwalsheim', Arial, sans-serif;
+}
+section.final-route li .content-left .address {
+	padding-left: 20px;
 	position: absolute;
-	left: 75%;
+	bottom: 20px;
+	left: 30%;
+	line-height: 1.1em;
+}
+
+section.final-route li .content-right {
+	width: 35%;
+	height: 100%;
+	background-color: #1a1a1a;
+	font-size: 16px;
+	color: #f7f8f9;
+	font-family: 'GtwalsheimThin', Arial, sans-serif;
+	line-height: 1.1em;
+	float: right;
+}
+section.final-route li .content-right p {
+	padding-left: 20px;
+	position: absolute;
+	bottom: 20px;
+	left: 65%;
+}
+.grab {
+	cursor: -moz-grab;
+}
+.grabbing {
+	cursor: -moz-grabbing;
 }
 /*************************
 *         FOOTER         *

@@ -1,8 +1,14 @@
+angular.module('LocalStorageModule').value('prefix', 'jclab');
+
 var app = angular.module('JocondeLab', [
     'ngRoute',
     'JocondeLabControllers',
-    'Accordion'
+    'Accordion',
+    'LocalStorageModule'
 ]);
+
+
+angular.module('testApp', ['LocalStorageModule'])
 
 app.run(['$rootScope', function($rootScope){
     $rootScope.artworksValidated = [];
@@ -631,9 +637,14 @@ app.directive('dndList', function() {
             $(element[0]).sortable({
                 items:'li',
                 start:function (event, ui) {
+                    $(ui.item).removeClass('grab');
+                    console.log($(this));
+                    $(ui.item).addClass('grabbing');
                     startIndex = ($(ui.item).index());
                 },
                 stop:function (event, ui) {
+                    $(ui.item).removeClass('grabbing');
+                    $(ui.item).addClass('grab');
                     var newIndex = ($(ui.item).index());
                     var toMove = toUpdate[startIndex];
                     toUpdate.splice(startIndex,1);
@@ -653,3 +664,21 @@ app.factory('ArtworksService', function() {
       minArtworks : 3
   };
 });
+app.factory('ArtworksStorage', ['$rootScope', function ($rootScope) {
+
+    var service = {
+
+        SaveState: function () {
+            sessionStorage.artworksService = angular.toJson($rootScope.validatedArtworks);
+        },
+
+        RestoreState: function () {
+            $rootScope.validatedArtworks = angular.fromJson(sessionStorage.artworksService);
+        }
+    }
+
+    $rootScope.$on("saveArtworks", service.SaveState);
+    $rootScope.$on("restoreArtworks", service.RestoreState);
+
+    return service;
+}]);
