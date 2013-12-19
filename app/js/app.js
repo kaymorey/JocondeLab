@@ -208,7 +208,7 @@ app.directive('filterAccordion', function($rootScope, $location) {
                 content: content,
                 closeBtn: false,
                 width: 280,
-                height: 190,
+                height: 194,
                 fitToView: false,
                 autoSize: false,
                 helpers : {
@@ -244,7 +244,7 @@ app.directive('filterAccordion', function($rootScope, $location) {
                     content: content,
                     closeBtn: false,
                     width: 280,
-                    height: 210,
+                    height: 214,
                     fitToView: false,
                     autoSize: false,
                     helpers : {
@@ -262,6 +262,41 @@ app.directive('filterAccordion', function($rootScope, $location) {
                         });
                     }
                 });     
+            });
+        }
+    }
+});
+app.directive('museumsAccordion', function($rootScope, $location) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var content = '<section class="museums-lightbox lightbox">';
+                content += '<h1>À vous de décider.</h1>';
+                content += '<p>Sélectionnez les œuvres de votre choix pour créer votre parcours de musées.</p>';
+                content += '<p>Affichez jusqu’à 10 œuvres par parcours.</p>';
+                content += '<div>';
+                    content += '<a href="#"">j\'ai compris</a>';
+                content += '</div>';
+            content += '</section>';
+
+            $.fancybox.open({
+                content: content,
+                closeBtn: false,
+                width: 280,
+                height: 232,
+                fitToView: false,
+                autoSize: false,
+                helpers : {
+                    overlay : {
+                        opacity    : 0.1
+                    },
+                },
+                afterShow: function() {
+                    $('.museums-lightbox a').on('click', function(e) {
+                        e.preventDefault();
+                        $.fancybox.close();
+                    });
+                }
             });
         }
     }
