@@ -580,6 +580,13 @@ footer nav li.lang span:first-child {
 	color: #FFF;
 }
 
+footer nav li.send-to {
+	background: url('../images/nav/send-to.png') no-repeat center center;
+}
+footer nav li.maps {
+	background: url('../images/nav/maps.png') no-repeat center center;
+}
+
 /*************************
 *        ACCORDION       *
 **************************/

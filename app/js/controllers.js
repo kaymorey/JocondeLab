@@ -85,6 +85,9 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
     $rootScope.$watch('validateBtn', function() {
         $scope.validateBtn = $rootScope.validateBtn;
     });
+    $rootScope.$watch('route', function() {
+        $scope.route = $rootScope.route;
+    });
     
     // Handle more-less indicators
     $scope.maxArtworks = ArtworksService.maxArtworks;
@@ -262,7 +265,6 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
                 alert('Vous avez déjà validé '+$rootScope.artworksValidated.length+' oeuvres');
             }
             else {
-                console.log(itemsToLoad);
                 var removed = 0;
                 var indexToRemove = 0;
                 for(var i = 0; i < ArtworksService.nbArtworks; i++) {
@@ -271,7 +273,6 @@ JocondeLabControllers.controller('MuseumsCtrl', function MuseumsCtrl($scope, $ro
                             $scope.remove(0);
                         });
                         removed++;
-                        console.log('removed item '+indexToRemove);
                         indexToRemove = 0;
                     }
                     else {
@@ -359,6 +360,8 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
 JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootScope, $http, localStorageService) {
     // Affichage full page
     $scope.full = true;
+
+    $rootScope.route = true;
 
     $rootScope.$broadcast("restoreArtworks");
     $scope.artworks = localStorageService.get('artworks');
