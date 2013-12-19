@@ -111,22 +111,24 @@ accordion.directive('accordionInit', function() {
                         $(element).accordion();
                     }
                 });
-            } 
-            $(document).on('click', '.accordion .actions .infos', function() {
-                var index = $(this).parent('.actions').attr('data-index');
-                var infos = $('.accordion div.infos').eq(index);
-                if(infos.is(':visible')) {
-                    $('.accordion div.infos').eq(index).slideUp();
-                    $('.accordion .actions').eq(index).find('.infos').removeClass('selected');
-                }
-                else {
-                    $('.accordion div.infos').eq(index).slideDown();
-                    $('.accordion .actions').eq(index).find('.infos').addClass('selected');
-                }
-            });
+            }
         }
     };
 });
+accordion.directive('infosSlide', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            $(document).on('click', '.accordion .actions .infos', function() {
+                var index = $(this).parent('.actions').attr('data-index');
+                var infos = $('.accordion div.infos').eq(index);
+                $('.accordion div.infos').eq(index).slideToggle();
+                $('.accordion .actions').eq(index).find('.infos').toggleClass('selected');
+            });
+        }
+    }
+});
+
 
 app.directive('pathAccordion', function() {
     return {
@@ -439,45 +441,6 @@ app.directive('moreLess', function($rootScope, ArtworksService) {
     }
 });
 
-/*app.directive('menuSlide', function() {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var width = element.attr('data-width');
-            element.on('mouseenter', function() {
-                element.animate({
-                    width: width
-                },
-                {
-                    duration: 200, 
-                    queue: false, 
-                    complete: function() {
-                        $(this).find('span').css({
-                            'display': 'inline-block',
-                            'height': '60px',
-                            'position': 'relative',
-                            'top': '20px',
-                            'left': '10px'
-                        });
-                    } 
-                });
-                
-            });
-            element.on('mouseleave', function() {
-                element.animate({
-                    width: 42
-                }, {
-                    duration: 200, 
-                    queue: false,
-                });
-                $(this).find('span').css({
-                    'display': 'none'
-                });
-            });
-        }
-    }
-});*/
-
 app.directive('connexion', function() {
     return {
         restrict: 'A',
@@ -756,7 +719,6 @@ app.directive('dndList', function() {
                 items:'li',
                 start:function (event, ui) {
                     $(ui.item).removeClass('grab');
-                    console.log($(this));
                     $(ui.item).addClass('grabbing');
                     startIndex = ($(ui.item).index());
                 },
