@@ -355,6 +355,35 @@ app.directive('moreLess', function($rootScope, ArtworksService) {
     }
 });*/
 
+app.directive('connexion', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.on('click', function() {
+                $.fancybox.open({
+                    href: 'images/connexion.jpg',
+                    type: 'image',
+                    closeBtn: false,
+                    helpers : {
+                        overlay : {
+                            opacity    : 0.1
+                        },
+                    },
+                    wrapCSS: 'fancy-connexion',
+                    afterShow: function() {
+                        $('.fancy-connexion').on('click', function() {
+                            $('.fancybox-inner').html('<image src="images/inscription.jpg" alt="" />');
+                            $(".fancybox-skin").css({
+                                'height': 260
+                            });
+                        });
+                    }
+                });
+            });
+        }
+    }
+});
+
 app.directive('goPath', function($rootScope, $location) {
     return {
         restrict: 'A',

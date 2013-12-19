@@ -385,6 +385,7 @@ footer nav li {
 }
 footer nav li span {
 	display: none;
+	letter-spacing: 0.05em;
 }
 footer nav li hr {
 	display: none;
@@ -393,8 +394,8 @@ footer nav li.validate {
 	background: url('../images/nav/validate.png') no-repeat center center;
 }
 footer nav li.validate:hover {
-	width: 165px;
-	background-position: 114px center;
+	width: 175px;
+	background-position: 124px center;
 }
 footer nav li.validate:hover span,
 footer nav li.breadcrumbs:hover div {
@@ -405,8 +406,8 @@ footer nav li.breadcrumbs:hover div {
 	left: 15px;
 }
 footer nav li.breadcrumbs:hover {
-	width: 320px;
-	background-position: 266px center;
+	width: 348px;
+	background-position: 290px center;
 }
 footer nav li.breadcrumbs:hover span {
 	display: inline;
@@ -439,8 +440,8 @@ footer nav li.more-less .indicators {
 	left: -4px;
 }
 footer nav li.more-less:hover {
-	width: 135px;
-	background-position: 90px center;
+	width: 120px;
+	background-position: 60px center;
 }
 footer nav li.more-less:hover span {
 	width: 2px;
@@ -450,7 +451,7 @@ footer nav li.more-less:hover span {
 	background-color: #666;
 	position: relative;
 	top: 20px;
-	left: 43px;
+	left: 13px;
 }
 footer nav li.more-less span.selected {
 	background-color: #FFF;

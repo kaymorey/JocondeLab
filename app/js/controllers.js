@@ -334,7 +334,7 @@ JocondeLabControllers.controller('PathCtrl', function PathCtrl($scope, $rootScop
 JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootScope, $http) {
     // Affichage full page
     $scope.full = true;
-    
+
     $scope.artworks = $rootScope.artworksValidated;
 });
 
