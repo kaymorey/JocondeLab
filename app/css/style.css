@@ -627,7 +627,7 @@ ul.accordion li div.actions a.next {
 	background: url('../images/buttons-accordion/next.png') center no-repeat;
 }
 ul.accordion li div.actions a.check {
-	background: url('../images/buttons-accordion/check.png') center no-repeat;
+	background: url('../images/buttons-accordion/check.png') center top no-repeat;
 	background-position: center top;
 }
 ul.accordion li div.actions a.check.selected {
@@ -637,7 +637,10 @@ ul.accordion li div.actions a.remove {
 	background: url('../images/buttons-accordion/remove.png') center no-repeat;
 }
 ul.accordion li div.actions a.infos {
-	background: url('../images/buttons-accordion/infos.png') center no-repeat;
+	background: url('../images/buttons-accordion/infos.png') center top no-repeat;
+}
+ul.accordion li div.actions a.infos.selected {
+	background-position: center bottom;
 }
 ul.accordion li div.infos {
 	width: 100%;
@@ -649,17 +652,7 @@ ul.accordion li div.infos {
 	z-index: 200;
 }
 ul.accordion li div.infos p {
-	padding: 20px 40px 20px 20px;
-}
-ul.accordion li div.infos .close {
-	width: 13px;
-	height: 12px;
-	background: url('../images/buttons-accordion/close.png') center no-repeat;
-	display: inline-block;
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	cursor: pointer;
+	padding: 20px;
 }
 
 /*************************

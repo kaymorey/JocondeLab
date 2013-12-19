@@ -116,17 +116,13 @@ accordion.directive('accordionInit', function() {
                 var index = $(this).parent('.actions').attr('data-index');
                 var infos = $('.accordion div.infos').eq(index);
                 if(infos.is(':visible')) {
-                    console.log('visible');
                     $('.accordion div.infos').eq(index).slideUp();
+                    $('.accordion .actions').eq(index).find('.infos').removeClass('selected');
                 }
                 else {
-                    $('.accordion div.infos').eq(index).slideDown();   
+                    $('.accordion div.infos').eq(index).slideDown();
+                    $('.accordion .actions').eq(index).find('.infos').addClass('selected');
                 }
-            });
-            $(document).on('click', '.accordion div.infos .close', function(e) {
-                e.preventDefault();
-                var index = $(this).parent('.infos').attr('data-index');
-                $('.accordion div.infos').eq(index).slideUp();
             });
         }
     };
@@ -138,6 +134,7 @@ app.directive('pathAccordion', function() {
         link: function(scope, element, attrs) {
             $(document).on('mouseenter', '.accordion li', function() {
                 $('.accordion div.infos').slideUp();
+                $('.accordion .actions .infos').removeClass('selected');
                 var index = $(this).index();
                 var items = $('.route .content .marker');
                 items.each(function() {
@@ -515,7 +512,7 @@ app.directive('goPath', function($rootScope, $location) {
         restrict: 'A',
         link: function(scope, element, attrs) {
             $rootScope.$on('path', function(event) {
-                var content = '<section class="path-lightbox">';
+                var content = '<section class="path-lightbox lightbox">';
                     content += '<h1>Félicitations !</h1>';
                     content += '<p><em>Vous venez de créer votre premier parcours.</em></p>';
                     content += '<p>Souhaitez vous  découvrir les musées qui se trouvent sur votre trajet ?</p>';
@@ -528,7 +525,7 @@ app.directive('goPath', function($rootScope, $location) {
                     content: content,
                     closeBtn: false,
                     width: 325,
-                    height: 244,
+                    height: 234,
                     fitToView: false,
                     autoSize: false,
                     helpers : {
@@ -644,6 +641,7 @@ app.directive('googleMap', function($rootScope) {
 
                 $(document).on('mouseenter', '.accordion li', function() {
                     $('.accordion div.infos').slideUp();
+                    $('.accordion .actions .infos').removeClass('selected');
                     if(prevActive != -1 && prevActive < markersTab.length && markersTab.length > 1) {
                         var prevItem = $('.accordion li').eq(prevActive);
                         if(prevItem.find('.actions .check').hasClass('selected')) {
