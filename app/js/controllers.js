@@ -52,14 +52,19 @@ JocondeLabControllers.controller('HomeChoiceCtrl', function HomeChoiceCtrl($scop
 JocondeLabControllers.controller('ChooseCityCtrl', function ChooseCityCtrl($scope, $rootScope, $location) {
     $scope.submit = function(city) {
         $rootScope.city = angular.copy(city);
-        $location.path('/filtre');
+        $location.path('/partir/'+$rootScope.city+'/filtre');
     }
 });
 
-JocondeLabControllers.controller('FilterCtrl', function FilterCtrl($scope, $rootScope, $http) {
+JocondeLabControllers.controller('FilterCtrl', function FilterCtrl($scope, $rootScope, $http, $routeParams) {
     // Affichage full page
     $scope.full = true;
     $scope.artworks = '';
+    // Footer btn
+    $rootScope.validateBtn = true;
+
+    $rootScope.page = 'filter';
+    $rootScope.city = $routeParams.city;
 
     $scope.getData = function() {
 
@@ -77,6 +82,9 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
     $rootScope.$watch('page', function() {
         $scope.page = $rootScope.page;
     });
+    $rootScope.$watch('validateBtn', function() {
+        $scope.validateBtn = $rootScope.validateBtn;
+    });
     
     // Handle more-less indicators
     $scope.maxArtworks = ArtworksService.maxArtworks;
@@ -88,7 +96,10 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
     }
 
     $scope.validate = function(page) {
-        if(page == 'city') {
+        if(page == 'filter') {
+            $rootScope.$broadcast('filterFinished');
+        }
+        else if(page == 'city') {
             if($rootScope.artworksValidated.length < 3) {
             alert('Vous devez sélectionner au moins 3 oeuvres pour passer à l\'étape suivante');
             }

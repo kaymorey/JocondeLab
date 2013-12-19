@@ -23,7 +23,7 @@
 					<span>FR</span>
 					<span>EN</span>
 				</li>
-				<li class="validate" ng-click="validate(page)" go-path ng-show="step"><span>étape suivante</span></li>
+				<li class="validate" ng-click="validate(page)" go-path ng-show="step || validateBtn"><span>étape suivante</span></li>
 				<li class="more-less" more-less ng-show="step">
 					<div class="indicators">
 						<span ng-repeat="i in getmaxArtworks(maxArtworks) track by $index" ng-class="{'selected' : (maxArtworks - nbArtworks) <= $index}">

@@ -21,7 +21,7 @@ app.config(['$routeProvider',
             templateUrl: 'partials/home.html',
             controller: 'HomeChoiceCtrl'
         })
-        .when('/filtre', {
+        .when('/partir/:city/filtre', {
             templateUrl: 'partials/filter.html',
             controller: 'FilterCtrl'
         })
@@ -192,7 +192,7 @@ app.directive('pathAccordion', function() {
         }
     };
 });
-app.directive('filterAccordion', function($rootScope) {
+app.directive('filterAccordion', function($rootScope, $location) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -200,7 +200,7 @@ app.directive('filterAccordion', function($rootScope) {
                 content += '<h1>À propos de vous...</h1>';
                 content += '<p>Aidez-nous à mieux vous connaître en sélectionnant la ou les œuvres qui vous intéressent.</p>';
                 content += '<div>';
-                    content += '<a href="#" class="yes-btn">c\'est parti !</a>';
+                    content += '<a href="#"">c\'est parti !</a>';
                 content += '</div>';
             content += '</section>';
 
@@ -230,6 +230,38 @@ app.directive('filterAccordion', function($rootScope) {
                     e.preventDefault();
                     $(this).find('a').toggleClass('selected');
                 });
+            });
+
+            $rootScope.$on('filterFinished', function() {
+                var content = '<section class="filter-lightbox lightbox">';
+                    content += '<h1>C’est noté :)</h1>';
+                    content += '<p>Maintenant que nous en savons plus sur vos goûts il est temps de commencer à créer votre parcours personnalisé.</p>';
+                    content += '<div>';
+                        content += '<a href="#">c\'est parti !</a>';
+                    content += '</div>';
+                content += '</section>';
+                $.fancybox.open({
+                    content: content,
+                    closeBtn: false,
+                    width: 280,
+                    height: 210,
+                    fitToView: false,
+                    autoSize: false,
+                    helpers : {
+                        overlay : {
+                            opacity    : 0.1
+                        },
+                    },
+                    afterShow: function() {
+                        $('.filter-lightbox a').on('click', function(e) {
+                            e.preventDefault();
+                            $rootScope.$apply(function() {
+                                $location.path('/partir/'+$rootScope.city);
+                            });
+                            $.fancybox.close();
+                        });
+                    }
+                });     
             });
         }
     }
