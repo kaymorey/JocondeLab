@@ -737,6 +737,40 @@ app.directive('dndList', function() {
         }
     }
 });
+app.directive('finalRoute', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var content = '<section class="route-lightbox lightbox">';
+                content += '<h1>Félicitations !</h1>';
+                content += '<p>Votre parcours est maintenant terminé. Vous pouvez désormais l’organiser en déplaçant chaque ligne de musée pour l’adapter à vos envies.</p>';
+                content += '<div>';
+                    content += '<a href="#"">suivant</a>';
+                content += '</div>';
+            content += '</section>';
+
+            $.fancybox.open({
+                content: content,
+                closeBtn: false,
+                width: 325,
+                height: 215,
+                fitToView: false,
+                autoSize: false,
+                helpers : {
+                    overlay : {
+                        opacity    : 0.1
+                    },
+                },
+                afterShow: function() {
+                    $('.route-lightbox a').on('click', function(e) {
+                        e.preventDefault();
+                        $.fancybox.close();
+                    });
+                }
+            });
+        }
+    }
+});
 app.factory('ArtworksService', function() {
   return {
       maxArtworks : 9,
