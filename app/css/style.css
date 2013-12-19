@@ -500,7 +500,8 @@ footer nav li.validate:hover {
 footer nav li.validate:hover span,
 footer nav li.maps:hover span,
 footer nav li.lock:hover span,
-footer nav li.breadcrumbs:hover div {
+footer nav li.breadcrumbs:hover div,
+footer nav li.send-to:hover div {
 	height: 60px;
 	display: inline-block;
 	position: relative;
@@ -589,10 +590,25 @@ footer nav li.lang span:first-child {
 footer nav li.send-to {
 	background: url('../images/nav/send-to.png') no-repeat center center;
 }
+
+footer nav li.send-to span {
+	margin-right: 5px;
+	color: #666;
+}
+footer nav li.send-to span:hover {
+	color: #FFF;
+}
+footer nav li.send-to:hover {
+	width: 278px;
+	background-position: 220px center;
+}
+footer nav li.send-to:hover span {
+	display: inline;
+}
+
 footer nav li.maps {
 	background: url('../images/nav/maps.png') no-repeat center center;
 }
-
 footer nav li.maps:hover {
 	width: 165px;
 	background-position: 114px center;

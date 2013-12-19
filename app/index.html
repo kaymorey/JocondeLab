@@ -39,7 +39,13 @@
 						<span ng-class="{'selected': page == 'route'}">parcours</span>
 					</div>
 				</li>
-				<li class="send-to" ng-show="route"></li>
+				<li class="send-to" ng-show="route">
+					<div>
+						<span>facebook</span>
+						<span>mail</span>
+						<span>imprimer</span>
+					</div>
+				</li>
 				<li class="maps" ng-show="route"><span>google maps</span></li>
 				<li class="lock" ng-click="connexion()" connexion><span>connexion</span></li>
 			</ul>
