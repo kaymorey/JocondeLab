@@ -115,7 +115,7 @@ accordion.directive('accordionInit', function() {
         }
     };
 });
-accordion.directive('infosSlide', function() {
+app.directive('infosSlide', function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -295,6 +295,22 @@ app.directive('museumsAccordion', function($rootScope, $location) {
                         e.preventDefault();
                         $.fancybox.close();
                     });
+                }
+            });
+        }
+    }
+});
+
+app.directive('homeWhere', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.on('click', function() {
+                if($(this).find('img').length == 0) {
+                    element.html('<img src="images/home/imperatifs.png" alt="" class="img-click" />');
+                }
+                else {
+                    element.html('<img src="images/home/imperatifs2.png" alt="" class="img-click" />');
                 }
             });
         }
