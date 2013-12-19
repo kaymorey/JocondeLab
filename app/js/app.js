@@ -207,8 +207,8 @@ app.directive('filterAccordion', function($rootScope) {
             $.fancybox.open({
                 content: content,
                 closeBtn: false,
-                width: 325,
-                height: 175,
+                width: 280,
+                height: 190,
                 fitToView: false,
                 autoSize: false,
                 helpers : {
