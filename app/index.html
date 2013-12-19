@@ -23,22 +23,6 @@
 					<span>FR</span>
 					<span>EN</span>
 				</li>
-				<li class="validate" ng-click="validate(page)" go-path ng-show="step || validateBtn"><span>étape suivante</span></li>
-				<li class="more-less" more-less ng-show="step">
-					<div class="indicators">
-						<span ng-repeat="i in getmaxArtworks(maxArtworks) track by $index" ng-class="{'selected' : (maxArtworks - nbArtworks) <= $index}">
-						</span>
-					</div>
-				</li>
-				<li class="breadcrumbs" ng-show="step">
-					<div>
-						<span ng-class="{'selected': page == 'city' || page == 'path'}">sur place</span>
-						<hr ng-class="{'selected': page == 'city' || page == 'path'}" />
-						<span ng-class="{'selected': page == 'path'}">trajet</span>
-						<hr ng-class="{'selected': page == 'route'}" />
-						<span ng-class="{'selected': page == 'route'}">parcours</span>
-					</div>
-				</li>
 				<li class="send-to" ng-show="route">
 					<div>
 						<span>facebook</span>
@@ -46,7 +30,23 @@
 						<span>imprimer</span>
 					</div>
 				</li>
-				<li class="maps" ng-show="route"><span>google maps</span></li>
+				<li class="maps" ng-show="route" ng-click="mapsDirection()"><span>google maps</span></li>
+				<li class="validate" ng-click="validate(page)" go-path ng-show="step || validateBtn"><span>étape suivante</span></li>
+				<li class="more-less" more-less ng-show="step">
+					<div class="indicators">
+						<span ng-repeat="i in getmaxArtworks(maxArtworks) track by $index" ng-class="{'selected' : (maxArtworks - nbArtworks) <= $index}">
+						</span>
+					</div>
+				</li>
+				<li class="breadcrumbs" ng-show="step || route">
+					<div>
+						<span ng-class="{'selected': page == 'city' || page == 'path' || page == 'route'}">sur place</span>
+						<hr ng-class="{'selected': page == 'city' || page == 'path' || page == 'route'}" />
+						<span ng-class="{'selected': page == 'path' || page == 'route'}">trajet</span>
+						<hr ng-class="{'selected': page == 'route'}" />
+						<span ng-class="{'selected': page == 'route'}">parcours</span>
+					</div>
+				</li>
 				<li class="lock" ng-click="connexion()" connexion><span>connexion</span></li>
 			</ul>
 		</nav>

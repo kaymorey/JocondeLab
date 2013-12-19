@@ -727,6 +727,7 @@ app.directive('dndList', function() {
         }
     }
 });
+
 app.directive('finalRoute', function() {
     return {
         restrict: 'A',

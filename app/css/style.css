@@ -320,6 +320,16 @@ section.final-route {
 	color: #FFF;
 	overflow: scroll;
 }
+section.final-route .overlay {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.6);
+	z-index: 300;
+	position: absolute;
+}
+section.final-route .overlay:hover {
+	background-color: rgba(0,0,0,0);
+}
 section.final-route ul li {
 	border: solid #333 1px;
 	position: relative;
@@ -335,6 +345,9 @@ section.final-route li .image {
 section.final-route li .image img {
 	min-width: 100%;
 	max-width: 100%;
+}
+section.final-route li p {
+	z-index: 200;
 }
 section.final-route li .content-left {
 	width: 35%;

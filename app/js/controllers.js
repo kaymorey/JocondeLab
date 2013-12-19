@@ -62,6 +62,7 @@ JocondeLabControllers.controller('FilterCtrl', function FilterCtrl($scope, $root
     $scope.artworks = '';
     // Footer btn
     $rootScope.validateBtn = true;
+    $rootScope.step = false;
     $rootScope.home = false;
 
     $rootScope.page = 'filter';
@@ -72,7 +73,7 @@ JocondeLabControllers.controller('FilterCtrl', function FilterCtrl($scope, $root
     }
 });
 
-JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $rootScope, $location, ArtworksService, localStorageService) {
+JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $rootScope, $location, $window, ArtworksService, localStorageService) {
     // Show or not elements footer
     $rootScope.$watch('step', function() {
         $scope.step = $rootScope.step;
@@ -116,6 +117,20 @@ JocondeLabControllers.controller('FooterCtrl', function FooterCtrl($scope, $root
             localStorageService.add('artworks', $rootScope.artworksValidated);
             $location.path('/partir/'+$rootScope.city+'/parcours');
         }
+    }
+
+    $scope.mapsDirection = function() {
+        $rootScope.$watch('artworks', function() {
+            $scope.artworks = $rootScope.artworks;
+            var url = 'https://maps.google.fr/maps?saddr=Marseille';
+            angular.forEach($scope.artworks, function(artwork, index) {
+                if(artwork.address['street_number'] == undefined) {
+                    artwork.address['street_number'] = 1;
+                }
+                url += '+to:'+artwork.address['street_number']+'+'+artwork.address['route']+'+'+artwork.address['postal_code']+'+'+artwork.address['locality,political'];
+            });
+            $window.open(url);
+        });
     }
 });
 
@@ -362,10 +377,15 @@ JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootSc
     // Affichage full page
     $scope.full = true;
 
+    $rootScope.step = false;
+    $rootScope.home = false;
+    $rootScope.page = 'route'
     $rootScope.route = true;
+    $rootScope.validateBtn = false;
 
     $rootScope.$broadcast("restoreArtworks");
     $scope.artworks = localStorageService.get('artworks');
+    $scope.atworks = $scope.artworks.reverse();
     $scope.$watch('artworks', function() {
         angular.forEach($scope.artworks, function(artwork, index) {
             var geoloc = angular.fromJson(artwork.geoloc);
@@ -385,6 +405,7 @@ JocondeLabControllers.controller('RouteCtrl', function RouteCtrl($scope, $rootSc
                 }
             });
         });
+        $rootScope.artworks = $scope.artworks;
     });
 });
 

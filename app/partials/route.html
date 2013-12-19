@@ -1,6 +1,7 @@
 <section class="final-route" final-route>
 	<ul dnd-list="artworks">
 		<li ng-repeat="artwork in artworks" class="grab">
+			<div class="overlay"></div>
 			<div class="image">
 				<img src="images/path/{{ artwork.image }}" alt="" ng-if="artwork.type == 'json'" />
 				<img src="http://www.culture.gouv.fr/Wave/image/joconde/{{ artwork.image }}" alt="" ng-if="artwork.type != 'json'" />
