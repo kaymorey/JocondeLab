@@ -543,8 +543,8 @@ footer nav li.more-less .indicators {
 	left: -4px;
 }
 footer nav li.more-less:hover {
-	width: 120px;
-	background-position: 60px center;
+	width: 125px;
+	background-position: 69px center;
 }
 footer nav li.more-less:hover span {
 	width: 2px;

@@ -679,16 +679,6 @@ app.directive('googleMap', function($rootScope) {
                 latlngTab.push(markerLatlng);
                 latlngbounds.extend(markerLatlng);
                 map.fitBounds(latlngbounds);
-
-                var contentString = '<div id="content"><div id="bodyContent">'+scope.artworks[index].loca+'</div></div>';
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.open(map, marker);
-                });
             });
             $rootScope.$on('removeMarker', function(event, index) {
                 markersTab[index].setMap(null);
@@ -799,7 +789,7 @@ app.directive('finalRoute', function() {
 });
 app.factory('ArtworksService', function() {
   return {
-      maxArtworks : 9,
+      maxArtworks : 10,
       nbArtworks : 5,
       minArtworks : 3
   };
