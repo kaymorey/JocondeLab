@@ -713,7 +713,10 @@ ul.accordion li div.infos p {
 	-webkit-border-radius: 0 !important;
 	border-radius: 0 !important;
 
-	background-color: red;
+	background-color: #FFF !important;
+}
+.fancy-connexion .fancybox-skin {
+	padding: 0 !important;
 }
 .lightbox {
 
