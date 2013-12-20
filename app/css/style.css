@@ -345,6 +345,8 @@ section.final-route li .image {
 section.final-route li .image img {
 	min-width: 100%;
 	max-width: 100%;
+	position: relative;
+	top: -30%;
 }
 section.final-route li p {
 	z-index: 200;
