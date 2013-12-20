@@ -696,6 +696,7 @@ ul.accordion li div.infos {
 	width: 100%;
 	color: #333333;
 	background-color: #FFF;
+	line-height: 1.2em;
 	display: none;
 	position: absolute;
 	bottom: 60px;
@@ -738,6 +739,7 @@ ul.accordion li div.infos p {
 	border: solid #808080 1px;
 	color: #808080;
 	font-size: 20px;
+	font-family: 'GtwalsheimThin', Arial, sans-serif;
 	text-decoration: none;
 	display: inline-block;
 }
