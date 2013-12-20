@@ -412,10 +412,10 @@ section.filter li div {
 	position: absolute;
 	bottom: 0;
 	background-image: linear-gradient(transparent, black);
-	visibility: hidden;
+	display: none;
 }
 section.filter li:hover div {
-	visibility: visible;
+	display: block;
 }
 section.filter li span {
 	-moz-text-shadow: 0px 0px 9px #333;
@@ -445,7 +445,6 @@ section.filter li a.selected {
 	color: #FFF;
 	background-color: #c1a061;
 	border: solid #c1a061 1px;
-	visibility: visible;
 }
 /*************************
 *         FOOTER         *
